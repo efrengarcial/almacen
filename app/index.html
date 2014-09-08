@@ -12,8 +12,11 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <!-- endbower -->
     <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+    <!-- build:css(.tmp) styles/main.css 
+    <link rel="stylesheet" href="styles/main.css">-->
+    <link rel="stylesheet" href="styles/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+
     <!-- endbuild -->
     <!--
     <link rel="stylesheet" href="styles/landing-page.css">-->    
@@ -26,32 +29,39 @@
 
     <!-- Add your site or application content here -->
      <!-- Fixed navbar -->
-     <div class="container">
-      <div class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"><b>ALMACÉN</b></a>
-          </div>
-          <div class="navbar-collapse collapse">
-            
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#/productos">Productos</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
+        <!-- Fixed navbar -->
+    <div class="navbar navbar-default1 navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Almacén</a>
         </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Sign up</a></li>
+            <li><a href="#">Sign in</a></li>
+            <li><a href="#/productos">Productos</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
       </div>
     </div>
 
+    <div id="header">
       <div ng-view=""></div>
-
-      <div class="footer">
-        xxx
-      </div>
+     </div>
+      
+      <div id="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-lg-offset-3">
+                <p class="copyright">Copyright &copy; 2014 - Frigorificos BLE</p>
+            </div>
+          </div>    
+        </div>  
     </div>
 
 
