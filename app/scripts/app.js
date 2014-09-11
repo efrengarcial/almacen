@@ -13,7 +13,8 @@ angular
     'ngCookies',
     'ngResource',
     'ngRoute',
-    'ngSanitize'
+    'ngSanitize',
+	'ngMessages'
   ])
   .config(function ($routeProvider) {
     $routeProvider
