@@ -12,13 +12,17 @@ angular.module('almacenApp')
   	$log.debug('ddd');
     $scope.nombre="";
 
-    $scope.submit = function() {
-       	$log.debug('yyyyyyyyyy......');
+    $scope.submit = function(isValid) {
+    	$log.debug(isValid);
+    	alert(isValid);
+    	if (isValid) {
+    		alert('Ok');	
+    	}
+       	
       };
 
     $scope.buscar = function() {
        	$log.debug('xxxxxxxx......');
       };
-  
 
   });
