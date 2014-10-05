@@ -13,10 +13,12 @@ angular
     'ngCookies',
     'ngResource',
     'ngRoute',
+    'ngMessages',
     'ngSanitize',
-	'ngMessages'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider,$logProvider) {
+    $logProvider.debugEnabled(true);
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',

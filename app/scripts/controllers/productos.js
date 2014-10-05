@@ -8,10 +8,17 @@
  * Controller of the almacenApp
  */
 angular.module('almacenApp')
-  .controller('ProductosCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('ProductosCtrl', function ($scope,$log) {
+  	$log.debug('ddd');
+    $scope.nombre="";
+
+    $scope.submit = function() {
+       	$log.debug('yyyyyyyyyy......');
+      };
+
+    $scope.buscar = function() {
+       	$log.debug('xxxxxxxx......');
+      };
+  
+
   });
