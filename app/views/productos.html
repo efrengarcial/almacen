@@ -20,15 +20,14 @@
             <div class="col-md-5 form-group">
                   <label class="col-md-2 control-label" for="nombre">Nombre</label>
                    <div class="col-md-8">
-                        <input id="nombre"  ng-model="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control"
-            							ng-minlength="3" ng-maxlength="20" ng-required="true"></input>
-            						<div ng-messages="productoForm.nombre.$error" ng-if="productoForm.nombre.$touched || productoForm.$submitted">
+                        <input id="nombre"  ng-model="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control" ng-minlength="3" ng-maxlength="20" ng-required="true"></input>
+            						<div class="error-message" ng-messages="productoForm.nombre.$error" ng-if="productoForm.nombre.$touched || productoForm.$submitted">
             						   <div class="error-message" ng-message="required">Debe ingresar el Nombre del Producto</div>		
                              <!-- then, incase the message is too short, show the message right after -->
-                            <div ng-message="minlength">El nombre es demasiado corto...</div>
+                            <div class="error-message" ng-message="minlength">El nombre es demasiado corto...</div>
 
                             <!-- of if is too long then let us know --> 
-                            <div ng-message="maxlength">El nombre es demasiado largo...</div>
+                            <div class="error-message" ng-message="maxlength">El nombre es demasiado largo...</div>
 
             						</div>
                        
@@ -38,22 +37,32 @@
             <div class="col-md-5 form-group">
                   <label class="col-md-2 control-label" for="codigo">Código</label>
                   <div class="col-md-8">
-                    <input id="codigo" name="codigo" type="text" placeholder="Código" class="form-control">
+                    <input id="codigo" ng-model="codigo" name="codigo" type="text" placeholder="Código" class="form-control" ng-required="true" numbers-only="numbers-only">
+                    <div class="error-message" ng-messages="productoForm.codigo.$error" ng-if="productoForm.codigo.$touched || productoForm.$submitted">
+                      <div class="error-message" ng-message="required">Debe ingresar el ID del Producto</div>
+                      <div class="error-message" ng-message="numbers-only">El código debe contener letras o números</div>
+                    </div>
                   </div>
             </div>
-          </div>
          
           <div class="row"> 
             <div class="col-md-5 form-group">
                   <label class="col-md-2 control-label" for="maximo">Máximo</label>
                    <div class="col-md-8">
-                     <input id="maximo" name="maximo" type="text" placeholder="Máximo" class="form-control">
+                     <input id="maximo" ng-model="maximo" name="maximo" type="text" placeholder="Máximo" class="form-control" ng-required="true">
+                     <div class="error-message" ng-messages="productoForm.maximo.$error" ng-if="productoForm.maximo.$touched || productoForm.$submitted">
+                      <div class="error-message" ng-message="required">Debe ingresar in valor para máximo</div>
+                     </div>
                   </div>
             </div>
             <div class="col-md-5 form-group">
                   <label class="col-md-2 control-label" for="minimo">Mínimo</label>
                   <div class="col-md-8">
-                    <input id="minimo" name="minimo" type="text" placeholder="Mínimo" class="form-control">
+                    <input id="minimo" ng-model="minimo" name="minimo" type="text" placeholder="Mínimo" class="form-control" ng-required="true">
+                    <div class="error-message" ng-messages="productoForm.minimo.$error" ng-if="productoForm.maximo.$touched || productoForm.$submitted">
+                      <div class="error-message" ng-message="required">Debe ingresar un valor para mínimo</div>
+                      
+                    </div>
                   </div>
             </div>
           </div>
@@ -118,21 +127,16 @@
             <div class="col-md-5 form-group">
                   <label class="col-md-4 control-label" for="verificar">Verificación 106</label>
                   <div class="col-md-2">
-                     <input id="verificar" name="verificar" type="checkbox" placeholder="Verificación" class="form-control">
+                     <input id="verificar" name="verificar" type="checkbox" placeholder="Verificación" class=" form-control">
                   </div>
             </div>
           </div>
 
          <div class="row">
-
-       
-
           <div class="col-md-4 col-md-offset-4">
-
                 <button type="submit" class="btn btn-primary" >
                    <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Salvar
                </button>
-
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-danger">
                         <input type="checkbox">
