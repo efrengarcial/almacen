@@ -225,3 +225,22 @@ p.copyright {
     margin: 1em 0;
     padding: 0;
 }
+
+/*styles iclude by Dario*/
+.error-message.ng-active {
+  background:maroon;
+  color:white;
+  padding:1px;
+  border-radius:5px;
+  margin-top:6px;
+  position:relative;
+}
+.error-message.ng-active:after {
+  position:absolute;
+  top:-10px;
+  content:"";
+  left:20px;
+  border-style:solid;
+  border-color:transparent transparent maroon;
+  border-width:5px;
+}
