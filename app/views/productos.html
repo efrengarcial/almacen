@@ -1,25 +1,12 @@
 
-<div class="container">
-      <div class="row">   
-        <div class="col-md-12  col-md-offset-9">             
-           <form class="form-inline" role="form">
-              <div class="form-group">
-                <input class="form-control" id="exampleInputEmail1" placeholder="Ingese Código, Nombre">
-              </div>             
-                 <label class="btn btn-theme" ng-click="buscar()">
-                    <span class="glyphicon glyphicon-search"></span>
-                    <span class="glyphicon-class">Buscar</span>
-                </label>
-          </form> 
-        </div>
-      </div>
-
+<div class="container-fluid">
+      
       <hr>      
         <form name="productoForm" ng-submit="submit(productoForm.$valid)" role="form" novalidate>
           <div class="row">  
-            <div class="col-md-5 form-group">
-                <label class="col-md-2 control-label" for="nombre">Nombre</label>
-                 <div class="col-md-8">
+            <div class="col-md-4 form-group">
+                <label class="col-md-3 control-label" for="nombre">Nombre</label>
+                 <div class="col-md-9">
                       <input id="nombre"  ng-model="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control" ng-minlength="3" ng-maxlength="20" ng-required="true">
           						<div class="error-message" ng-messages="productoForm.nombre.$error" ng-if="interacted(productoForm.nombre) || productoForm.$submitted">
           						   <div class="error-message" ng-message="required">Debe ingresar el Nombre del Producto</div>		
@@ -31,9 +18,9 @@
           						</div>
                   </div>
             </div>
-            <div class="col-md-5 form-group">
-                  <label class="col-md-2 control-label" for="codigo">Código</label>
-                  <div class="col-md-8">
+            <div class="col-md-4 form-group">
+                  <label class="col-md-3 control-label" for="codigo">Código</label>
+                  <div class="col-md-9">
                     <input id="codigo" ng-model="codigo" name="codigo" type="text" placeholder="Código" class="form-control" ng-maxlength="9" ng-required="true" numbers-only>
                     <div class="error-message" ng-messages="productoForm.codigo.$error" ng-if="interacted(productoForm.codigo) || productoForm.$submitted">
                         <div class="error-message" ng-message="required">Debe ingresar el código del Producto</div>
@@ -42,12 +29,18 @@
                     </div>
                   </div>
             </div>
+            <div class="col-md-4 form-group">
+                  <label class="col-md-3 control-label" for="referencia">Referencia</label>
+                  <div class="col-md-9">
+                    <input id="referencia"  name="referencia" type="text" placeholder="Referencia" class="form-control" ng-maxlength="9" ng-required="true" >                    
+                  </div>
             </div>
+          </div>
          
           <div class="row"> 
-            <div class="col-md-5 form-group">
-                  <label class="col-md-2 control-label" for="maximo">Máximo</label>
-                   <div class="col-md-8">
+            <div class="col-md-4 form-group">
+                  <label class="col-md-3 control-label" for="maximo">Máximo</label>
+                   <div class="col-md-9">
                      <input id="maximo" ng-model="maximo" name="maximo" type="text" placeholder="Máximo" class="form-control" ng-maxlength="9" ng-required="true" numbers-only>
                      <div class="error-message" ng-messages="productoForm.maximo.$error" ng-if="interacted(productoForm.maximo) || productoForm.$submitted">
                       <div class="error-message" ng-message="required">Debe ingresar in valor para máximo</div>
@@ -55,9 +48,9 @@
                      </div>
                   </div>
             </div>
-            <div class="col-md-5 form-group">
-                  <label class="col-md-2 control-label" for="minimo">Mínimo</label>
-                  <div class="col-md-8">
+            <div class="col-md-4 form-group">
+                  <label class="col-md-3 control-label" for="minimo">Mínimo</label>
+                  <div class="col-md-9">
                     <input id="minimo" ng-model="minimo" name="minimo" type="text" placeholder="Mínimo" class="form-control" ng-maxlength="9" ng-required="true">
                     <div class="error-message" ng-messages="productoForm.minimo.$error" ng-if="interacted(productoForm.minimo) || productoForm.$submitted">
                       <div class="error-message" ng-message="required">Debe ingresar un valor para mínimo</div>
@@ -65,12 +58,18 @@
                     </div>
                   </div>
             </div>
+            <div class="col-md-4 form-group">
+                  <label class="col-md-3 control-label" for="referencia">Precio</label>
+                  <div class="col-md-9">
+                    <input id="precio"  name="precio" type="text" placeholder="$" class="form-control" ng-maxlength="9" ng-required="true" >                    
+                  </div>
+            </div>
           </div>
           
           <div class="row">   
-             <div class="col-md-5 form-group">
-                  <label class="col-md-2 control-label" for="linea">Línea</label>
-                     <div class="col-md-8">
+             <div class="col-md-4 form-group">
+                  <label class="col-md-3 control-label" for="linea">Línea</label>
+                     <div class="col-md-9">
                         <select id="linea" ng-model="linea" name="linea" class="form-control" ng-required="true">
                               <option>Línea</option>
                               <option>1</option>
@@ -84,9 +83,9 @@
                         </div>                        
                     </div>
             </div>
-            <div class="col-md-5 form-group">
-                  <label class="col-md-2 control-label" for="grupo">Grupo</label>
-                  <div class="col-md-8">
+            <div class="col-md-4 form-group">
+                  <label class="col-md-3 control-label" for="grupo">Grupo</label>
+                  <div class="col-md-9">
                     <select id="grupo" ng-model="grupo" name="grupo" class="form-control" ng-required="true">
                           <option>Grupo</option>
                           <option>1</option>
@@ -100,18 +99,10 @@
                         </div>                    
                   </div>
             </div>
-          </div>
-          
-          <div class="row">   
-            <div class="col-md-5 form-group">
-                  <label class="col-md-2 control-label" for="ubicacion">Ubicación</label>
-                   <div class="col-md-8">
-                    <input id="ubicacion" name="ubicacion" type="text" placeholder="Ubicación" class="form-control">
-                  </div>
-            </div>
-            <div class="col-md-5 form-group">
-                  <label class="col-md-2 control-label" for="unidad">Unidad</label>
-                  <div class="col-md-8">
+
+             <div class="col-md-4 form-group">
+                  <label class="col-md-3 control-label" for="unidad">Unidad</label>
+                  <div class="col-md-9">
                      <select id="unidad" name="unidad" class="form-control">
                                           <option>Unidad</option>
                                           <option>1</option>
@@ -122,24 +113,33 @@
                                       </select>
                   </div>
             </div>
-          </div>  
-          <div class="row"> 
-            <div class="col-md-5 form-group">
-                  <label class="col-md-2 control-label" for="iva">IVA</label>
-                   <div class="col-md-8">
+
+          </div>
+          
+          <div class="row">   
+            <div class="col-md-4 form-group">
+                  <label class="col-md-3 control-label" for="ubicacion">Ubicación</label>
+                   <div class="col-md-9">
+                    <input id="ubicacion" name="ubicacion" type="text" placeholder="Ubicación" class="form-control">
+                  </div>
+            </div>
+             <div class="col-md-4 form-group">
+                  <label class="col-md-3 control-label" for="iva">IVA</label>
+                   <div class="col-md-9">
                      <input id="iva" name="iva" type="text" placeholder="IVA" class="form-control">
                   </div>
             </div>
-            <div class="col-md-5 form-group">
-                  <label class="col-md-4 control-label" for="verificar">Verificación 106</label>
+            <div class="col-md-4 form-group">
+                  <label class="col-md-3 control-label" for="verificar">Verificación 106</label>
                   <div class="col-md-2">
                      <input id="verificar" name="verificar" type="checkbox" placeholder="Verificación" class=" form-control">
                   </div>
             </div>
-          </div>
 
+          </div>  
+          
          <div class="row">
-          <div class="col-md-4 col-md-offset-4">
+          <div class="col-md-4 col-md-offset-5">
                 <button type="submit" class="btn btn-primary" >
                    <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Salvar
                </button>
