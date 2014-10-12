@@ -44,7 +44,7 @@ angular.module('almacenApp')
               modelCtrl.$render();
            }         
 
-           return transformedInput;         
+           return inputValue;         
        });
      }
    };

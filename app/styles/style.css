@@ -228,8 +228,8 @@ p.copyright {
 
 /*styles iclude by Dario*/
 .error-message.ng-active {
-  background:maroon;
-  color:white;
+  background: #AC2925;
+  color: #FFFFFF;
   padding:1px;
   border-radius:5px;
   margin-top:6px;

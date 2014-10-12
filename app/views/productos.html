@@ -22,7 +22,7 @@
                  <div class="col-md-8">
                       <input id="nombre"  ng-model="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control" ng-minlength="3" ng-maxlength="20" ng-required="true">
           						<div class="error-message" ng-messages="productoForm.nombre.$error" ng-if="interacted(productoForm.nombre) || productoForm.$submitted">
-          						   <div class="error-message" ng-message="required">Debe ingresar el Nombre del Producto</div>		
+          						   <div class="error-message" ng-message="required">Debe ingresar el Nombre del producto</div>		
                            <!-- then, incase the message is too short, show the message right after -->
                           <div class="error-message" ng-message="minlength">El nombre es demasiado corto...</div>
 
@@ -34,11 +34,11 @@
             <div class="col-md-5 form-group">
                   <label class="col-md-2 control-label" for="codigo">Código</label>
                   <div class="col-md-8">
-                    <input id="codigo" ng-model="codigo" name="codigo" type="text" placeholder="Código" class="form-control" ng-maxlength="9" ng-required="true" numbers-only>
-                    <div class="error-message" ng-messages="productoForm.codigo.$error" ng-if="interacted(productoForm.codigo) || productoForm.$submitted">
-                        <div class="error-message" ng-message="required">Debe ingresar el código del Producto</div>
-                        <div class="error-message" ng-message="numbers-only">El código debe ser numérico</div>
+                    <input id="codigo" ng-model="codigo" name="codigo" type="text" placeholder="Código" class="form-control" ng-maxlength="9" ng-required="true" numbers-only  ng-pattern="/^[0-9]{1,9}$/">
+                    <div class="error-message" ng-messages="productoForm.codigo.$error" ng-if="interacted(productoForm.codigo) || productoForm.codigo.$error.pattern || productoForm.$submitted">
                         <div class="error-message" ng-message="maxlength">El código es demasiado largo...</div>
+                        <div class="error-message" ng-message="required">Debe ingresar el código del Producto</div>
+                        <div class="error-message" ng-message="pattern">El código debe ser numérico</div>
                     </div>
                   </div>
             </div>
@@ -48,20 +48,22 @@
             <div class="col-md-5 form-group">
                   <label class="col-md-2 control-label" for="maximo">Máximo</label>
                    <div class="col-md-8">
-                     <input id="maximo" ng-model="maximo" name="maximo" type="text" placeholder="Máximo" class="form-control" ng-maxlength="9" ng-required="true" numbers-only>
-                     <div class="error-message" ng-messages="productoForm.maximo.$error" ng-if="interacted(productoForm.maximo) || productoForm.$submitted">
-                      <div class="error-message" ng-message="required">Debe ingresar in valor para máximo</div>
+                     <input id="maximo" ng-model="maximo" name="maximo" type="text" placeholder="Máximo" class="form-control" ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/">
+                     <div class="error-message" ng-messages="productoForm.maximo.$error" ng-if="interacted(productoForm.maximo) || productoForm.maximo.$error.pattern || productoForm.$submitted">
                       <div class="error-message" ng-message="maxlength">El máximo es demasiado largo...</div>
+                      <div class="error-message" ng-message="required">Debe ingresar un valor para máximo</div>
+                      <div class="error-message" ng-message="pattern">El valor para máximo debe ser numérico</div>
                      </div>
                   </div>
             </div>
             <div class="col-md-5 form-group">
                   <label class="col-md-2 control-label" for="minimo">Mínimo</label>
                   <div class="col-md-8">
-                    <input id="minimo" ng-model="minimo" name="minimo" type="text" placeholder="Mínimo" class="form-control" ng-maxlength="9" ng-required="true">
-                    <div class="error-message" ng-messages="productoForm.minimo.$error" ng-if="interacted(productoForm.minimo) || productoForm.$submitted">
-                      <div class="error-message" ng-message="required">Debe ingresar un valor para mínimo</div>
+                    <input id="minimo" ng-model="minimo" name="minimo" type="text" placeholder="Mínimo" class="form-control" ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/">
+                    <div class="error-message" ng-messages="productoForm.minimo.$error" ng-if="interacted(productoForm.minimo)  || productoForm.minino.$error.pattern || productoForm.$submitted">
                       <div class="error-message" ng-message="maxlength">El mínimo es demasiado largo...</div>
+                      <div class="error-message" ng-message="required">Debe ingresar un valor para mínimo</div>
+                      <div class="error-message" ng-message="pattern">El valor para mínimo deber ser numérico</div>
                     </div>
                   </div>
             </div>
