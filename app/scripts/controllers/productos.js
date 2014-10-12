@@ -25,6 +25,10 @@ angular.module('almacenApp')
        	$log.debug('xxxxxxxx......');
       };
 
+    $scope.interacted = function (field) {
+       return $scope.submitted || field.$dirty;
+    };
+
   }).directive('numbersOnly', function(){
    return {
      require: 'ngModel',
