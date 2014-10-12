@@ -15,7 +15,7 @@ angular.module('almacenApp')
     $scope.submit = function(isValid) {
     	$log.debug(isValid);
     	if (isValid) {
-    		alert('Okyyy');	
+    		alert('Ok');	
     	}
        	
       };
