@@ -9,12 +9,11 @@
  */
 angular.module('almacenApp')
   .controller('ProductosCtrl', function ($scope,$log) {
-  	$log.debug('ddd');
+  	$log.debug('Iniciando Productos...');
     $scope.nombre="";
 
     $scope.submit = function(isValid) {
     	$log.debug(isValid);
-    	alert(isValid);
     	if (isValid) {
     		alert('Ok');	
     	}
