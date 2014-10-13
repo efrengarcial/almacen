@@ -25,7 +25,12 @@ angular.module('almacenApp')
       };
 
     $scope.interacted = function (field) {
+
        return $scope.submitted || field.$dirty;
+    };
+
+    $scope.showKeyCode = function(e){
+      console.log(e);
     };
 
   }).directive('numbersOnly', function(){

@@ -1,7 +1,7 @@
 ﻿
-<div class="container-fluid">
-      
-      <hr>      
+<div class="container-fluid">      
+        <div><h1 class="header">Productos</h1></div>
+        <hr>
         <form name="productoForm" ng-submit="submit(productoForm.$valid)" role="form" novalidate>
           <div class="row">  
             <div class="col-md-4 form-group">
@@ -32,7 +32,12 @@
             <div class="col-md-4 form-group">
                   <label class="col-md-3 control-label" for="referencia">Referencia</label>
                   <div class="col-md-9">
-                    <input id="referencia"  name="referencia" type="text" placeholder="Referencia" class="form-control" ng-maxlength="9" ng-required="true" >                    
+                    <input id="referencia"  ng-model="referencia" name="referencia" type="text" placeholder="Referencia" class="form-control" ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/">
+                      <div class="error-message" ng-messages="productoForm.referencia.$error" ng-if="interacted(productoForm.referencia) || productoForm.referencia.$error.pattern || productoForm.$submitted">
+                          <div class="error-message" ng-message="maxlength">La referencia es demasiado largo...</div>
+                          <div class="error-message" ng-message="required">Debe ingresasr la referencia</div>
+                          <div class="error-message" ng-message="pattern">La referencia debe ser numérico</div>
+                      </div>                    
                   </div>
             </div>
           </div>
@@ -56,14 +61,18 @@
                     <div class="error-message" ng-messages="productoForm.minimo.$error" ng-if="interacted(productoForm.minimo)  || productoForm.minino.$error.pattern || productoForm.$submitted">
                       <div class="error-message" ng-message="maxlength">El mínimo es demasiado largo...</div>
                       <div class="error-message" ng-message="required">Debe ingresar un valor para mínimo</div>
-                      <div class="error-message" ng-message="pattern">El valor para mínimo deber ser numérico</div>
+                      <div class="error-message" ng-message="pattern">El valor mínimo deber ser numérico</div>
                     </div>
                   </div>
             </div>
             <div class="col-md-4 form-group">
                   <label class="col-md-3 control-label" for="referencia">Precio</label>
                   <div class="col-md-9">
-                    <input id="precio"  name="precio" type="text" placeholder="$" class="form-control" ng-maxlength="9" ng-required="true" >                    
+                    <input id="precio"  ng-model="precio" name="precio" type="text" placeholder="$" class="form-control" ng-required="true" numbers-only ng-pattern="/^\d{0,9}(\.\d{1,9})?$/">
+                      <div class="error-message" ng-messages="productoForm.precio.$error" ng-if="interacted(productoForm.precio)  || productoForm.precio.$error.pattern || productoForm.$submitted">
+                      <div class="error-message" ng-message="required">Debe ingresar un valor para mínimo</div>
+                      <div class="error-message" ng-message="pattern">El precio deber ser numérico</div>
+                    </div>                    
                   </div>
             </div>
           </div>
@@ -132,7 +141,7 @@
                   </div>
             </div>
             <div class="col-md-4 form-group">
-                  <label class="col-md-3 control-label" for="verificar">Verificación 106</label>
+                  <label class="col-md-3 control-label" for="verificar">Finalizar</label>
                   <div class="col-md-2">
                      <input id="verificar" name="verificar" type="checkbox" placeholder="Verificación" class=" form-control">
                   </div>
