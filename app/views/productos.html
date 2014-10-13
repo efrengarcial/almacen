@@ -1,7 +1,24 @@
 ﻿
 <div class="container-fluid">      
-        <div><h1 class="header">Productos</h1></div>
-        <hr>
+      <div class="row">   
+       <div class="col-md-2">
+          <h1 class="header">Productos</h1>
+       </div>
+       <div class="col-md-3">             
+           <form class="form-inline" role="form">
+              <div class="form-group">
+                <input class="form-control" id="exampleInputEmail1" placeholder="Ingese Código, Nombre">
+              </div>             
+                 <label class="btn btn-theme" ng-click="buscar()">
+                    <span class="glyphicon glyphicon-search"></span>
+                    <span class="glyphicon-class">Buscar</span>
+                </label>
+          </form> 
+
+        </div>
+       </div>   
+       <hr>
+
         <form name="productoForm" ng-submit="submit(productoForm.$valid)" role="form" novalidate>
           <div class="row">  
             <div class="col-md-4 form-group">
