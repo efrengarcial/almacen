@@ -15,6 +15,7 @@ angular
     'ngRoute',
     'ngMessages',
     'ngSanitize',
+    'fcsa-number',
   ])
   .config(function ($routeProvider,$logProvider) {
     $logProvider.debugEnabled(true);
