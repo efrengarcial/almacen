@@ -30,19 +30,20 @@ angular.module('almacenApp')
         };
 
         $scope.showMessage = function() {
-            $('.required-icon').tooltip({
+            $('.required-icon, .required-combo-icon').tooltip({
                 placement: 'left',
                 title: 'Campo requerido'
             });
         };
 
         $scope.precio = {
-            numberMaxDecimals: "$" + 9.99
+            numberMaxDecimals: 9.99
         };
 
         $scope.iva = {
-            numberMaxDecimals: "$" + 9.99
-        };        
+            numberMaxDecimals: 9.99
+
+        };
 
     }).directive('numbersOnly', function() {
         return {
