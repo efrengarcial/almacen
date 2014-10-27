@@ -265,12 +265,12 @@ textarea {
   resize:vertical; 
 } 
 
-/* Required combo START*/
-.required-combo-block {
+/* Required field START*/
+.required-field-block {
     position: relative;   
 }
 
-.required-combo-block .required-combo-icon {
+.required-field-block .required-icon {
     display: inline-block;
     vertical-align: middle;
     margin: -0.25em 0.25em 0em;
@@ -291,7 +291,7 @@ textarea {
     font-size: 75%;
 }
   
-.required-combo-block .required-combo-icon {
+.required-field-block .required-icon {
     background-color: transparent;
     position: absolute;
     top: 0px;
@@ -305,7 +305,7 @@ textarea {
     transition: color 0.2s ease;
 }
 
-.required-combo-block .required-combo-icon:after {
+.required-field-block .required-icon:after {
     position: absolute;
     content: "";
     right: 4px;
@@ -320,7 +320,7 @@ textarea {
     transition: border-color 0.2s ease;
 }
 
-.required-combo-block .required-combo-icon .text {
+.required-field-block .required-icon .text {
   color: #B80000;
   font-size: 26px;
   margin: 2px 0 0 12px;
