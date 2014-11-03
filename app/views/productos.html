@@ -8,7 +8,7 @@
          <form class="col-md-5 col-md-offset-1" role="form">
             <div class="input-group stylish-input-group">
               <input type="text" name="buscar" class="form-control" id="search" placeholder="Ingese Código, Nombre" maxlength="50">
-               <span class="btn btn-primary input-group-addon">
+               <span class="btn btn-theme input-group-addon">
                   <button type="submit" ng-click="buscar()">
                     <span class="glyphicon glyphicon-search"></span>
                     <span class="glyphicon-class">Buscar</span>
@@ -16,7 +16,10 @@
               </span>
             </div>             
         </form> 
-      </div> 
+      </div>
+        <div class="row">
+        <div class="col-md-3 col-md-offset-10">* Campos requeridos</div>
+         </div> 
 
        <hr>
 
@@ -213,20 +216,11 @@
                       <textarea rows="3" class="form-control" placeholder="Descripción"></textarea>
                   </div>
             </div>
-
-            <div class="col-md-4 form-group">
-                  <label class="col-md-3 control-label" for="verificar">Finalizar</label>
-                  <div class="col-md-2">
-                     <input id="verificar" name="verificar" type="checkbox" placeholder="Verificación" class=" form-control">
-                  </div>
-            </div> 
+ 
           </div>  
           
          <div class="row">
           <div class="col-md-4 col-md-offset-5">
-                <button type="submit" class="btn btn-primary" >
-                   <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Salvar
-               </button>
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-danger">
                         <input type="checkbox">
@@ -234,6 +228,9 @@
                         <span class="glyphicon-class">Cancelar</span>
                     </label>
                 </div>
+                <button type="submit" class="btn btn-primary" >
+                   <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Guardar
+               </button>                
           </div>
         </div>
                   
