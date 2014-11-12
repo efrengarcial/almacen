@@ -10,6 +10,7 @@
  */
 angular
   .module('almacenApp', [
+    'restangular',
     'ngCookies',
     'ngResource',
     'ngRoute',
@@ -36,4 +37,22 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  })
+   .run(['Restangular','$rootScope',  
+    function(Restangular, $rootScope) {
+      Restangular.setErrorInterceptor(
+        function(response) { 
+          if(response.status === 0 ) {
+            console.log('Error por timeout');
+            $rootScope.$emit('evento', {descripcion: 'PAGE.MSG.TIMEOUT'});        
+          } else if( response.status === 500) { 
+            console.log('Error en el servidor');
+            $rootScope.$emit('evento', {descripcion: 'PAGE.MSG.SERVERERROR' + response.data.descripcion});
+          } else if(response.status === 404) {
+            console.log('Page not found');
+            $rootScope.$emit('evento', {descripcion : 'PAGE.MSG.PAGENOTFOUND'});
+          } 
+        }
+      );
+    }
+  ]);
