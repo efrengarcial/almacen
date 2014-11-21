@@ -329,3 +329,13 @@ textarea {
 
 /* Required combo END */
 
+.list-group-item{
+display: block;
+padding: 0px 20px;
+clear: both;
+font-weight: normal;
+line-height: 1.42857143;
+color: #333;
+white-space: nowrap;
+}
+
