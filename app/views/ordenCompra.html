@@ -2,69 +2,66 @@
 	<form name="ordenCompraForm" ng-submit="submit(ordenCompraForm.$valid)" class="form-horizontal" role="form" novalidate>
 	 <fieldset>
 		<div class="row">
-			<div class="col-md-3 form-group">
-				<label class="col-md-5 control-label" for="nombre">Orden de Compra No</label>
+			<div class="col-md-4 form-group">
+				<label class="col-md-5 control-label" for="orden">Orden Compra</label>
 				<div class="col-md-7">
-					<input id="ordenCompra" type="text" name="ordenCompra" placeholder="No. 1520" readonly class="form-control">
-					
+					<input id="orden" ng-model="orden" type="text" name="orden" placeholder="No. 1520" readonly class="form-control" >		
 				</div>
 			</div>
 
-            <div class="col-md-3 form-group">
-            	<label class="col-md-4 control-label" for="">Fecha</label>
-            	<div class="col-md-8">
+            <div class="col-md-4 form-group">
+            	<label class="col-md-5 control-label" for="">Fecha</label>
+            	<div class="col-md-7">
             		<input type="text" name="fecha" placeholder="20-12-2014" readonly class="form-control">            		
             	</div>
             </div>
-
-            <div class="col-md-4 form-group">
-            	<label class="col-md-3 control-label" for="">Proveedor</label>
-            	<div class="col-md-6">
-					<div class="btn-group btn-group-default">
-						<button class="btn btn-default btn-md" type="button">Proveedor</button>
-						<button data-toggle="dropdown" class="btn btn-default btn-md dropdown-toggle" type="button"><span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu">
-							<li><a href="#">Cliente 1</a></li>
-							<li class="divider"></li>
-							<li><a href="#">Cliente 2</a></li>
-							<li class="divider"></li>
-							<li><a href="#">Cliente 3</a></li>
-						</ul>
-					</div>
-            	</div>
+             <div class="col-md-4 form-group required-field-block">
+                  <label class="col-md-5 control-label" for="proveedor">Proveedor</label>
+                     <div class="col-md-7">
+                        <select id="proveedor" ng-model="proveedor" name="proveedor" class="form-control" ng-required="true">
+                              <option>Proveedor</option>
+                              <option>Proveedor 1</option>
+                              <option>Proveedor 2</option>
+                        </select>
+                        <div class="required-icon" ng-mouseover="showMessage();">
+                          <div class="text">*</div>
+                        </div>                        
+                        <div class="error-message" ng-messages="ordenCompraForm.proveedor.$error" ng-if="ordenCompraForm.proveedor.$touched || ordenCompraForm.$submitted">
+                          <div class="error-message" ng-message="required">Debe ingresar Proveedor</div>
+                        </div>                        
+                    </div>
             </div>
 
 		</div>
 		<div class="row">
-			<div class="col-md-3  form-group">
+			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="nit">NIT</label>
 				<div class="col-md-7">
 					<input id="nit" type="text" name="nit" placeholder="565485794" readonly class="form-control">
 				</div>
 			</div>
-			<div class="col-md-3  form-group">
-				<label class="col-md-4 control-label" for="nit">Teléfono</label>
-				<div class="col-md-8">
+			<div class="col-md-4 form-group">
+				<label class="col-md-5 control-label" for="nit">Teléfono</label>
+				<div class="col-md-7">
 					<input id="telefono" type="text" name="telefono" placeholder="2345312" readonly class="form-control">
 				</div>
 			</div>
-			<div class="col-md-3  form-group">
-				<label class="col-md-4 control-label" for="nit">Dirección</label>
-				<div class="col-md-8">
+			<div class="col-md-4 form-group">
+				<label class="col-md-5 control-label" for="nit">Dirección</label>
+				<div class="col-md-7">
 					<input id="direc" type="text" name="direc" placeholder="Calle 12 # 52-45" readonly class="form-control">
 				</div>
 			</div>									
 		</div>
 		<div class="row">
-			<div class="col-md-3  form-group">
-				<label class="col-md-5 control-label" for="plazo">Plazo de entrega</label>
+			<div class="col-md-4 form-group">
+				<label class="col-md-5 control-label" for="plazo">Plazo entrega</label>
 				<div class="col-md-7">
 					<input id="plazo" type="text" name="plazo" placeholder="10 Días" readonly class="form-control">
 				</div>
 			</div>
-            <div class="col-md-3 form-group">
-            	<label class="col-md-4 control-label" for="">Centro de Costos</label>
+            <div class="col-md-4 form-group">
+            	<label class="col-md-5 control-label" for="">Centro Costos</label>
             	<div class="col-md-7">
 					<div class="btn-group btn-group-default">
 						<button class="btn btn-default btn-md" type="button">Tipo ganado</button>
@@ -89,35 +86,43 @@
 					</div>
             	</div>
             </div>
-			<div class="col-md-3  form-group">
-				<label class="col-md-4 control-label" for="nit">Fecha de entrega</label>
-				<div class="col-md-8">
+			<div class="col-md-4  form-group">
+				<label class="col-md-5 control-label" for="nit">Fecha entrega</label>
+				<div class="col-md-7">
 					<input id="entrega" type="text" name="entrega" placeholder="31-12-2014" readonly class="form-control">
 				</div>
 			</div>
-            <div class="col-md-3 form-group">
-            	<label class="col-md-4 control-label" for="nit">Anulada</label>
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <input type="checkbox">
-                    </span>
-                    <input id="anular" name="anular" type="text" placeholder="Anulada" class="form-control">
-                </div>
-            </div>	
+			</div>
+			<div class="row">
+	            <div class="col-md-4 form-group">
+	            	<label class="col-md-5 control-label" for="nit">Anulada</label>
+	                <div class="input-group">
+	                    <span class="input-group-addon">
+	                        <input type="checkbox">
+	                    </span>
+	                    <input id="anular" name="anular" type="text" placeholder="Anulada" class="form-control">
+	                </div>
+	            </div>	
 
-            <div class="col-md-3 form-group">
-            	<label class="col-md-4 control-label" for="nit">Finalizada</label>
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <input type="checkbox">
-                    </span>
-                    <input id="finalizar" name="finalizar" type="text" placeholder="Finalizada" class="form-control">
-                </div>
-            </div>
+	            <div class="col-md-4 form-group">
+	            	<label class="col-md-5 control-label" for="nit">Finalizada</label>
+	                <div class="input-group">
+	                    <span class="input-group-addon">
+	                        <input type="checkbox">
+	                    </span>
+	                    <input id="finalizar" name="finalizar" type="text" placeholder="Finalizada" class="form-control">
+	                </div>
+	            </div>
+				<div class="col-md-4 form-group">
+				<label class="col-md-5 control-label" for="nit">Temporal</label>
+		            <button type="submit" class="btn btn-primary" >
+		               <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Guardar
+		           </button>  			
+				</div>            
 		</div>
-		</fieldset>		
+		</fieldset>	
+		
 	</form>
-	<hr>
 	<!-- Table to show data -->
 	<div class="row">
 		<div class="col-md-12">
