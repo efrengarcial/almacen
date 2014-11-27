@@ -28,7 +28,7 @@
             <div class="col-md-4 form-group required-field-block">
                 <label class="col-md-3 control-label" for="nombre">Nombre</label>
                  <div class="col-md-9">
-                      <input id="nombre"  ng-model="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control" ng-minlength="3" ng-maxlength="50" ng-required="true">
+                      <input id="nombre"  ng-model="producto.Nombre" name="nombre" type="text" placeholder="Nombre" class="form-control" ng-minlength="3" ng-maxlength="50" ng-required="true">
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>
@@ -45,7 +45,7 @@
             <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="codigo">Código</label>
                   <div class="col-md-9">
-                    <input id="codigo" ng-model="codigo" name="codigo" type="text" placeholder="Código" class="form-control" ng-maxlength="9" ng-required="true" numbers-only  ng-pattern="/^[0-9]{1,9}$/">
+                    <input id="codigo" ng-model="producto.Codigo" name="codigo" type="text" placeholder="Código" class="form-control" ng-maxlength="9" ng-required="true" numbers-only  ng-pattern="/^[0-9]{1,9}$/">
                       <div class="required-icon" ng-mouseover="showMessage();">
                        <div class="text">*</div>
                       </div>
@@ -59,7 +59,7 @@
             <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="referencia">Referencia</label>
                   <div class="col-md-9">
-                    <input id="referencia"  ng-model="referencia" name="referencia" type="text" placeholder="Referencia" class="form-control" ng-maxlength="50" ng-pattern="/^[a-zA-Z0-9]{1,50}$/" ng-required="true">
+                    <input id="referencia"  ng-model="producto.Referencia" name="referencia" type="text" placeholder="Referencia" class="form-control" ng-maxlength="50" ng-pattern="/^[a-zA-Z0-9]{1,50}$/" ng-required="true">
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>                    
@@ -76,7 +76,7 @@
             <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="maximo">Máximo</label>
                    <div class="col-md-9">
-                     <input id="maximo" ng-model="maximo" name="maximo" type="text" placeholder="Máximo" class="form-control" ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/">
+                     <input id="maximo" ng-model="producto.Maximo" name="maximo" type="text" placeholder="Máximo" class="form-control" ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/">
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>                     
@@ -90,7 +90,7 @@
             <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="minimo">Mínimo</label>
                   <div class="col-md-9">
-                    <input id="minimo" ng-model="minimo" name="minimo" type="text" placeholder="Mínimo" class="form-control" ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/">
+                    <input id="minimo" ng-model="producto.Minimo" name="minimo" type="text" placeholder="Mínimo" class="form-control" ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/">
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>                    
@@ -104,7 +104,7 @@
             <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="referencia">Precio</label>
                   <div class="col-md-9">
-                    <input id="precio" fcsa-number="{ preventInvalidInput: true}" ng-model="precio.numberMaxDecimals" name="precio" type="text" placeholder="$" class="form-control" maxlength="13" ng-required="true" ng-pattern="/(^[0-9]{1,10}\.[0-9]{0,2})$/">
+                    <input id="precio" fcsa-number="{ preventInvalidInput: true}" ng-model="producto.Precio" name="precio" type="text" placeholder="$" class="form-control" maxlength="13" ng-required="true" ng-pattern="/(^[0-9]{1,10}\.[0-9]{0,2})$/">
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>
@@ -121,13 +121,8 @@
              <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="linea">Línea</label>
                      <div class="col-md-9">
-                        <select id="linea" ng-model="linea" name="linea" class="form-control" ng-required="true">
-                              <option>Línea</option>
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
+                        <select id="linea" ng-model="producto.Linea" name="linea" class="form-control" ng-required="true" ng-options="linea.Id as linea.Nombre for linea in lineas"  ng-change="seleccionarLinea()">
+                            <option style="display:none" value="">Seleccione una Linea</option>
                         </select>
                         <div class="required-icon" ng-mouseover="showMessage();">
                           <div class="text">*</div>
@@ -140,13 +135,8 @@
             <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="grupo">Grupo</label>
                   <div class="col-md-9">
-                    <select id="grupo" ng-model="grupo" name="grupo" class="form-control" ng-required="true">
-                          <option>Grupo</option>
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
+                    <select id="grupo" ng-model="producto.IdSubLinea" name="grupo" class="form-control" ng-required="true" ng-options="grupo.Id as grupo.Nombre for grupo in grupos" >
+                         <option style="display:none" value="">Seleccione un Grupo</option>
                     </select>
                     <div class="required-icon" ng-mouseover="showMessage();">
                       <div class="text">*</div>
@@ -160,13 +150,8 @@
              <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="unidad">Unidad</label>
                   <div class="col-md-9">
-                     <select id="unidad" ng-model="unidad" name="unidad" class="form-control" ng-required="true">
-                        <option>Unidad</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                     <select id="unidad" ng-model="producto.IdMedida" name="unidad" class="form-control" ng-required="true" ng-options="medida.Id as medida.Nombre for medida in medidas" >
+                        <option style="display:none" value="">Seleccione una Unidad</option>
                     </select>
                     <div class="required-icon" ng-mouseover="showMessage();">
                       <div class="text">*</div>
@@ -183,7 +168,7 @@
             <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="ubicacion">Ubicación</label>
                   <div class="col-md-9">
-                    <input id="ubicacion" ng-model="ubicacion" name="ubicacion" type="text" placeholder="Ubicación" class="form-control" ng-maxlength="50" ng-required="true">
+                    <input id="ubicacion" ng-model="producto.Ubicacion" name="ubicacion" type="text" placeholder="Ubicación" class="form-control" ng-maxlength="50" ng-required="true">
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>
@@ -196,7 +181,7 @@
              <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="iva">IVA</label>
                    <div class="col-md-9">
-                     <input id="iva" fcsa-number="{ preventInvalidInput: true }" ng-model="iva.numberMaxDecimals" name="iva" type="text" placeholder="IVA" class="form-control" maxlength="5" ng-required="true" ng-pattern="/(^[0-9]{0,2}\.[0-9]{0,2})$/">
+                     <input id="iva" fcsa-number="{ preventInvalidInput: true }" ng-model="producto.Iva" name="iva" type="text" placeholder="IVA" class="form-control" maxlength="5" ng-required="true" ng-pattern="/(^[0-9]{0,2}\.[0-9]{0,2})$/">
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>
@@ -212,7 +197,7 @@
             <div class="col-md-4 form-group">
                   <label class="col-md-3 control-label" for="verificar">Descripción</label>
                   <div class="col-md-9">
-                      <textarea rows="3" class="form-control" placeholder="Descripción"></textarea>
+                      <textarea rows="3" ng-model="producto.Descripcion" class="form-control" placeholder="Descripción"></textarea>
                   </div>
             </div>
  

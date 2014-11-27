@@ -17,6 +17,7 @@ angular
     'ngMessages',
     'ngSanitize',
     'fcsa-number',
+    'toaster'
   ])
   .config(function ($routeProvider,$logProvider) {
     $logProvider.debugEnabled(true);
@@ -45,17 +46,21 @@ angular
    .run(['Restangular','$rootScope',  
     function(Restangular, $rootScope) {
       Restangular.setErrorInterceptor(
-        function(response) { 
+        function(response, deferred, responseHandler) { 
           if(response.status === 0 ) {
             console.log('Error por timeout');
-            $rootScope.$emit('evento', {descripcion: 'PAGE.MSG.TIMEOUT'});        
+            $rootScope.$emit('evento', {descripcion: 'PAGE.MSG.TIMEOUT'});  
+            return false; // error handled      
           } else if( response.status === 500) { 
             console.log('Error en el servidor');
-            $rootScope.$emit('evento', {descripcion: 'PAGE.MSG.SERVERERROR' + response.data.descripcion});
+            $rootScope.$emit('evento', {descripcion: response.statusText});
+            return false; // error handled
           } else if(response.status === 404) {
             console.log('Page not found');
             $rootScope.$emit('evento', {descripcion : 'PAGE.MSG.PAGENOTFOUND'});
-          } 
+            return false; // error handled
+          }
+          return true; // error not handled 
         }
       );
     }
