@@ -1,0 +1,71 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3">
+			<h1 class="header">Proveedor</h1>
+		</div>
+		<form class="col-md-5 col-md-offset-1" role="form">
+			<div class="input-group stylish-input-group">
+				<input type="text" name="buscar" class="form-control" id="search" placeholder="Ingese Nombre, NIT" maxlength="50">
+				<span class="btn btn-theme input-group-addon">
+					<button type="submit" ng-click="buscar()">
+						<span class="glyphicon glyphicon-search"></span>
+						<span class="glyphicon-class">Buscar</span>
+					</button>
+				</span>
+			</div>             
+		</form> 		
+	</div>
+	<div class="row">
+		<div class="col-md-3 col-md-offset-10">* Campos requeridos</div>
+	</div>
+	<form name="proveedorForm" ng-submit="submit(proveedorForm.$valid)" role="form" novalidate>
+		<div class="row">
+            <div class="col-md-4 form-group required-field-block">
+                <label class="col-md-3 control-label">C.C o NIT</label>
+                <div class="col-md-9">
+                    <input id="nit"  ng-model="nit" name="nit" type="text" placeholder="C.C. o NIT" class="form-control"  ng-maxlength="12" ng-required="true">
+	                <div class="required-icon" ng-mouseover="showMessage();">
+	                	<div class="text">*</div>
+	                </div>
+					<div class="error-message" ng-messages="proveedorForm.nit.$error" ng-if="interacted(proveedorForm.nit) || proveedorForm.$submitted">
+						<div class="error-message" ng-message="required">Debe ingresar un NIT</div>		
+						<div class="error-message" ng-message="minlength">El NIT es demasiado corto...</div>
+						<div class="error-message" ng-message="maxlength">El NIT es demasiado largo...</div>
+					</div>
+                </div>
+            </div>
+
+            <div class="col-md-4 form-group required-field-block">
+            	<label class="col-md-3 control-label">Nombre</label>
+            	<div class="col-md-9">
+            		<input id="nombre" ng-model="nombre" type="text" name="nombre" placeholder="Nombre" class="form-control" ng-maxlength="15" ng-required="true">
+            		<div class="required-icon" ng-mouseover="showMessage();">
+            			<div class="text">*</div>
+            		</div>
+					<div class="error-message" ng-messages="proveedorForm.nombre.$error" ng-if="interacted(proveedorForm.nombre) || proveedorForm.$submitted">
+						<div class="error-message" ng-message="required">Debe ingresar un Nombre</div>		
+						<div class="error-message" ng-message="minlength">El Nombre es demasiado corto...</div>
+						<div class="error-message" ng-message="maxlength">El Nombre es demasiado largo...</div>
+					</div>            		
+            	</div>
+            </div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4 form-group required-field-block">
+				<label class="col-md-3 control-label">Teléfono</label>
+				<div class="col-md-9">
+					<input id="tele" ng-model="tele" type="text" name="tele" placeholder="Teléfono" class="form-control" ng-maxlength="15" ng-required="true">
+					<div class="required-icon" ng-mouseover="showMessage();">
+						<div class="text">*</div>
+					</div>
+					<div class="error-message" ng-messages="proveedorForm.tele.$error" ng-if="interacted(proveedorForm.tele) || proveedorForm.$submitted">
+						<div class="error-message" ng-message="required">Debe ingresar un Teléfono</div>		
+						<div class="error-message" ng-message="minlength">El Teléfono es demasiado corto...</div>
+						<div class="error-message" ng-message="maxlength">El Teléfono es demasiado largo...</div>
+					</div>				
+				</div>			
+			</div>
+		</div>
+	</form>
+</div>
