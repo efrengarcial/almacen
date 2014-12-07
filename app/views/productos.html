@@ -7,7 +7,7 @@
 
          <form class="col-md-5 col-md-offset-1" role="form">
             <div class="input-group stylish-input-group">
-              <input type="text" name="buscar" class="form-control" id="search" placeholder="Ingese Código, Nombre" maxlength="50">
+              <input type="text" name="buscar" ng-model="search" class="form-control" id="search" placeholder="Ingese Código, Nombre" maxlength="50">
                <span class="btn btn-theme input-group-addon">
                   <button type="submit" ng-click="buscar()">
                     <span class="glyphicon glyphicon-search"></span>
@@ -23,7 +23,7 @@
 
        <hr>
 
-        <form name="productoForm" ng-submit="submit(productoForm.$valid)" role="form" novalidate>
+        <form name="productoForm" ng-submit="submitForm(productoForm.$valid)" role="form" novalidate>
           <div class="row">  
             <div class="col-md-4 form-group required-field-block">
                 <label class="col-md-3 control-label" for="nombre">Nombre</label>
@@ -121,7 +121,7 @@
              <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="linea">Línea</label>
                      <div class="col-md-9">
-                        <select id="linea" ng-model="producto.Linea" name="linea" class="form-control" ng-required="true" ng-options="linea.Id as linea.Nombre for linea in lineas"  ng-change="seleccionarLinea()">
+                        <select id="linea" ng-model="producto.IdLinea" name="linea" class="form-control" ng-required="true" ng-options="linea.Id as linea.Nombre for linea in lineas"  ng-change="seleccionarLinea()">
                             <option style="display:none" value="">Seleccione una Linea</option>
                         </select>
                         <div class="required-icon" ng-mouseover="showMessage();">
@@ -205,50 +205,31 @@
           
          <div class="row">
           <div class="col-md-4 col-md-offset-5">
-                <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-danger">
-                        <input type="checkbox">
-                        <span class="glyphicon glyphicon-trash"></span>
-                        <span class="glyphicon-class">Cancelar</span>
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary" >
-                   <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Guardar
+              <button class="btn btn-danger" ng-click="clearForm()" style="width: 100px;">
+                <i class="glyphicon glyphicon-remove"></i>
+                Cancelar
+              </button>
+               
+                <button type="submit" class="btn btn-success" >
+                   <span class="glyphicon glyphicon-ok" style="vertical-align:middle"></span> Aceptar
                </button>                
           </div>
         </div>
                   
       </form>
 
-  <!-- Table to show data -->
-      <div class="panel panel-default">
-      <div class="panel-heading text-center">Resultados</div>
-           <table class="table table-striped table-bordered">
-              <thead>
-                  <tr>
-                      <th>Nombre</th>
-                      <th>Unidad</th>
-                      <th>Código</th>
-                      <th>Ubicación</th>
-                      <th>Línea</th>
-                      <th>Grupo</th>
-                      <th><span class="glyphicon glyphicon-edit"></span></th>
-                      <th><span class="glyphicon glyphicon-trash"></span></th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                  </tr>
-              </tbody>
-           </table>
+      <!-- Table to show data -->
+      <div <div class="grid" >
+        
+        <!-- Binds the grid component to be displayed. -->
+        <div class="gridStyle" ng-grid="gridOptions" ng-show="allData.length > 0"></div>
+      
+        <!--  Bind the pagination component to be displayed. -->
+        <pagination direction-links="true" boundary-links="true"
+                total-items="pagingOptions.totalServerItems" items-per-page="pagingOptions.pageSize"
+                ng-model="pagingOptions.currentPage" ng-change="refreshGrid()">
+        </pagination>
+
       </div>
       <!-- end table-->
    

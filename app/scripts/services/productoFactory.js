@@ -21,6 +21,15 @@ angular
           return apiFactory.all(WS.URI_MEDIDAS).getList().then(function(medidas) {           
             return medidas;
           });
-        }
+        },
+        saveProducto : function(producto) {
+          return apiFactory.one(WS.URI_SAVE_PRODUCTO).post(producto);
+        },
+        query : function(search) {
+          return apiFactory.all(WS.URI_QUERY_PRODUCTO).one(search).
+                  getList().then(function(productos) {           
+            return productos;
+          });
+        },
       };
     }]);

@@ -17,7 +17,9 @@ angular
 	})
 	.constant('WS', {
 		URI_LINEAS : 'producto/lineas',
-		URI_MEDIDAS: 'producto/medidas'		
+		URI_MEDIDAS: 'producto/medidas',
+		URI_SAVE_PRODUCTO: 'producto/save',
+		URI_QUERY_PRODUCTO: 'producto/query'			
 	})
 	.constant('menu', {		
 		step1 : 'PASO 1 - COTIZACIÓN',

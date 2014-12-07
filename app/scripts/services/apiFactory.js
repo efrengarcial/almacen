@@ -15,7 +15,8 @@ angular
             Restangular.setBaseUrl(appConfig.apiDomain + appConfig.apiPath);
             Restangular.setDefaultHttpFields({
                 timeout: appConfig.apiTimeout,
-                responseType : 'json'
+                responseType : 'json',
+                "Access-Control-Allow-Headers" : "Content-Type, x-xsrf-token"
             });
         });
     }]);

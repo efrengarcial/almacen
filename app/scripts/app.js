@@ -17,7 +17,9 @@ angular
     'ngMessages',
     'ngSanitize',
     'fcsa-number',
-    'toaster'
+    'toaster',
+    'ngGrid',
+    'ui.bootstrap'
   ])
   .config(function ($routeProvider,$logProvider) {
     $logProvider.debugEnabled(true);
