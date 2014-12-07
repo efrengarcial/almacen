@@ -136,7 +136,7 @@ a.navbar-brand:hover {
   min-height: 650px;
   width: 100%;
   
-    -webkit-background-size: 100%;
+    /*-webkit-background-size: 100%;
     -moz-background-size: 100%;
     -o-background-size: 100%;
     background-size: 100%;
@@ -144,7 +144,7 @@ a.navbar-brand:hover {
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
+    background-size: cover;*/
 }
 
 
@@ -323,7 +323,11 @@ textarea {
 .required-field-block .required-icon .text {
   color: #B80000;
   font-size: 26px;
-  margin: 2px 0 0 12px;
+  margin: 0px 0 0 0px;
+}
+
+.required-text{
+  color: #B80000;
 }
 
 

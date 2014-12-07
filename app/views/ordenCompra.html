@@ -17,7 +17,7 @@
             </div>
              <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-5 control-label" for="proveedor">Proveedor</label>
-                     <div class="col-md-7">
+                    <div class="col-md-7">
                         <select id="proveedor" ng-model="proveedor" name="proveedor" class="form-control" ng-required="true">
                               <option>Proveedor</option>
                               <option>Proveedor 1</option>
@@ -31,7 +31,6 @@
                         </div>                        
                     </div>
             </div>
-
 		</div>
 		<div class="row">
 			<div class="col-md-4 form-group">
@@ -60,30 +59,43 @@
 					<input id="plazo" type="text" name="plazo" placeholder="10 Días" readonly class="form-control">
 				</div>
 			</div>
-            <div class="col-md-4 form-group">
+
+			<!---->
+
+
+			<!---->
+
+
+            <div class="col-md-4 form-group required-field-block">
             	<label class="col-md-5 control-label" for="">Centro Costos</label>
             	<div class="col-md-7">
 					<div class="btn-group btn-group-default">
-						<button class="btn btn-default btn-md" type="button">Tipo ganado</button>
+						<button class="btn btn-default btn-md" type="button">Tipo de ganado</button>
 						<button data-toggle="dropdown" class="btn btn-default btn-md dropdown-toggle" type="button"><span class="caret"></span>
 						</button>
-						<ul class="dropdown-menu">
-							<li class="list-group-item">
+						<ul class="dropdown-menu" ng-model="costos" name="costos" class="form-control" ng-required="true">
+							<li class="list-group-item" ng-required="true">
 								<div class="radio">
 									<label>
-									<input type="radio" name="optionsRadios" value="" placeholder="">Bovinos
+									<input type="radio" name="optionsRadios" value="">Bovinos
 									</label>
 								</div>
 							</li>
 							<li class="list-group-item">
-								<div class="radio">
+								<div class="radio" ng-required="true">
 									<label>
-									<input type="radio" name="optionsRadios" value="" placeholder="">Porcinos
+									<input type="radio" name="optionsRadios" value="">Porcinos
 									</label>
 								</div>
 							</li>							
 						</ul>
 					</div>
+                    <div class="required-icon" ng-mouseover="showMessage();">
+                      <div class="text">*</div>
+                    </div>                        
+                    <div class="error-message" ng-messages="ordenCompraForm.costos.$error" ng-if="ordenCompraForm.costos.$touched || ordenCompraForm.$submitted">
+                      <div class="error-message" ng-message="required">Ingresar Centro de Costos</div>
+                    </div>
             	</div>
             </div>
 			<div class="col-md-4  form-group">
@@ -94,34 +106,14 @@
 			</div>
 			</div>
 			<div class="row">
-	            <div class="col-md-4 form-group">
-	            	<label class="col-md-5 control-label" for="nit">Anulada</label>
-	                <div class="input-group">
-	                    <span class="input-group-addon">
-	                        <input type="checkbox">
-	                    </span>
-	                    <input id="anular" name="anular" type="text" placeholder="Anulada" class="form-control">
-	                </div>
-	            </div>	
-
-	            <div class="col-md-4 form-group">
-	            	<label class="col-md-5 control-label" for="nit">Finalizada</label>
-	                <div class="input-group">
-	                    <span class="input-group-addon">
-	                        <input type="checkbox">
-	                    </span>
-	                    <input id="finalizar" name="finalizar" type="text" placeholder="Finalizada" class="form-control">
-	                </div>
-	            </div>
 				<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="nit">Temporal</label>
 		            <button type="submit" class="btn btn-primary" >
 		               <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Guardar
 		           </button>  			
 				</div>            
-		</div>
+			</div>
 		</fieldset>	
-		
 	</form>
 	<!-- Table to show data -->
 	<div class="row">
@@ -131,7 +123,7 @@
 				<table class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>Código</th>
+							<th>Código</th>	
 							<th>Descripción</th>
 							<th>Unidad</th>
 							<th>Cantidad</th>

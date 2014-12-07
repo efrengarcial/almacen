@@ -7,7 +7,7 @@
 
          <form class="col-md-5 col-md-offset-1" role="form">
             <div class="input-group stylish-input-group">
-              <input type="text" name="buscar" ng-model="search" class="form-control" id="search" placeholder="Ingese Código, Nombre" maxlength="50">
+              <input type="text" name="buscar" ng-model="search" class="form-control" id="search" placeholder="Ingese Codigo, Nombre" maxlength="50">
                <span class="btn btn-theme input-group-addon">
                   <button type="submit" ng-click="buscar()">
                     <span class="glyphicon glyphicon-search"></span>
@@ -17,12 +17,11 @@
             </div>             
         </form> 
       </div>
-        <div class="row">
-        <div class="col-md-3 col-md-offset-10">* Campos requeridos</div>
-         </div> 
+      <div class="row">
+        <div class="col-md-2 col-md-offset-10 required-text">* Campos requeridos</div>
+      </div> 
 
        <hr>
-
         <form name="productoForm" ng-submit="submitForm(productoForm.$valid)" role="form" novalidate>
           <div class="row">  
             <div class="col-md-4 form-group required-field-block">
@@ -157,7 +156,7 @@
                       <div class="text">*</div>
                     </div>                    
                         <div class="error-message" ng-messages="productoForm.unidad.$error" ng-if="productoForm.unidad.$touched || productoForm.$submitted">
-                          <div class="error-message" ng-message="required">Debe ingresar un valor para Unidad</div>
+                          <div class="error-message" ng-message="required">Debe ingresar un valor para Unidad </div>
                         </div>                     
                   </div>
             </div>
