@@ -23,7 +23,7 @@ angular
           });
         },
         saveProducto : function(producto) {
-          return apiFactory.one(WS.URI_SAVE_PRODUCTO).post(producto);
+          return apiFactory.all(WS.URI_SAVE_PRODUCTO).post(producto);
         },
         query : function(search) {
           return apiFactory.all(WS.URI_QUERY_PRODUCTO).one(search).
