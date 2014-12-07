@@ -91,14 +91,15 @@
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-3 control-label">E-mail</label>
 				<div class="col-md-9">
-					<input id="mail" ng-model="mail" type="text" name="mail" placeholder="E-mail" class="form-control" ng-maxlength="15" ng-required="true">
+					<input id="mail" ng-model="mail" type="email" name="mail" placeholder="E-mail" class="form-control" ng-minlength="3" ng-maxlength="40" required>
 					<div class="required-icon" ng-mouseover="showMessage();">
 						<div class="text">*</div>
 					</div>
-					<div class="error-message" ng-messages="proveedorForm.mail.$error" ng-if="interacted(proveedorForm.mail) || proveedorForm.$submitted">
+					<div class="error-message" ng-messages="proveedorForm.mail.$error" ng-if="interacted(proveedorForm.mail) || proveedorForm.$submitted || proveedorForm.mail.$error.email">
 						<div class="error-message" ng-message="required">Debe ingresar un E-mail</div>		
 						<div class="error-message" ng-message="minlength">El E-mail es demasiado corto...</div>
 						<div class="error-message" ng-message="maxlength">El E-mail es demasiado largo...</div>
+						<div class="error-message" ng-message="email">E-mail inválido</div>
 					</div>				
 				</div>			
 			</div>			
@@ -108,13 +109,12 @@
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-3 control-label">Dirección</label>
 				<div class="col-md-9">
-					<input id="direcc" ng-model="direcc" type="text" name="direcc" placeholder="Dirección" class="form-control" ng-maxlength="15" ng-required="true">
+					<input id="direcc" ng-model="direcc" type="text" name="direcc" placeholder="Dirección" class="form-control" ng-maxlength="50" ng-required="true">
 					<div class="required-icon" ng-mouseover="showMessage();">
 						<div class="text">*</div>
 					</div>
 					<div class="error-message" ng-messages="proveedorForm.direcc.$error" ng-if="interacted(proveedorForm.direcc) || proveedorForm.$submitted">
 						<div class="error-message" ng-message="required">Debe ingresar una Dirección</div>		
-						<div class="error-message" ng-message="minlength">La Dirección es demasiado corta...</div>
 						<div class="error-message" ng-message="maxlength">La Dirección es demasiado larga...</div>
 					</div>				
 				</div>			
@@ -123,14 +123,15 @@
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-3 control-label">Ciudad</label>
 				<div class="col-md-9">
-					<input id="ciudad" ng-model="ciudad" type="text" name="ciudad" placeholder="Ciudad" class="form-control" ng-maxlength="15" ng-required="true">
+					<input id="ciudad" ng-model="ciudad" type="text" name="ciudad" placeholder="Ciudad" class="form-control" ng-minlength="3" ng-maxlength="20" ng-required="true" ng-pattern="/^[^0-9]+$/">
 					<div class="required-icon" ng-mouseover="showMessage();">
 						<div class="text">*</div>
 					</div>
 					<div class="error-message" ng-messages="proveedorForm.ciudad.$error" ng-if="interacted(proveedorForm.ciudad) || proveedorForm.$submitted">
-						<div class="error-message" ng-message="required">Debe ingresar un valor</div>		
-						<div class="error-message" ng-message="minlength">El valor es demasiado corto...</div>
-						<div class="error-message" ng-message="maxlength">El valor es demasiado largo...</div>
+						<div class="error-message" ng-message="required">Debe ingresar un valor para ciudad</div>		
+						<div class="error-message" ng-message="minlength">La Ciudad es demasiado corta</div>
+						<div class="error-message" ng-message="maxlength">La Ciudad es demasiado larga</div>
+						<div class="error-message" ng-message="pattern">La Ciudad NO debe contener números</div>
 					</div>				
 				</div>			
 			</div>
@@ -178,8 +179,8 @@
 					</div>
 					<div class="error-message" ng-messages="proveedorForm.plazo.$error" ng-if="interacted(proveedorForm.plazo) || proveedorForm.$submitted">
 						<div class="error-message" ng-message="required">Debe ingresar un valor</div>		
-						<div class="error-message" ng-message="minlength">El valor es demasiado corto...</div>
-						<div class="error-message" ng-message="maxlength">El valor es demasiado largo...</div>
+						<div class="error-message" ng-message="minlength">El valor es demasiado corto</div>
+						<div class="error-message" ng-message="maxlength">El valor es demasiado largo</div>
 					</div>				
 				</div>			
 			</div>
@@ -203,15 +204,12 @@
 
          <div class="row">
           <div class="col-md-4 col-md-offset-5">
-                <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-danger">
-                        <input type="checkbox">
-                        <span class="glyphicon glyphicon-trash"></span>
-                        <span class="glyphicon-class">Cancelar</span>
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary" >
-                   <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Guardar
+              <button class="btn btn-danger" ng-click="clearForm()" style="width: 100px;">
+                <i class="glyphicon glyphicon-remove"></i>
+                Cancelar
+              </button>
+                <button type="submit" class="btn btn-success" >
+                   <span class="glyphicon glyphicon-ok" style="vertical-align:middle"></span> Aceptar
                </button>                
           </div>
         </div>

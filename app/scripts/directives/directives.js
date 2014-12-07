@@ -7,8 +7,8 @@
  * # directives
  */
 angular
-  .module('almacenApp')
-  .directive('numbersOnly', function() {
+    .module('almacenApp')
+    .directive('numbersOnly', function() {
         return {
             require: 'ngModel',
             link: function(scope, element, attrs, modelCtrl) {

@@ -20,7 +20,7 @@ angular.module('almacenApp')
     	$scope.pagingOptions = {
         	pageSizes: [5, 10, 15],
         	pageSize: 5,
-        	currentPage: 1,
+        	currentPage: 0,
         	totalServerItems: 0
     	};
 
