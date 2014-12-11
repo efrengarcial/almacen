@@ -173,7 +173,7 @@
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-3 control-label">Plazo</label>
 				<div class="col-md-9">
-					<input id="plazo" ng-model="plazo" type="text" name="plazo" placeholder="Plazo" class="form-control" ng-maxlength="15" ng-required="true">
+					<input id="plazo" ng-model="plazo" type="text" name="plazo" placeholder="Plazo" class="form-control" ng-maxlength="15" ng-required="true" numbers-only ng-pattern="/^[0-9]+$/">
 					<div class="required-icon" ng-mouseover="showMessage();">
 						<div class="text">*</div>
 					</div>
@@ -181,6 +181,7 @@
 						<div class="error-message" ng-message="required">Debe ingresar un valor</div>		
 						<div class="error-message" ng-message="minlength">El valor es demasiado corto</div>
 						<div class="error-message" ng-message="maxlength">El valor es demasiado largo</div>
+						<div class="error-message" ng-message="pattern">Debe ser númerico</div>
 					</div>				
 				</div>			
 			</div>
