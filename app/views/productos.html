@@ -103,7 +103,7 @@
             <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="referencia">Precio</label>
                   <div class="col-md-9">
-                    <input id="precio" fcsa-number="{ preventInvalidInput: true}" ng-model="producto.Precio" name="precio" type="text" placeholder="$" class="form-control" maxlength="13" ng-required="true" ng-pattern="/(^[0-9]{1,10}\.[0-9]{0,2})$/">
+                    <input id="precio" fcsa-number="{ preventInvalidInput: true}" ng-model="producto.Precio" name="precio" type="text" placeholder="$" class="form-control" maxlength="13" ng-required="true" ng-pattern="/^[0-9]{1,11}(\.[0-9]{1,2})?$/">
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>
@@ -180,7 +180,7 @@
              <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="iva">IVA</label>
                    <div class="col-md-9">
-                     <input id="iva" fcsa-number="{ preventInvalidInput: true }" ng-model="producto.Iva" name="iva" type="text" placeholder="IVA" class="form-control" maxlength="5" ng-required="true" ng-pattern="/(^[0-9]{0,2}\.[0-9]{0,2})$/">
+                     <input id="iva" fcsa-number="{ preventInvalidInput: true }" ng-model="producto.Iva" name="iva" type="text" placeholder="IVA" class="form-control" maxlength="5" ng-required="true" ng-pattern="/^[0-9]{1,2}(\.[0-9]{1,2})?$/">
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>
