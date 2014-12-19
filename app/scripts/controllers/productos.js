@@ -14,6 +14,7 @@ angular.module('almacenApp')
             $log.debug('Iniciando Productos...');
             cargarLineas();
             cargarMedidas();
+            $scope.seleccionarLinea = seleccionarLinea;
 
             $scope.search = "";
             $scope.sortInfo = {
@@ -66,7 +67,9 @@ angular.module('almacenApp')
             $scope.clearForm = function() {
                 $scope.producto = null;
                 // Resets the form validation state.
-                $scope.productoForm.$setPristine();
+                //https://github.com/angular/angular.js/issues/10006
+                //https://docs.angularjs.org/api/ng/type/form.FormController
+                 $scope.productoForm.$setPristine();
                 // Broadcast the event to also clear the grid selection.
                 $rootScope.$broadcast('clear');
             };
@@ -145,6 +148,7 @@ angular.module('almacenApp')
             // Picks up the event broadcasted when the person is selected from the grid and perform 
             // the producto load by calling the appropiate rest service.
             $scope.$on('productoSelected', function(event, producto) {
+                buscarSubLineas(producto.IdLinea);
                 $scope.producto = producto;
             });
 
@@ -171,16 +175,6 @@ angular.module('almacenApp')
                 });
             };
 
-            $scope.seleccionarLinea = seleccionarLinea;
-
-            /*$scope.producto.Precio = {
-            numberMaxDecimals: 9.99
-        };
-
-        $scope.producto.Iva = {
-            numberMaxDecimals: 9.99
-        };*/
-
             $rootScope.$on('evento', function(event, message) {
                 toaster.pop('error', 'Error', message.descripcion)
             });
@@ -198,17 +192,20 @@ angular.module('almacenApp')
                 });
             }
 
-            function seleccionarLinea() {
+            function seleccionarLinea(idLinea) {
+               $scope.producto.IdSubLinea = "";
+               buscarSubLineas(idLinea);
+            }
+            function buscarSubLineas(idLinea) {
                 var found = $filter('filter')($scope.lineas, {
-                    Id: $scope.producto.Linea
+                    Id: idLinea
                 }, true);
                 if (found.length) {
-                    $scope.producto.IdSubLinea = "";
+                    
                     $scope.grupos = found[0].SubLineas;
                 } else {
                     $scope.grupos = [];
                 }
-
             }
 
         }

@@ -120,13 +120,13 @@
              <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="linea">Línea</label>
                      <div class="col-md-9">
-                        <select id="linea" ng-model="producto.IdLinea" name="linea" class="form-control" ng-required="true" ng-options="linea.Id as linea.Nombre for linea in lineas"  ng-change="seleccionarLinea()">
+                        <select id="linea" ng-model="producto.IdLinea" name="linea" class="form-control" ng-required="true" ng-options="linea.Id as linea.Nombre for linea in lineas"  ng-change="seleccionarLinea(producto.IdLinea)">
                             <option style="display:none" value="">Seleccione una Linea</option>
                         </select>
                         <div class="required-icon" ng-mouseover="showMessage();">
                           <div class="text">*</div>
                         </div>                        
-                        <div class="error-message" ng-messages="productoForm.linea.$error" ng-if="productoForm.linea.$touched || productoForm.$submitted">
+                        <div class="error-message" ng-messages="productoForm.linea.$error" ng-if="interacted(productoForm.linea) || productoForm.$submitted">
                           <div class="error-message" ng-message="required">Debe ingresar un valor para Línea</div>
                         </div>                        
                     </div>
@@ -140,7 +140,7 @@
                     <div class="required-icon" ng-mouseover="showMessage();">
                       <div class="text">*</div>
                     </div>                    
-                        <div class="error-message" ng-messages="productoForm.grupo.$error" ng-if="productoForm.grupo.$touched || productoForm.$submitted">
+                        <div class="error-message" ng-messages="productoForm.grupo.$error" ng-if="interacted(productoForm.grupo) || productoForm.$submitted">
                           <div class="error-message" ng-message="required">Debe ingresar un valor para Grupo</div>
                         </div>                    
                   </div>
@@ -155,7 +155,7 @@
                     <div class="required-icon" ng-mouseover="showMessage();">
                       <div class="text">*</div>
                     </div>                    
-                        <div class="error-message" ng-messages="productoForm.unidad.$error" ng-if="productoForm.unidad.$touched || productoForm.$submitted">
+                        <div class="error-message" ng-messages="productoForm.unidad.$error" ng-if="interacted(productoForm.unidad) || productoForm.$submitted">
                           <div class="error-message" ng-message="required">Debe ingresar un valor para Unidad </div>
                         </div>                     
                   </div>
@@ -204,7 +204,7 @@
           
          <div class="row">
           <div class="col-md-4 col-md-offset-5">
-              <button class="btn btn-danger" ng-click="clearForm()" style="width: 100px;">
+              <button type="button" class="btn btn-danger" ng-click="clearForm()" style="width: 100px;">
                 <i class="glyphicon glyphicon-remove"></i>
                 Cancelar
               </button>
@@ -214,6 +214,12 @@
                </button>                
           </div>
         </div>
+
+        Test : {{interacted(productoForm.nombre) || productoForm.$submitted}}
+        <br/>
+        Submitted: {{productoForm.$submitted}}
+        <br/>
+        Pristine: {{productoForm.$pristine}}
                   
       </form>
 
