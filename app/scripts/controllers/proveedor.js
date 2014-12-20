@@ -7,10 +7,12 @@
  * # OrdenCompraCtrl
  * Controller of the almacenApp
  */
-angular.module('almacenApp')
-    .controller('ProveedorCtrl', function($scope, $log) {
-        $log.debug('Iniciando orden proveedores...');
 
+angular.module('almacenApp')
+    .controller('ProveedorCtrl', ['$scope', '$log', '$rootScope', 'productoFactory', 'toaster', '$filter',
+        'modalWindowFactory',
+        function($scope, $log, $rootScope, productoFactory, toaster, $filter, modalWindowFactory) {
+        $log.debug('Iniciando orden proveedores...');
 
         $scope.submit = function(isValid) {
             $log.debug(isValid);
@@ -31,24 +33,4 @@ angular.module('almacenApp')
             });
         };
 
-    }).directive('numbersOnly', function() {
-        return {
-            require: 'ngModel',
-            link: function(scope, element, attrs, modelCtrl) {
-                modelCtrl.$parsers.push(function(inputValue) {
-
-                    if (inputValue === undefined) {
-                        return '';
-                    }
-
-                    var transformedInput = inputValue.replace(/[^0-9]/g, '');
-                    if (transformedInput !== inputValue) {
-                        modelCtrl.$setViewValue(transformedInput);
-                        modelCtrl.$render();
-                    }
-
-                    return inputValue;
-                });
-            }
-        };
-    });
+    }]);
