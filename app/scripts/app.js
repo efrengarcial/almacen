@@ -49,8 +49,8 @@ angular
         redirectTo: '/'
       });
   })
-   .run(['Restangular','$rootScope',  
-    function(Restangular, $rootScope) {
+   .run(['Restangular','$rootScope','toaster',  
+    function(Restangular, $rootScope,toaster) {
 
       $rootScope.$on('evento', function(event, message) {
           toaster.pop('error', 'Error', message.descripcion)

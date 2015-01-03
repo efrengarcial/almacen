@@ -52,7 +52,7 @@ angular.module('almacenApp')
                     field: '',
                     displayName: 'Inhabilitar',
                     width: 100,
-                    cellTemplate: '<span class="glyphicon glyphicon-trash trash" ng-click="deleteRow(row)"></span>'
+                    cellTemplate: '<span class="glyphicon glyphicon-remove" ng-click="deleteRow(row)"></span>'
                 }],
 
                 multiSelect: false,
