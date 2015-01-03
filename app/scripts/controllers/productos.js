@@ -7,6 +7,7 @@
  * # MainCtrl
  * Controller of the almacenApp
  */
+
 angular.module('almacenApp')
     .controller('ProductosCtrl', ['$scope', '$log', '$rootScope', 'productoFactory', 'toaster', '$filter',
         'modalWindowFactory',
