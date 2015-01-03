@@ -10,8 +10,9 @@
 
 angular.module('almacenApp')
     .controller('ProductosCtrl', ['$scope', '$log', '$rootScope', 'productoFactory', 'toaster', '$filter',
-        'modalWindowFactory',
-        function($scope, $log, $rootScope, productoFactory, toaster, $filter, modalWindowFactory) {
+        'modalWindowFactory','Constants',
+        function($scope, $log, $rootScope, productoFactory, toaster, $filter, 
+        	modalWindowFactory,Constants) {
             $log.debug('Iniciando Productos...');
             
             cargarLineas();
@@ -24,8 +25,8 @@ angular.module('almacenApp')
                 directions: ['asc']
             };
             $scope.pagingOptions = {
-                pageSizes: [5, 10, 15],
-                pageSize: 5,
+                pageSizes: Constants.pageSizes,
+                pageSize: Constants.pageSize,
                 currentPage: 1,
                 totalServerItems: 0
             };
@@ -73,7 +74,8 @@ angular.module('almacenApp')
                 	Activo: true
             	};
             	$scope.allData=null;
-            	$scope.gridOptions.ngGrid.config.sortInfo = { fields:['Codigo'], directions: ['asc'], columns:[] };
+            	$scope.gridOptions.ngGrid.config.sortInfo = { fields:['Codigo'], 
+            		directions: ['asc'], columns:[] };
                 // Resets the form validation state.
                 //https://github.com/angular/angular.js/issues/10006
                 //https://docs.angularjs.org/api/ng/type/form.FormController
@@ -85,7 +87,7 @@ angular.module('almacenApp')
             $scope.submitForm = function(isValid) {
                 $log.debug(isValid);
                 if (isValid) {
-                    productoFactory.saveProducto($scope.producto).then(function(mensaje) {
+                    productoFactory.save($scope.producto).then(function(mensaje) {
                     	if ($scope.producto.Id === 0){
                         	toaster.pop('success', 'mensaje', 'El producto fue creado exitosamente.');
                     	} else {
@@ -129,7 +131,8 @@ angular.module('almacenApp')
             }
 
             $scope.buscar = function() {
-                $log.debug('Buscando......');
+                $log.debug('Buscando productos......');
+                $scope.clearForm();
                 productoFactory.query($scope.search).then(function(data) {
                     $scope.allData = data;
                     $scope.pagingOptions.currentPage = 1;
@@ -173,7 +176,15 @@ angular.module('almacenApp')
                 var title = "Inhabilitar '" + row.entity.Nombre + "'";
                 var msg = "Seguro que deseas des activar este elemento?";
                 var confirmCallback = function() {
-                	
+                	 productoFactory.inactivate($scope.producto.Id).then(function(mensaje) {
+                    	toaster.pop('success', 'mensaje', 'El producto fue Inhabilitado exitosamente.');
+                        $scope.clearForm();
+                    }, function error(response) {
+                        // An error has occurred
+                        $rootScope.$emit('evento', {
+                            descripcion: response.statusText
+                        });
+                    });
                 }
 
                 modalWindowFactory.show(title, msg, confirmCallback);

@@ -22,8 +22,11 @@ angular
                         return medidas;
                     });
                 },
-                saveProducto: function(producto) {
+                save: function(producto) {
                     return apiFactory.all(WS.URI_SAVE_PRODUCTO).post(producto);
+                },
+                inactivate: function(idProducto) {
+                    return apiFactory.all(WS.URI_INACTIVATE_PRODUCTO).post(idProducto);
                 },
                 query: function(search) {
                     return apiFactory.all(WS.URI_QUERY_PRODUCTO).one(search).

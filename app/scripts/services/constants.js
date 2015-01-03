@@ -19,6 +19,7 @@ angular
 		URI_LINEAS : 'producto/lineas',
 		URI_MEDIDAS: 'producto/medidas',
 		URI_SAVE_PRODUCTO: 'producto/save',
+		URI_INACTIVATE_PRODUCTO: 'producto/inactivate',
 		URI_QUERY_PRODUCTO: 'producto/query',
 		URI_SAVE_PROVEEDOR: 'proveedor/save',
 		URI_QUERY_PROVEEDOR: 'proveedor/query'
@@ -29,9 +30,8 @@ angular
 		step2 : 'PASO 2 - DATOS ADICIONALES',
 		step3 : 'PASO 3 - PAGAR'
 	})
-	.constant('general', {
+	.constant('Constants', {
 		formatDate : 'YYYY-MM-DD',
-		maxMonthsVigencia : 6,
-		minYearsNacimiento : 16,		
-		minDateNacimiento : '1910-01-01'
-	});
+		pageSizes: [5, 10, 15],
+        pageSize: 5
+    });
