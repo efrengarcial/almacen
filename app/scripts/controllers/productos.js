@@ -12,11 +12,12 @@ angular.module('almacenApp')
         'modalWindowFactory',
         function($scope, $log, $rootScope, productoFactory, toaster, $filter, modalWindowFactory) {
             $log.debug('Iniciando Productos...');
+            
             cargarLineas();
             cargarMedidas();
             $scope.seleccionarLinea = seleccionarLinea;
 
-            $scope.search = "";
+            $scope.search = '';
             $scope.sortInfo = {
                 fields: ['Codigo'],
                 directions: ['asc']
@@ -66,19 +67,29 @@ angular.module('almacenApp')
 
             $scope.clearForm = function() {
                 $scope.producto = null;
+                $scope.producto = {
+                	Id:0,	
+                	Activo: true
+            	};
+            	$scope.allData=null;
+            	$scope.gridOptions.ngGrid.config.sortInfo = { fields:['Codigo'], directions: ['asc'], columns:[] };
                 // Resets the form validation state.
                 //https://github.com/angular/angular.js/issues/10006
                 //https://docs.angularjs.org/api/ng/type/form.FormController
                  $scope.productoForm.$setPristine();
                 // Broadcast the event to also clear the grid selection.
-                $rootScope.$broadcast('clear');
+                //$rootScope.$broadcast('clear');
             };
 
             $scope.submitForm = function(isValid) {
                 $log.debug(isValid);
                 if (isValid) {
                     productoFactory.saveProducto($scope.producto).then(function(mensaje) {
-                        toaster.pop('success', 'mensaje', 'El producto fue creado exitosamente.')
+                    	if ($scope.producto.Id === 0){
+                        	toaster.pop('success', 'mensaje', 'El producto fue creado exitosamente.');
+                    	} else {
+                    		toaster.pop('success', 'mensaje', 'El producto fue actualizado exitosamente.');
+                    	}
                         $scope.clearForm();
                     }, function error(response) {
                         // An error has occurred
@@ -91,7 +102,9 @@ angular.module('almacenApp')
             };
 
             $scope.setPagingData = function(data, page, pageSize) {
-                if (!data) return;
+                if (!data) { 
+                	return;
+                }
                 var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
                 $scope.dataGrid = pagedData;
                 $scope.pagingOptions.totalServerItems = data.length;
@@ -102,9 +115,11 @@ angular.module('almacenApp')
 
             // sort over all data
             function sortData(field, direction) {
-                if (!$scope.allData) return;
+                if (!$scope.allData) {
+                	return;
+                }
                 $scope.allData.sort(function(a, b) {
-                    if (direction == "asc") {
+                    if (direction === 'asc') {
                         return a[field] > b[field] ? 1 : -1;
                     } else {
                         return a[field] > b[field] ? -1 : 1;
@@ -155,7 +170,7 @@ angular.module('almacenApp')
             // Broadcast an event when an element in the grid is deleted. No real deletion is perfomed at this point.
             $scope.deleteRow = function(row) {
                 var title = "Inhabilitar '" + row.entity.Nombre + "'";
-                var msg = "Seguro que deseas eliminar este elemento?";
+                var msg = "Seguro que deseas des activar este elemento?";
                 var confirmCallback = function() {
 
                 }
@@ -174,10 +189,11 @@ angular.module('almacenApp')
                     title: 'Campo requerido'
                 });
             };
-
-            $rootScope.$on('evento', function(event, message) {
-                toaster.pop('error', 'Error', message.descripcion)
-            });
+           
+               // Picks the event broadcasted when the form is cleared to also clear the grid selection.
+    		$scope.$on('clear', function () {
+        		$scope.gridOptions.selectAll(false);
+    		});
 
             /* Cargar información de listas */
             function cargarLineas() {

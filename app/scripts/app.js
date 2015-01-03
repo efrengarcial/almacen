@@ -51,6 +51,11 @@ angular
   })
    .run(['Restangular','$rootScope',  
     function(Restangular, $rootScope) {
+
+      $rootScope.$on('evento', function(event, message) {
+          toaster.pop('error', 'Error', message.descripcion)
+      });
+
       Restangular.setErrorInterceptor(
         function(response, deferred, responseHandler) { 
           if(response.status === 0 ) {
