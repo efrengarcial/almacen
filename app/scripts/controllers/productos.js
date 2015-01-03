@@ -172,7 +172,7 @@ angular.module('almacenApp')
                 var title = "Inhabilitar '" + row.entity.Nombre + "'";
                 var msg = "Seguro que deseas des activar este elemento?";
                 var confirmCallback = function() {
-
+                	
                 }
 
                 modalWindowFactory.show(title, msg, confirmCallback);
