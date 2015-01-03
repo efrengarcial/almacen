@@ -8,9 +8,7 @@
  * Factory in the almacenApp.
  */
 
-angular
-    .module('almacenApp')
-    .factory('proveedorFactory', ['Restangular', 'apiFactory', 'WS',
+angular.module('almacenApp').factory('proveedorFactory', ['Restangular', 'apiFactory', 'WS',
         function(Restangular, apiFactory, WS) {
             return {
                 saveProveedor: function(proveedor) {
