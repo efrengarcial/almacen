@@ -22,7 +22,9 @@ angular
 		URI_INACTIVATE_PRODUCTO: 'producto/inactivate',
 		URI_QUERY_PRODUCTO: 'producto/query',
 		URI_SAVE_PROVEEDOR: 'proveedor/save',
-		URI_QUERY_PROVEEDOR: 'proveedor/query'
+		URI_QUERY_PROVEEDOR: 'proveedor/query',
+		URI_INACTIVATE_PROVEEDOR: 'proveedor/inactivate'
+
 
 	})
 	.constant('menu', {		
