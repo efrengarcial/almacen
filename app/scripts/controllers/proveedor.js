@@ -70,7 +70,7 @@ angular.module('almacenApp')
                     Activo: true
                 };
                 $scope.allData = null;
-                $scope.gridOptions.ngGrid.config.sortInfo = { fields: ['Id'], directions: ['asc'], columns: []};
+                $scope.gridOptions.ngGrid.config.sortInfo = { fields: ['Nit'], directions: ['asc'], columns: []};
 
                 // Resets the form validation state.
                 //https://github.com/angular/angular.js/issues/10006

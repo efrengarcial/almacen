@@ -3,23 +3,23 @@
 		<div class="col-md-3">
 			<h1 class="header">Proveedor</h1>
 		</div>
-         <form class="col-md-6 col-md-offset-1 form-inline " role="form">
-             <div class="form-group col-md-3">
+         <form class="col-md-10 form-group col-md-offset-4" role="form">
+             <div class="form-group col-md-4">
               <input type="text" name="buscar" ng-model="search" class="form-control" id="search" placeholder="Ingese Nit, Nombre" maxlength="50" />
              </div>
-             <div class="form-group col-md-offset-2">
+             <div class="form-group col-md-1">
                   <button type="submit" class="btn btn-theme" ng-click="buscar()">
                      <i class="glyphicon glyphicon-search"></i>
                      Buscar
                   </button>
               </div>    
-              <div class="form-group">
+              <div class="form-group col-md-1">
                 <button type="button" class="btn btn-primary" ng-click="clearForm()" style="width: 100px;">
                 <i class="glyphicon glyphicon-plus"></i>
                   Nuevo
                 </button>
               </div>        
-        </form> 		
+        </form> 
 	</div>
 	<div class="row">
 		<div class="col-md-2 col-md-offset-10 required-text">* Campos requeridos</div>
@@ -30,7 +30,7 @@
 	<form name="proveedorForm" ng-submit="submitForm(proveedorForm.$valid)" role="form" novalidate>
 		<div class="row">
             <div class="col-md-4 form-group required-field-block">
-                <label class="col-md-3 control-label">C.C o NIT</label>
+                <label class="col-md-3 control-label">C.C NIT</label>
                 <div class="col-md-9">
                     <input id="nit" ng-model="proveedor.Nit" name="nit" type="text" placeholder="C.C. o NIT" class="form-control"  ng-maxlength="12" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,12}$/">
 	                <div class="required-icon" ng-mouseover="showMessage();">
@@ -221,4 +221,20 @@
           </div>
         </div>
 	</form>
+
+      <br/>
+      <!-- Table to show data -->
+      <div class="grid">
+        
+        <!-- Binds the grid component to be displayed. -->
+        <div class="gridStyle" ng-grid="gridOptions" ng-show="allData.length > 0"></div>
+      
+        <!--  Bind the pagination component to be displayed. -->
+        <pagination direction-links="true" boundary-links="true" ng-show="allData.length > 0"
+                total-items="pagingOptions.totalServerItems" items-per-page="pagingOptions.pageSize"
+                ng-model="pagingOptions.currentPage" ng-change="refreshGrid()">
+        </pagination>
+
+      </div>
+      <!-- end table-->	
 </div>
