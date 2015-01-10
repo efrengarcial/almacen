@@ -53,11 +53,11 @@ angular
     function(Restangular, $rootScope,toaster) {
 
       $rootScope.$on('evento', function(event, message) {
-          toaster.pop('error', 'Error', message.descripcion)
+          toaster.pop('error', 'Error', message.descripcion);
       });
 
       Restangular.setErrorInterceptor(
-        function(response, deferred, responseHandler) { 
+        function(response) { 
           if(response.status === 0 ) {
             console.log('Error por timeout');
             $rootScope.$emit('evento', {descripcion: 'PAGE.MSG.TIMEOUT'});  

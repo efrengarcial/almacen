@@ -31,7 +31,7 @@ angular
 		step3 : 'PASO 3 - PAGAR'
 	})
 	.constant('Constants', {
-		formatDate : 'YYYY-MM-DD',
+		formatDate : 'DD/MM/YYYY',
 		pageSizes: [5, 10, 15],
         pageSize: 5
     });

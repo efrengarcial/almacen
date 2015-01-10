@@ -14,6 +14,35 @@ angular.module('almacenApp')
         function($scope, $log, $rootScope, productoFactory, toaster, $filter, 
         	modalWindowFactory,Constants) {
             $log.debug('Iniciando Productos...');
+
+             /* Cargar información de listas */
+            function cargarLineas() {
+                productoFactory.getLineas().then(function(lineas) {
+                    $scope.lineas = lineas;
+                });
+            }
+
+            function cargarMedidas() {
+                productoFactory.getMedidas().then(function(medidas) {
+                    $scope.medidas = medidas;
+                });
+            }
+
+            function seleccionarLinea(idLinea) {
+               $scope.producto.IdSubLinea = '';
+               buscarSubLineas(idLinea);
+            }
+            function buscarSubLineas(idLinea) {
+                var found = $filter('filter')($scope.lineas, {
+                    Id: idLinea
+                }, true);
+                if (found.length) {
+                    
+                    $scope.grupos = found[0].SubLineas;
+                } else {
+                    $scope.grupos = [];
+                }
+            }
             
             cargarLineas();
             cargarMedidas();
@@ -51,7 +80,7 @@ angular.module('almacenApp')
                     displayName: 'Referencia'
                 }, {
                     field: '',
-                    displayName: 'Inhabilitar',
+                    displayName: 'Inhabilitar', 
                     width: 100,
                     cellTemplate: '<span class="glyphicon glyphicon-remove" ng-click="deleteRow(row)"></span>'
                 }],
@@ -87,7 +116,7 @@ angular.module('almacenApp')
             $scope.submitForm = function(isValid) {
                 $log.debug(isValid);
                 if (isValid) {
-                    productoFactory.save($scope.producto).then(function(mensaje) {
+                    productoFactory.save($scope.producto).then(function() {
                     	if ($scope.producto.Id === 0){
                         	toaster.pop('success', 'mensaje', 'El producto fue creado exitosamente.');
                     	} else {
@@ -127,7 +156,7 @@ angular.module('almacenApp')
                     } else {
                         return a[field] > b[field] ? -1 : 1;
                     }
-                })
+                });
             }
 
             $scope.buscar = function() {
@@ -173,10 +202,10 @@ angular.module('almacenApp')
 
             // Broadcast an event when an element in the grid is deleted. No real deletion is perfomed at this point.
             $scope.deleteRow = function(row) {
-                var title = "Inhabilitar '" + row.entity.Nombre + "'";
-                var msg = "Seguro que deseas des activar este elemento?";
+                var title = 'Inhabilitar \'' + row.entity.Nombre + '\'';
+                var msg = 'Seguro que deseas des activar este elemento?';
                 var confirmCallback = function() {
-                	 productoFactory.inactivate($scope.producto.Id).then(function(mensaje) {
+                	 productoFactory.inactivate($scope.producto.Id).then(function() {
                     	toaster.pop('success', 'mensaje', 'El producto fue Inhabilitado exitosamente.');
                         $scope.clearForm();
                     }, function error(response) {
@@ -185,7 +214,7 @@ angular.module('almacenApp')
                             descripcion: response.statusText
                         });
                     });
-                }
+                };
 
                 modalWindowFactory.show(title, msg, confirmCallback);
                 //$rootScope.$broadcast('deletePerson', row.entity.id);
@@ -205,36 +234,7 @@ angular.module('almacenApp')
                // Picks the event broadcasted when the form is cleared to also clear the grid selection.
     		$scope.$on('clear', function () {
         		$scope.gridOptions.selectAll(false);
-    		});
-
-            /* Cargar información de listas */
-            function cargarLineas() {
-                productoFactory.getLineas().then(function(lineas) {
-                    $scope.lineas = lineas;
-                });
-            }
-
-            function cargarMedidas() {
-                productoFactory.getMedidas().then(function(medidas) {
-                    $scope.medidas = medidas;
-                });
-            }
-
-            function seleccionarLinea(idLinea) {
-               $scope.producto.IdSubLinea = "";
-               buscarSubLineas(idLinea);
-            }
-            function buscarSubLineas(idLinea) {
-                var found = $filter('filter')($scope.lineas, {
-                    Id: idLinea
-                }, true);
-                if (found.length) {
-                    
-                    $scope.grupos = found[0].SubLineas;
-                } else {
-                    $scope.grupos = [];
-                }
-            }
+    		});          
 
         }
     ]);
