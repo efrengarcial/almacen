@@ -11,9 +11,12 @@
 angular.module('almacenApp').factory('proveedorFactory', ['Restangular', 'apiFactory', 'WS',
         function(Restangular, apiFactory, WS) {
             return {
-                saveProveedor: function(proveedor) {
+                save: function(proveedor) {
                     return apiFactory.all(WS.URI_SAVE_PROVEEDOR).post(proveedor);
                 },
+                inactivate: function(idProveedor) {
+                    return apiFactory.all(WS.URI_INACTIVATE_PROVEEDOR).post(idProveedor);
+                },                
                 query: function(search) {
                     return apiFactory.all(WS.URI_QUERY_PROVEEDOR).one(search).
                     getList().then(function(proveedores) {
