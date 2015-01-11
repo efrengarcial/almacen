@@ -23,6 +23,11 @@ angular.module('almacenApp').factory('proveedorFactory', ['Restangular', 'apiFac
                         return proveedores;
                     });
                 },
+                getAll: function() {
+                    return apiFactory.all(WS.URI_PROVEEDORES).getList().then(function(proveedores) {
+                        return proveedores;
+                    });
+                }
             };
         }
     ]);

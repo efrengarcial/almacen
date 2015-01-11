@@ -23,9 +23,8 @@ angular
 		URI_QUERY_PRODUCTO: 'producto/query',
 		URI_SAVE_PROVEEDOR: 'proveedor/save',
 		URI_QUERY_PROVEEDOR: 'proveedor/query',
-		URI_INACTIVATE_PROVEEDOR: 'proveedor/inactivate'
-
-
+		URI_INACTIVATE_PROVEEDOR: 'proveedor/inactivate',
+		URI_PROVEEDORES: 'proveedor/getAll'
 	})
 	.constant('menu', {		
 		step1 : 'PASO 1 - COTIZACIÓN',

@@ -1,28 +1,55 @@
 <div class="container-fluid">
+
+	<div class="row">
+		<div class="col-md-3">
+			<h1 class="header">Orden de Compra</h1>
+		</div>
+         <form class="col-md-10 form-group col-md-offset-4" role="form">
+             <div class="form-group col-md-4">
+              <input type="text" name="buscar" ng-model="search" class="form-control" id="search" placeholder="Ingese Número de Orden" maxlength="50" />
+             </div>
+             <div class="form-group col-md-1">
+                  <button type="submit" class="btn btn-theme" ng-click="buscar()">
+                     <i class="glyphicon glyphicon-search"></i>
+                     Buscar
+                  </button>
+              </div>    
+              <div class="form-group col-md-1">
+                <button type="button" class="btn btn-primary" ng-click="clearForm()" style="width: 100px;">
+                <i class="glyphicon glyphicon-plus"></i>
+                  Nuevo
+                </button>
+              </div>
+              <div class="form-group col-md-1">   
+               <button type="submit" class="btn btn-primary" >
+		               <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Guardar
+		           </button>  	     
+		        </div>   
+        </form> 
+	</div>
+	<hr/>
 	<form name="ordenCompraForm" ng-submit="submit(ordenCompraForm.$valid)" class="form-horizontal" role="form" novalidate>
 	 <fieldset>
 		<div class="row">
 			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="orden">Orden Compra</label>
 				<div class="col-md-7">
-					<input id="orden" ng-model="orden" type="text" name="orden" placeholder="No. 1520" readonly class="form-control" >		
+					<input id="orden" ng-model="orden.Id" type="text" name="orden" placeholder="No. 1520" readonly class="form-control" >		
 				</div>
 			</div>
 
             <div class="col-md-4 form-group">
             	<label class="col-md-5 control-label" for="">Fecha</label>
             	<div class="col-md-7">
-            		<input type="text" name="fecha" placeholder="20-12-2014" readonly class="form-control">            		
+            		<input type="text" name="fecha"  ng-model="orden.FechaOrden" placeholder="20/12/2014" readonly class="form-control">            		
             	</div>
             </div>
              <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-5 control-label" for="proveedor">Proveedor</label>
                     <div class="col-md-7">
-                        <select id="proveedor" ng-model="proveedor" name="proveedor" class="form-control" ng-required="true">
-                              <option>Proveedor</option>
-                              <option>Proveedor 1</option>
-                              <option>Proveedor 2</option>
-                        </select>
+                    	<input type="text" id="proveedor" name="proveedor" ng-model="orden.Proveedor" placeholder="Proveedor" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:8" class="form-control" 
+						typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" />
+                        
                         <div class="required-icon" ng-mouseover="showMessage();">
                           <div class="text">*</div>
                         </div>                        
@@ -36,19 +63,19 @@
 			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="nit">NIT</label>
 				<div class="col-md-7">
-					<input id="nit" type="text" name="nit" placeholder="565485794" readonly class="form-control">
+					<input id="nit" type="text"  name="nit" ng-model="proveedor.Nit" placeholder="565485794" readonly class="form-control">
 				</div>
 			</div>
 			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="nit">Teléfono</label>
 				<div class="col-md-7">
-					<input id="telefono" type="text" name="telefono" placeholder="2345312" readonly class="form-control">
+					<input id="telefono" type="text" name="telefono" ng-model="proveedor.Telefono" placeholder="2345312" readonly class="form-control">
 				</div>
 			</div>
 			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="nit">Dirección</label>
 				<div class="col-md-7">
-					<input id="direc" type="text" name="direc" placeholder="Calle 12 # 52-45" readonly class="form-control">
+					<input id="direc" type="text" name="direc" ng-model="proveedor.Direccion"  placeholder="Calle 12 # 52-45" readonly class="form-control">
 				</div>
 			</div>									
 		</div>
@@ -56,40 +83,16 @@
 			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="plazo">Plazo entrega</label>
 				<div class="col-md-7">
-					<input id="plazo" type="text" name="plazo" placeholder="10 Días" readonly class="form-control">
+					<input id="plazo" type="text" name="plazo" ng-model="proveedor.Plazo" placeholder="10 Días" readonly class="form-control">
 				</div>
 			</div>
 
-			<!---->
-
-
-			<!---->
-
-
-            <div class="col-md-4 form-group required-field-block">
+		    <div class="col-md-4 form-group required-field-block">
             	<label class="col-md-5 control-label" for="">Centro Costos</label>
             	<div class="col-md-7">
-					<div class="btn-group btn-group-default">
-						<button class="btn btn-default btn-md" type="button">Tipo de ganado</button>
-						<button data-toggle="dropdown" class="btn btn-default btn-md dropdown-toggle" type="button"><span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" ng-model="costos" name="costos" class="form-control" ng-required="true">
-							<li class="list-group-item" ng-required="true">
-								<div class="radio">
-									<label>
-									<input type="radio" name="optionsRadios" value="">Bovinos
-									</label>
-								</div>
-							</li>
-							<li class="list-group-item">
-								<div class="radio" ng-required="true">
-									<label>
-									<input type="radio" name="optionsRadios" value="">Porcinos
-									</label>
-								</div>
-							</li>							
-						</ul>
-					</div>
+					<input type="radio" name="costos" ng-model="orden.CentroCostos" value="BOVINOS" >Bovinos
+					<input type="radio" name="costos" ng-model="orden.CentroCostos" value="PORCINOS">Porcinos
+
                     <div class="required-icon" ng-mouseover="showMessage();">
                       <div class="text">*</div>
                     </div>                        
@@ -107,10 +110,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-4 form-group">
-				<label class="col-md-5 control-label" for="nit">Temporal</label>
-		            <button type="submit" class="btn btn-primary" >
-		               <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Guardar
-		           </button>  			
+				<label class="col-md-5 control-label">Productos</label>
 				</div>            
 			</div>
 		</fieldset>	
@@ -119,7 +119,6 @@
 	<div class="row">
 		<div class="col-md-12">
 		<div class="panel panel-primary">
-			<div class="panel-heading text-center">Resultados</div>
 				<table class="table table-striped table-bordered">
 					<thead>
 						<tr>
