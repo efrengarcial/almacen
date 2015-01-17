@@ -44,8 +44,20 @@ angular.module('almacenApp')
                     field: 'Nombre',
                     displayName: 'Nombre'
                 }, {
+                    field: 'Telefono',
+                    displayName: 'Telefono'
+                }, {
                     field: 'Direccion',
                     displayName: 'Direccion'
+                }, {
+                    field: 'EMail',
+                    displayName: 'E-mail'
+                }, {
+                    field: 'Ciudad',
+                    displayName: 'Ciudad'
+                }, {
+                    field: 'FormaPago',
+                    displayName: 'Forma Pago'
                 }, {
                     field: '',
                     displayName: 'Inhabilitar',
@@ -70,7 +82,11 @@ angular.module('almacenApp')
                     Activo: true
                 };
                 $scope.allData = null;
-                $scope.gridOptions.ngGrid.config.sortInfo = { fields: ['Nit'], directions: ['asc'], columns: []};
+                $scope.gridOptions.ngGrid.config.sortInfo = {
+                    fields: ['Nit'],
+                    directions: ['asc'],
+                    columns: []
+                };
 
                 // Resets the form validation state.
                 //https://github.com/angular/angular.js/issues/10006
@@ -138,8 +154,7 @@ angular.module('almacenApp')
 
             $scope.$watch('pagingOptions', function(newVal, oldVal) {
                 if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
-                    $scope.setPagingData($scope.allData, $scope.pagingOptions.currentPage,
-                        $scope.pagingOptions.pageSize);
+                    $scope.setPagingData($scope.allData, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
                 }
             }, true);
 
@@ -151,8 +166,7 @@ angular.module('almacenApp')
             $scope.$watch('sortInfo', function(newVal, oldVal) {
                 sortData(newVal.fields[0], newVal.directions[0]);
                 $scope.pagingOptions.currentPage = 1;
-                $scope.setPagingData($scope.allData, $scope.pagingOptions.currentPage,
-                    $scope.pagingOptions.pageSize);
+                $scope.setPagingData($scope.allData, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
             }, true);
 
 
@@ -173,10 +187,10 @@ angular.module('almacenApp')
 
             // Broadcast an event when an element in the grid is deleted. No real deletion is perfomed at this point.
             $scope.deleteRow = function(row) {
-                var title = "Inhabilitar '" + row.entity.Nombre + "'";
+                var title = 'Inhabilitar \'' + row.entity.Nombre + '\'';
                 var msg = "Seguro que deseas des activar este elemento?";
                 var confirmCallback = function() {
-                    proveedorFactory.inactivate($scope.proveedor.Id).then(function(mensaje) {
+                    proveedorFactory.inactivate($scope.proveedor.Id).then(function() {
                         toaster.pop('success', 'mensaje', 'El proveedor fue Inhabilitado exitosamente.');
                         $scope.clearForm();
                     }, function error(response) {
