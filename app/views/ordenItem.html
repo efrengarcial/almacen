@@ -1,0 +1,47 @@
+﻿<table class="table table-hover table-striped table-condensed table-bordered ordersTable">
+    <thead>
+        <tr>
+            <th ng-click="vm.setOrder('product')">Producto</th>
+            <th ng-click="vm.setOrder('date')">Nombre</th>
+            <th ng-click="vm.setOrder('date')">Unidad</th>
+            <th ng-click="vm.setOrder('quantity')">Cantidad</th>
+            <th ng-click="vm.setOrder('price')">Precio Unitario</th>
+            <th ng-click="vm.setOrder('orderTotal')">Precio Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-hide="vm.customer.orders || vm.customer.orders.length > 0" class="error">
+            <td colspan="6">
+                <div class="text-center"><strong>No se econtraron ordenes</strong></div>
+            </td>
+        </tr>
+        <tr ng-repeat="order in vm.customer.orders | orderBy:vm.orderby:vm.reverse" class="repeat-animation">
+            <td>
+                {{ order.product }}
+            </td>
+            <td>
+                {{ order.date | date:'MM/dd/yyyy' }}
+            </td>
+            <td>
+                {{ order.quantity }}
+            </td>
+            <td>
+                {{ order.quantity }}
+            </td>
+            <td>
+                {{ order.price | currency }}
+            </td>
+            <td>
+                {{ order.orderTotal | currency }}
+            </td>
+        </tr>
+        <tr class="info">
+            <td colspan="5">
+                &nbsp;
+            </td>
+            <td>
+                <strong>{{ vm.customer.ordersTotal | currency }}</strong>
+            </td>
+        </tr>
+    </tbody>
+</table>
