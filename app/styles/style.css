@@ -1,5 +1,5 @@
 /* ==== Google font ==== */
-@import url('http://fonts.googleapis.com/css?family=Lato:400,300,700,900');
+/*@import url('http://fonts.googleapis.com/css?family=Lato:400,300,700,900'); */
 
 body {
   background-color: #f2f2f2;
@@ -352,21 +352,32 @@ color: #333;
 white-space: nowrap;
 }
 
-.grid {
-    width: 90%;
-    float: left;
-    margin-left: 5%;
-    margin-right: 5%;
-}
-
-.grid .remove {
-    width: 20px;
-    height: 20px;
-    margin-top: 8px;
-    color: #a94442;
-}
 
 .gridStyle {
     border: 1px solid rgb(212, 212, 212);
     height: 210px;
+}
+
+.ngHeaderCell {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color:  #027FF4;
+    color: #fff;
+    font-weight: bold;
+ }
+
+.ordersTable {
+    width:90%;
+}
+
+.orders th, .customers th {
+    width:20%;
+    cursor: pointer;
+}
+
+.ordersTable tr:first-child th, .customersTable tr:first-child th {
+    background-color: #027FF4;
+    color: #fff;
+    font-weight: bold;
 }

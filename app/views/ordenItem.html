@@ -1,46 +1,49 @@
 ﻿<table class="table table-hover table-striped table-condensed table-bordered ordersTable">
     <thead>
         <tr>
-            <th ng-click="vm.setOrder('product')">Producto</th>
-            <th ng-click="vm.setOrder('date')">Nombre</th>
-            <th ng-click="vm.setOrder('date')">Unidad</th>
-            <th ng-click="vm.setOrder('quantity')">Cantidad</th>
-            <th ng-click="vm.setOrder('price')">Precio Unitario</th>
-            <th ng-click="vm.setOrder('orderTotal')">Precio Total</th>
+            <th>No.</th>
+            <th>Producto</th>
+            <th>Codigo</th>
+            <th>Unidad</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Precio Total</th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-hide="vm.customer.orders || vm.customer.orders.length > 0" class="error">
-            <td colspan="6">
+        <tr ng-hide="orden.OrdenItems || orden.OrdenItems.length > 0" class="error">
+            <td colspan="7">
                 <div class="text-center"><strong>No se econtraron ordenes</strong></div>
             </td>
         </tr>
-        <tr ng-repeat="order in vm.customer.orders | orderBy:vm.orderby:vm.reverse" class="repeat-animation">
+        <tr ng-repeat="ordenItem in orden.OrdenItems" class="repeat-animation">
+            <td>{{$index + 1}}.</td>
+
             <td>
-                {{ order.product }}
+                <input class="form-control" type="text" ng-model="ordenItem.Producto.Nombre" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="Cargando" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label,ordenItem)" typeahead-editable="false" required  />
+            </td>           
+            <td>
+                {{ ordenItem.Producto.Codigo }}
             </td>
             <td>
-                {{ order.date | date:'MM/dd/yyyy' }}
+                {{ ordenItem.Producto.Medida.Nombre }}
             </td>
             <td>
-                {{ order.quantity }}
+                 <input class="form-control" type="number" ng-model="ordenItem.Cantidad" required  />
             </td>
             <td>
-                {{ order.quantity }}
+                {{ ordenItem.Producto.Precio |  currency }}
             </td>
             <td>
-                {{ order.price | currency }}
-            </td>
-            <td>
-                {{ order.orderTotal | currency }}
+                {{ ordenItem.PrecioTotal() | currency }}
             </td>
         </tr>
         <tr class="info">
-            <td colspan="5">
+            <td colspan="6">
                 &nbsp;
             </td>
             <td>
-                <strong>{{ vm.customer.ordersTotal | currency }}</strong>
+                <strong>{{ orden.PrecioTotal() | currency }}</strong>
             </td>
         </tr>
     </tbody>
