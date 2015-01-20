@@ -29,10 +29,7 @@ angular
                     return apiFactory.all(WS.URI_INACTIVATE_PRODUCTO).post(idProducto);
                 },
                 query: function(search) {
-                    return apiFactory.all(WS.URI_QUERY_PRODUCTO).one(search).
-                    getList().then(function(productos) {
-                        return productos;
-                    });
+                    return apiFactory.all(WS.URI_QUERY_PRODUCTO).one(search).getList();
                 },
             };
         }
