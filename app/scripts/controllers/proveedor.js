@@ -188,7 +188,7 @@ angular.module('almacenApp')
             // Broadcast an event when an element in the grid is deleted. No real deletion is perfomed at this point.
             $scope.deleteRow = function(row) {
                 var title = 'Inhabilitar \'' + row.entity.Nombre + '\'';
-                var msg = "Seguro que deseas des activar este elemento?";
+                var msg = "Seguro que deseas desactivar este elemento?";
                 var confirmCallback = function() {
                     proveedorFactory.inactivate($scope.proveedor.Id).then(function() {
                         toaster.pop('success', 'mensaje', 'El proveedor fue Inhabilitado exitosamente.');
