@@ -78,8 +78,7 @@ angular.module('almacenApp')
             $scope.clearForm = function() {
                 $scope.proveedor = null;
                 $scope.proveedor = {
-                    Id: 0,
-                    Activo: true
+                    Id: 0
                 };
                 $scope.allData = null;
                 $scope.gridOptions.ngGrid.config.sortInfo = {
