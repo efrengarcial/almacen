@@ -146,8 +146,13 @@ angular.module('almacenApp')
                 $scope.clearForm();
                 proveedorFactory.query($scope.search).then(function(data) {
                     $scope.allData = data;
-                    $scope.pagingOptions.currentPage = 1;
-                    $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+
+                    if ($scope.allData[0] === undefined) {
+                        toaster.pop('error', 'mensaje', 'El proveedor no fue encontrado.');
+                    } else {
+                        $scope.pagingOptions.currentPage = 1;
+                        $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                    };
                 });
             };
 
