@@ -105,7 +105,7 @@ angular.module('almacenApp')
                             toaster.pop('success', 'mensaje', 'El proveedor fue creado exitosamente.');
                         } else {
                             toaster.pop('success', 'mensaje', 'El proveedor fue actualizado exitosamente.');
-                        };
+                        }
                         $scope.clearForm();
                     }, function error(response) {
                         // An error has occurred
@@ -147,8 +147,13 @@ angular.module('almacenApp')
                 $scope.clearForm();
                 proveedorFactory.query($scope.search).then(function(data) {
                     $scope.allData = data;
-                    $scope.pagingOptions.currentPage = 1;
-                    $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+
+                    if ($scope.allData[0] === undefined) {
+                        toaster.pop('error', 'mensaje', 'El proveedor no fue encontrado.');
+                    } else {
+                        $scope.pagingOptions.currentPage = 1;
+                        $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                    };
                 });
             };
 
@@ -157,8 +162,6 @@ angular.module('almacenApp')
                     $scope.setPagingData($scope.allData, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
                 }
             }, true);
-
-
 
             // Watch the sortInfo variable. If changes are detected than we need to refresh the grid.
             // This also works for the first page access, since we assign the initial sorting in the initialize section.
