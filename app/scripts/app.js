@@ -38,12 +38,12 @@ angular
         controller: 'ProductosCtrl'
       })
       .when('/ordenCompra', {
-        templateUrl: 'views/ordenCompra.html',
-        controller: 'OrdenCompraCtrl'
+        templateUrl: 'views/orden.html',
+        controller: 'OrdenCtrl'
       })
        .when('/ordenItem', {
         templateUrl: 'views/ordenItem.html',
-        controller: 'OrdenCompraCtrl'
+        controller: 'OrdenCtrl'
       })
       .when('/proveedor', {
         templateUrl: 'views/proveedor.html',

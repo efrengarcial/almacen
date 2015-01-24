@@ -8,12 +8,13 @@
  * Controller of the almacenApp
  */
 angular.module('almacenApp')
-    .controller('OrdenCompraCtrl', ['$scope', '$log', 'proveedorFactory', 'productoFactory',
-    	'ordenCompraFactory', 
-        function($scope, $log, proveedorFactory, productoFactory,ordenCompraFactory) {
+    .controller('OrdenCtrl', ['$scope', '$log', 'proveedorFactory', 'productoFactory',
+    	'ordenFactory', 
+        function($scope, $log, proveedorFactory, productoFactory,ordenFactory) {
             $log.debug('Iniciando Orden....');
 
-            $scope.orden = ordenCompraFactory.getOrdenObject();
+            $scope.orden = ordenFactory.getOrdenObject();
+            $scope.proveedores= [];
 
             /* Cargar información de listas */
             function cargarProveedores() {
@@ -54,7 +55,11 @@ angular.module('almacenApp')
             };
 
             $scope.addProducto = function() {
-            	ordenCompraFactory.addOrdenItemObject($scope.orden);	
+            	ordenFactory.addOrdenItemObject($scope.orden);	
+            }
+
+            $scope.save = function(isValid) {
+                
             }
 
         }

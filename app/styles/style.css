@@ -381,3 +381,8 @@ white-space: nowrap;
     color: #fff;
     font-weight: bold;
 }
+
+.estadoFactura {
+  background-color: #00ff00;
+  width: 150px;  
+}

@@ -9,7 +9,7 @@
  */
 angular
     .module('almacenApp')
-    .factory('ordenCompraFactory', ['Restangular', 'apiFactory', 'WS',
+    .factory('ordenFactory', ['Restangular', 'apiFactory', 'WS',
         function(Restangular, apiFactory, WS) {
             return {
                 getOrdenObject: function() {
@@ -49,6 +49,9 @@ angular
                     orden.OrdenItems.push(ordenItem);
                     return ordenItem;
                 },
+                save: function(orden) {
+                    return apiFactory.all(WS.URI_SAVE_ORDEN).post(orden);
+                }
             };
         }
     ]);

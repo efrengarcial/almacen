@@ -1,34 +1,38 @@
 <div class="container-fluid">
 
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-2">
 			<h1 class="header">Orden de Compra</h1>
 		</div>
-         <form class="col-md-10 form-group col-md-offset-4" role="form">
-             <div class="form-group col-md-4">
+         <form class="col-md-6 form-group col-md-offset-2" role="form">
+             <div class="form-group col-md-6">
               <input type="text" name="buscar" ng-model="search" class="form-control" id="search" placeholder="Ingese Número de Orden" maxlength="50" />
              </div>
-             <div class="form-group col-md-1">
-                  <button type="submit" class="btn btn-theme" ng-click="buscar()">
+             <div class="form-group col-md-2">
+                  <button type="submit" class="btn btn-theme" ng-click="buscar()" style="width: 100px;">
                      <i class="glyphicon glyphicon-search"></i>
                      Buscar
                   </button>
               </div>    
-              <div class="form-group col-md-1">
+              <div class="form-group col-md-2">
                 <button type="button" class="btn btn-primary" ng-click="clearForm()" style="width: 100px;">
                 <i class="glyphicon glyphicon-plus"></i>
                   Nuevo
                 </button>
               </div>
-              <div class="form-group col-md-1">   
-               <button type="submit" class="btn btn-primary" >
+              <div class="form-group col-md-2">   
+               <button type="submit" class="btn btn-primary"  ng-click="save(ordenForm.$valid)" style="width: 100px;">
 		               <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Guardar
 		           </button>  	     
 		        </div>   
         </form> 
 	</div>
-	<hr/>
-	<form name="ordenCompraForm" ng-submit="submit(ordenCompraForm.$valid)" class="form-horizontal" role="form" novalidate>
+	<div class="row">		
+	 <div class="col-md-2 estadoFactura">En Elaboración</div> 
+        <div class="col-md-2 col-md-offset-8 required-text">* Campos requeridos</div>
+    </div> 
+    <hr/>  
+	<form name="ordenForm" ng-submit="submit(ordenForm.$valid)" class="form-horizontal" role="form" novalidate>
 	<fieldset>
 		<div class="row">
 			<div class="col-md-4 form-group">
@@ -53,7 +57,7 @@
                         <div class="required-icon" ng-mouseover="showMessage();">
                           <div class="text">*</div>
                         </div>                        
-                        <div class="error-message" ng-messages="ordenCompraForm.proveedor.$error" ng-if="ordenCompraForm.proveedor.$touched || ordenCompraForm.$submitted">
+                        <div class="error-message" ng-messages="ordenForm.proveedor.$error" ng-if="ordenForm.proveedor.$touched || ordenForm.$submitted">
                           <div class="error-message" ng-message="required">Debe ingresar Proveedor</div>
                         </div>                        
                     </div>
@@ -96,7 +100,7 @@
                     <div class="required-icon" ng-mouseover="showMessage();">
                       <div class="text">*</div>
                     </div>                        
-                    <div class="error-message" ng-messages="ordenCompraForm.costos.$error" ng-if="ordenCompraForm.costos.$touched || ordenCompraForm.$submitted">
+                    <div class="error-message" ng-messages="ordenForm.costos.$error" ng-if="ordenForm.costos.$touched || ordenForm.$submitted">
                       <div class="error-message" ng-message="required">Ingresar Centro de Costos</div>
                     </div>
             	</div>

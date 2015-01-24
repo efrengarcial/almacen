@@ -99,8 +99,7 @@ angular.module('almacenApp')
             $scope.clearForm = function() {
                 $scope.producto = null;
                 $scope.producto = {
-                	Id:0,	
-                	Activo: true
+                	Id:0
             	};
             	$scope.allData=null;
             	$scope.gridOptions.ngGrid.config.sortInfo = { fields:['Codigo'], 
