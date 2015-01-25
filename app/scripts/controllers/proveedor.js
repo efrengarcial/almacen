@@ -14,7 +14,7 @@ angular.module('almacenApp')
         function($scope, $log, $rootScope, proveedorFactory, toaster, $filter, modalWindowFactory, Constants) {
             $log.debug('Iniciando orden proveedores...');
 
-
+            $scope.max = 90, $scope.min = 1;
             $scope.search = '';
             $scope.sortInfo = {
                 fields: ['Nit'],

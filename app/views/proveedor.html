@@ -27,7 +27,7 @@
 
 	<hr>
 
-	<form name="proveedorForm" ng-submit="submitForm(proveedorForm.$valid)" role="form" ngMax="max = 300" novalidate>
+	<form name="proveedorForm" ng-submit="submitForm(proveedorForm.$valid)" role="form" novalidate>
 		<div class="row">
             <div class="col-md-4 form-group required-field-block">
                 <label class="col-md-3 control-label">C.C NIT</label>
@@ -137,7 +137,7 @@
 						<div class="error-message" ng-message="required">Debe ingresar un valor para ciudad</div>		
 						<div class="error-message" ng-message="minlength">La Ciudad es demasiado corta...</div>
 						<div class="error-message" ng-message="maxlength">La Ciudad es demasiado larga...</div>
-						<div class="error-message" ng-message="pattern">La Ciudad NO debe contener números</div>
+						<div class="error-message" ng-message="pattern">NO debe contener números</div>
 					</div>				
 				</div>			
 			</div>
@@ -181,18 +181,16 @@
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-3 control-label">Plazo</label>
 				<div class="col-md-9">
-					<input id="plazo" ng-model="proveedor.Plazo" type="text" name="plazo" placeholder="Plazo" class="form-control" ng-maxlength="3" ng-required="true" numbers-only>
+					<input type="text" id="plazo" min="{{min}}" max="{{max}}" ng-model="proveedor.Plazo" name="plazo" placeholder="Plazo" class="form-control" ng-maxlength="2" numbers-only ng-required="true" ng-pattern="/^([1-9]|[1-8][0-9]|90)$/">
 					<div class="required-icon" ng-mouseover="showMessage();">
 						<div class="text">*</div>
 					</div>
-					<div class="error-message" ng-messages="proveedorForm.plazo.$error" ng-if="interacted(proveedorForm.plazo) || proveedorForm.plazo.$valid || proveedorForm.$submitted">
+					<div class="error-message" ng-messages="proveedorForm.plazo.$error" ng-if="interacted(proveedorForm.plazo) || proveedorForm.$submitted">
 						<div class="error-message" ng-message="required">Debe ingresar un valor</div>		
-						<div class="error-message" ng-message="maxlength">El valor es demasiado largo...</div>
-						<div class="error-message" ng-message="proveedorForm.plazo.$error">Debe ser númerico no mayor de 90</div>
+						<div class="error-message" ng-message="maxlength">El valor es muy largo...</div>
+						<div class="error-message" ng-message="pattern">Plazo entre (1) y (90) días</div>
 					</div>				
 				</div>
-
-
 			</div>
 
 			<div class="col-md-4 form-group required-field-block">

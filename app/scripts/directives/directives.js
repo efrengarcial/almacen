@@ -17,43 +17,23 @@ angular.module('almacenApp').directive('numbersOnly', function() {
         require: 'ngModel',
         link: function(scope, element, attrs, modelCtrl) {
             modelCtrl.$parsers.push(function(inputValue) {
-
                 if (inputValue === undefined) {
                     return '';
                 }
+                console.log(inputValue);
+                try {
+                    var transformedInput = inputValue.replace(/[^0-9]/g, '');
+                    if (transformedInput !== inputValue) {
+                        modelCtrl.$setViewValue(transformedInput);
+                        modelCtrl.$render();
+                    }
 
-                var transformedInput = inputValue.replace(/[^0-9]/g, '');
-                if (transformedInput !== inputValue) {
-                    modelCtrl.$setViewValue(transformedInput);
-                    modelCtrl.$render();
+                } catch (err) {
+                    console.log(err);
                 }
 
                 return inputValue;
             });
-        }
-    };
-}).directive('ngMax', function() {
-    return {
-       // restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, elem, attr, ctrl) {
-            scope.$watch(attr.ngMax, function() {
-                ctrl.$setViewValue(ctrl.$viewValue);
-            });
-            var maxValidator = function(value) {
-                var max = scope.$eval(attr.ngMax) || Infinity;
-                if (!isEmpty(value) && value > max) {
-                    ctrl.$setValidity('ngMax', false);
-                    console.log(value);
-                    return undefined;
-                } else {
-                    ctrl.$setValidity('ngMax', true);
-                    return value;
-                }
-            };
-
-            ctrl.$parsers.push(maxValidator);
-            ctrl.$formatters.push(maxValidator);
         }
     };
 });
@@ -61,6 +41,7 @@ angular.module('almacenApp').directive('numbersOnly', function() {
 angular
     .module('almacenApp')
     .directive('ngFocus', [
+
         function() {
             var FOCUS_CLASS = 'ng-focused';
             return {
