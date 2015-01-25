@@ -19,7 +19,8 @@ angular
     'fcsa-number',
     'toaster',
     'ngGrid',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'angularMoment'
   ])
   .config(function ($routeProvider,$logProvider) {
     $logProvider.debugEnabled(true);

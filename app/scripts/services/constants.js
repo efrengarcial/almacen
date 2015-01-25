@@ -36,5 +36,6 @@ angular
 	.constant('Constants', {
 		formatDate : 'DD/MM/YYYY',
 		pageSizes: [5, 10, 15],
-        pageSize: 5
+        pageSize: 5,
+        ORDEN_COMPRA: 'ORDEN_COMPRA'
     });

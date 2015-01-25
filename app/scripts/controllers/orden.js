@@ -8,13 +8,13 @@
  * Controller of the almacenApp
  */
 angular.module('almacenApp')
-    .controller('OrdenCtrl', ['$scope', '$log', 'proveedorFactory', 'productoFactory',
-    	'ordenFactory', 
-        function($scope, $log, proveedorFactory, productoFactory,ordenFactory) {
+    .controller('OrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'productoFactory',
+        'ordenFactory', 'toaster',
+        function($scope, $log, $rootScope, proveedorFactory, productoFactory, ordenFactory, toaster) {
             $log.debug('Iniciando Orden....');
 
             $scope.orden = ordenFactory.getOrdenObject();
-            $scope.proveedores= [];
+            $scope.proveedores = [];
 
             /* Cargar información de listas */
             function cargarProveedores() {
@@ -55,12 +55,41 @@ angular.module('almacenApp')
             };
 
             $scope.addProducto = function() {
-            	ordenFactory.addOrdenItemObject($scope.orden);	
-            }
+                ordenFactory.addOrdenItemObject($scope.orden);
+            };
+
+            $scope.clearForm = function() {
+                $scope.orden = null;
+                $scope.orden = ordenFactory.getOrdenObject();
+                $scope.ordenForm.$setPristine();
+                // Broadcast the event to also clear the grid selection.
+                //$rootScope.$broadcast('clear');
+            };
+
+            $scope.interacted = function(field) {
+                return $scope.submitted || field.$dirty;
+            };
+
+            $scope.showMessage = function() {
+                $('.required-icon, .required-combo-icon').tooltip({
+                    placement: 'left',
+                    title: 'Campo requerido'
+                });
+            };
 
             $scope.save = function(isValid) {
-                
-            }
+                if (isValid) {
+                    ordenFactory.save($scope.orden).then(function() {
+                        toaster.pop('success', 'mensaje', 'La Orden de Compra fue creada exitosamente.');
+                        $scope.clearForm();
+                    }, function error(response) {
+                        // An error has occurred
+                        $rootScope.$emit('evento', {
+                            descripcion: response.statusText
+                        });
+                    });
+                }
+            };
 
         }
     ]);
