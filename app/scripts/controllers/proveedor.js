@@ -148,7 +148,7 @@ angular.module('almacenApp')
                     $scope.allData = data;
 
                     if ($scope.allData[0] === undefined) {
-                        toaster.pop('warning', 'advertencia', 'El proveedor no fue encontrado.');
+                        toaster.pop('warning', 'Advertencia', 'El proveedor no fue encontrado.');
                     } else {
                         $scope.pagingOptions.currentPage = 1;
                         $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
