@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name almacenApp.controller:OrdenCompraCtrl
+ * @name almacenApp.controller:ProveedorCtrl
  * @description
- * # OrdenCompraCtrl
+ * # ProveedorCtrl
  * Controller of the almacenApp
  */
 
@@ -148,7 +148,7 @@ angular.module('almacenApp')
                     $scope.allData = data;
 
                     if ($scope.allData[0] === undefined) {
-                        toaster.pop('error', 'mensaje', 'El proveedor no fue encontrado.');
+                        toaster.pop('warning', 'advertencia', 'El proveedor no fue encontrado.');
                     } else {
                         $scope.pagingOptions.currentPage = 1;
                         $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);

@@ -42,6 +42,10 @@ angular
         templateUrl: 'views/orden.html',
         controller: 'OrdenCtrl'
       })
+      .when('/consultarOrden', {
+        templateUrl: 'views/consultarOrden.html',
+        controller: 'ConsultarOrdenCtrl'
+      })
        .when('/ordenItem', {
         templateUrl: 'views/ordenItem.html',
         controller: 'OrdenCtrl'
