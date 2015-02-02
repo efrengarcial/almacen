@@ -4,18 +4,18 @@
 		<div class="col-md-2">
 			<h1 class="header">Orden de Compra</h1>
 		</div>
-         <form class="col-md-6 form-group col-md-offset-2" role="form">
+         <form class="col-md-8 form-group col-md-offset-4" role="form">
              <div class="form-group col-md-6">
               <input type="text" name="buscar" ng-model="search" class="form-control" id="search" placeholder="Ingese Número de Orden" maxlength="50" />
              </div>
-             <div class="form-group col-md-2">
-                  <button type="submit" class="btn btn-theme" ng-click="buscar()" style="width: 100px;">
+             <div class="form-group col-md-1">
+                  <button type="submit" class="btn btn-theme" ng-click="buscar()">
                      <i class="glyphicon glyphicon-search"></i>
                      Buscar
                   </button>
               </div>    
-              <div class="form-group col-md-2">
-                <button type="button" class="btn btn-primary" ng-click="clearForm()" style="width: 100px;">
+              <div class="form-group col-md-1">
+                <button type="button" class="btn btn-primary btn-plus" ng-click="clearForm()">
                 <i class="glyphicon glyphicon-plus"></i>
                   Nuevo
                 </button>

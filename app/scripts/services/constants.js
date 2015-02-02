@@ -37,5 +37,7 @@ angular
 		formatDate : 'DD/MM/YYYY',
 		pageSizes: [5, 10, 15],
         pageSize: 5,
-        ORDEN_COMPRA: 'ORDEN_COMPRA'
+        ORDEN_COMPRA: 'ORDEN_COMPRA',
+        plazoMin: 1,
+        plazoMax: 90
     });

@@ -1,38 +1,78 @@
 <div class="container-fluid">
-
 	<form name="consultarOrdenForm" ng-submit="submitForm(consultarOrdenForm.$valid)" role="form" novalidate>
 		<div class="row">
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Orden</label>
 				<div class="col-md-8">
 					<input type="text" ng-model="consultarOrden.Numero" name="numero" placeholder="Orden" class="form-control" ng-required="true">
-	                <div class="required-icon" ng-mouseover="showMessage();">
-	                	<div class="text">*</div>
-	                </div>
+					<div class="required-icon" ng-mouseover="showMessage();">
+						<div class="text">*</div>
+					</div>
 					<div class="error-message" ng-messages="consultarOrdenForm.numero.$error" ng-if="interacted(consultarOrdenForm.numero) || consultarOrdenForm.$submitted">
-						<div class="error-message" ng-message="required">Debe ingresar un # de Orden.</div>		
-					</div>					
+						<div class="error-message" ng-message="required">Debe ingresar un # de Orden.</div>
+					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
-
 		<div class="row">
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Fecha inicial</label>
 				<div class="col-md-8">
-					<input type="date" ng-model="consultarOrden.FechaCreacion" name="fechaInicial" class="form-control">				
+					<input type="date" ng-model="consultarOrden.FechaCreacion" name="fechaInicial" class="form-control">
 				</div>
 			</div>
-
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Fecha final</label>
 				<div class="col-md-8">
-					<input type="date" ng-model="consultarOrden.FechaCreacion" name="fechaFinal" class="form-control">				
+					<input type="date" ng-model="consultarOrden.FechaFinal" name="fechaFinal" class="form-control">
 				</div>
 			</div>
-
-		</div>		
-	
+		</div>
+		<div class="row">
+			<div class="col-md-4 form-group required-field-block">
+				<label class="col-md-4 control-label">Proveedor</label>
+				<div class="col-md-8">
+					<input type="text" ng-model="consultarOrden.Proveedor" name="proveedor" placeholder="Buscar" class="form-control" ng-required="true">
+					<div class="required-icon" ng-mouseover="showMessage();">
+						<div class="text">*</div>
+					</div>
+					<div class="error-message" ng-messages="consultarOrdenForm.proveedor.$error" ng-if="interacted(consultarOrdenForm.proveedor) || consultarOrdenForm.$submitted">
+						<div class="error-message" ng-message="required">Debe ingresar un Proveedor.</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 form-group required-field-block">
+				<label class="col-md-4 control-label">Usuario</label>
+				<div class="col-md-8">
+					<select ng-model="consultarOrden.IdUsuario" name="usuario" placeholder="Usuario" class="form-control" ng-required="true">
+						<option style="display:none" value="">Seleccione un Usuario</option>
+						<option>Usuario-1</option>
+						<option>Usuario-2</option>
+					</select>
+					<div class="required-icon" ng-mouseover="showMessage();">
+						<div class="text">*</div>
+					</div>
+					<div class="error-message" ng-messages="consultarOrdenForm.usuario.$error" ng-if="interacted(consultarOrdenForm.usuario) || consultarOrdenForm.$submitted">
+						<div class="error-message" ng-message="required">Debe seleccionar un usuario.</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<button type="button" class="btn btn-danger" ng-click="clearForm()" style="width: 100px;">
+				<i class="glyphicon glyphicon-remove"></i>
+				Cancelar
+				</button>
+				<button type="submit" class="btn btn-success" >
+				<span class="glyphicon glyphicon-search" style="vertical-align:middle"></span> Buscar
+				</button>
+			</div>
+		</div>
 	</form>
-
+	<hr>
+	<!-- Table to show data -->
+	<!-- end table-->
 </div>

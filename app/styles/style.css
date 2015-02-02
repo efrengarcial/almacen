@@ -70,6 +70,7 @@ a:before, a:after {
 .navbar-default1 {
   background-color: #3498db;
   border-color: transparent;
+  
 }
 
 .navbar-default1 .navbar-brand {
@@ -339,8 +340,16 @@ textarea {
   color: #B80000;
 }
 
-
 /* Required combo END */
+
+/*Start Styles buttons plus*/
+.btn-plus{
+width: 90px;
+position: absolute;
+left: 30px;
+}
+
+/*End Styles buttons plus*/
 
 .list-group-item{
 display: block;
@@ -386,3 +395,5 @@ white-space: nowrap;
   background-color: #00ff00;
   width: 150px;  
 }
+
+

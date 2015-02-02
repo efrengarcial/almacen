@@ -14,8 +14,10 @@ angular.module('almacenApp')
         function($scope, $log, $rootScope, proveedorFactory, toaster, $filter, modalWindowFactory, Constants) {
             $log.debug('Iniciando orden proveedores...');
 
-            $scope.max = 90, $scope.min = 1;
+            $scope.max = Constants.plazoMax;
+            $scope.min = Constants.plazoMin;
             $scope.search = '';
+            
             $scope.sortInfo = {
                 fields: ['Nit'],
                 directions: ['asc']
@@ -142,18 +144,23 @@ angular.module('almacenApp')
             }
 
             $scope.buscar = function() {
-                $log.debug('Buscando proveedores......');
+                $log.debug("Buscando proveedores......" + $scope.search);
                 $scope.clearForm();
-                proveedorFactory.query($scope.search).then(function(data) {
-                    $scope.allData = data;
 
-                    if ($scope.allData[0] === undefined) {
-                        toaster.pop('warning', 'Advertencia', 'El proveedor no fue encontrado.');
-                    } else {
-                        $scope.pagingOptions.currentPage = 1;
-                        $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
-                    };
-                });
+                if ($scope.search === "") {
+                    toaster.pop('warning', 'Advertencia', 'Debe ingresar un Nit o Nombre de proveedor.');
+                } else {
+                    proveedorFactory.query($scope.search).then(function(data) {
+                        $scope.allData = data;
+
+                        if ($scope.allData[0] === undefined) {
+                            toaster.pop('warning', 'Advertencia', 'No existe proveedor con el parametro de búsqueda.');
+                        } else {
+                            $scope.pagingOptions.currentPage = 1;
+                            $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                        };
+                    });
+                }
             };
 
             $scope.$watch('pagingOptions', function(newVal, oldVal) {
