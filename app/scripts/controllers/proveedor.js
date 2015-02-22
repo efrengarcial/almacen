@@ -90,8 +90,6 @@ angular.module('almacenApp')
                 };
 
                 // Resets the form validation state.
-                //https://github.com/angular/angular.js/issues/10006
-                //https://docs.angularjs.org/api/ng/type/form.FormController
                 $scope.proveedorForm.$setPristine();
                 // Broadcast the event to also clear the grid selection.
                 //$rootScope.$broadcast('clear');

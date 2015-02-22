@@ -9,11 +9,31 @@
  */
 
 angular.module('almacenApp')
-    .controller('ConsultarOrdenCtrl', ['$scope', '$log', '$rootScope', 'ordenFactory', 'toaster', '$filter',
+    .controller('ConsultarOrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter',
         'modalWindowFactory', 'Constants',
-        function($scope, $log, $rootScope, ordenFactory, toaster, $filter, modalWindowFactory, Constants) {
+        function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, Constants) {
             $log.debug('Iniciando consultar orden');
             $scope.search = '';
+
+            $scope.orden = ordenFactory.getOrdenObject();
+            $scope.proveedores = [];
+
+            /* Cargar información de listas */
+            function cargarProveedores() {
+                proveedorFactory.getAll().then(function(proveedores) {
+                    $scope.proveedores = proveedores;
+                });
+            }
+
+            function saveProveedor(proveedorObj, model, label) {
+                $log.debug('label ' + label);
+                $log.debug('model ' + JSON.stringify(model));
+                $scope.orden.IdProveedor = proveedorObj.Id;
+                $scope.proveedor = proveedorObj;
+            }
+
+            $scope.saveProveedor = saveProveedor;
+            cargarProveedores();
 
             $scope.sortInfo = {
                 fields: ['Numero'],
@@ -76,7 +96,11 @@ angular.module('almacenApp')
             };
 
             $scope.clearForm = function() {
+                $log.debug("clearForm");
                 $scope.orden = null;
+                $scope.orden = {
+                    Id: 0
+                };
                 $scope.allData = null;
                 $scope.gridOptions.ngGrid.config.sortInfo = {
                     fields: ['Numero'],
@@ -85,8 +109,6 @@ angular.module('almacenApp')
                 };
 
                 // Resets the form validation state.
-                //https://github.com/angular/angular.js/issues/10006
-                //https://docs.angularjs.org/api/ng/type/form.FormController
                 $scope.consultarOrdenForm.$setPristine();
                 // Broadcast the event to also clear the grid selection.
                 //$rootScope.$broadcast('clear');
@@ -116,22 +138,22 @@ angular.module('almacenApp')
                         return a[field] > b[field] ? -1 : 1;
                     }
                 })
-            }            
+            }
 
 
 
             $scope.buscar = function() {
-                $log.debug("Buscando ordenes....." + $scope.search);
+                $log.debug("Buscando orden Número: " + $scope.search);
                 $scope.clearForm();
 
                 if ($scope.search === "") {
-                    toaster.pop('warning', 'Advertencia', 'Debe ingresar un Número de orden.');
+                    toaster.pop('warning', 'Advertencia', 'Debe ingresar un Número de Orden.');
                 } else {
                     ordenFactory.query($scope.search).then(function(data) {
                         $scope.allData = data;
 
                         if ($scope.allData[0] === undefined) {
-                            toaster.pop('warning', 'Advertencia', 'No existe proveedor con el parametro de búsqueda.');
+                            toaster.pop('warning', 'Advertencia', 'No existe Orden con el parámetro de búsqueda.');
                         } else {
                             $scope.pagingOptions.currentPage = 1;
                             $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
@@ -141,7 +163,7 @@ angular.module('almacenApp')
             };
 
 
-          $scope.$watch('pagingOptions', function(newVal, oldVal) {
+            $scope.$watch('pagingOptions', function(newVal, oldVal) {
                 if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
                     $scope.setPagingData($scope.allData, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
                 }
@@ -178,7 +200,7 @@ angular.module('almacenApp')
                 var msg = "Seguro que deseas desactivar este elemento?";
                 var confirmCallback = function() {
                     ordenFactory.inactivate($scope.orden.Id).then(function() {
-                        toaster.pop('success', 'mensaje', 'La orden fue Inhabilitada exitosamente.');
+                        toaster.pop('success', 'mensaje', 'La Orden fue Inhabilitada exitosamente.');
                         $scope.clearForm();
                     }, function error(response) {
                         // An error has occurred
@@ -196,9 +218,7 @@ angular.module('almacenApp')
             // Picks the event broadcasted when the form is cleared to also clear the grid selection.
             $scope.$on('clear', function() {
                 $scope.gridOptions.selectAll(false);
-            });           
+            });
 
         }
     ]);
-
-
