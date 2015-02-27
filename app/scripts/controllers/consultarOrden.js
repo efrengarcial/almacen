@@ -10,10 +10,55 @@
 
 angular.module('almacenApp')
     .controller('ConsultarOrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter',
-        'modalWindowFactory', 'Constants',
-        function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, Constants) {
+        'modalWindowFactory', 'moment', 'Constants',
+        function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants) {
             $log.debug('Iniciando consultar orden');
             $scope.search = '';
+
+            //Date
+            $scope.dates = {
+                startDate: new Date().getTime(),
+                finalDate: new Date().getTime()
+            };
+
+            $scope.today = function() {
+                $scope.startDate = new Date().getTime();
+                $scope.finalDate = new Date().getTime();
+            };
+
+            $scope.today();
+
+            $scope.clear = function() {
+                $scope.startDate = null;
+                $scope.finalDate = null;
+            };
+
+            // Disable weekend selection
+            $scope.disabled = function(date, mode) {
+                return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+            };
+
+            $scope.toggleMin = function() {
+                $scope.minDate = $scope.minDate ? null : new Date();
+            };
+            $scope.toggleMin();
+
+            $scope.open = function($event) {
+                console.log($event);
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                $scope.opened = true;
+            };
+
+            $scope.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+            };
+
+            $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+            $scope.format = $scope.formats[1];
+            //Date end
 
             $scope.orden = ordenFactory.getOrdenObject();
             $scope.proveedores = [];
@@ -143,7 +188,8 @@ angular.module('almacenApp')
 
 
             $scope.buscar = function() {
-                $log.debug("Buscando orden Número: " + $scope.search);
+                $log.debug("Buscando orden Número: " + $scope.search + " fechaInicial: " +  moment($scope.dates.startDate).format(Constants.formatDate) + " fechaFinal: " +  moment($scope.dates.finalDate).format(Constants.formatDate));
+
                 $scope.clearForm();
 
                 if ($scope.search === "") {

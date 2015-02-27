@@ -396,4 +396,10 @@ white-space: nowrap;
   width: 150px;  
 }
 
+.input-group{
+  position: relative;
+  left: 17px;
+
+}
+
 

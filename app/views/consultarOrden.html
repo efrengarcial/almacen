@@ -15,17 +15,37 @@
 				</div>
 			</div>
 		</div>
+		<!--<div class="row">
+			<div class="col-md-4 form-group required-field-block">
+				<label class="col-md-4 control-label">Fecha inicial</label>
+					<div class="col-md-8">
+						<input type="date" ng-model="orden.FechaInicial" name="fechaInicial" class="form-control">
+							</div>
+							</div>
+							<div class="col-md-4 form-group required-field-block">
+						<label class="col-md-4 control-label">Fecha final</label>
+					<div class="col-md-8">
+				<input type="date" ng-model="orden.FechaFinal" name="fechaFinal" class="form-control">
+				</div>
+			</div>
+		</div>-->
 		<div class="row">
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Fecha inicial</label>
-				<div class="col-md-8">
-					<input type="date" ng-model="orden.FechaCreacion" name="fechaInicial" class="form-control">
+				<div class="col-md-7 input-group">
+					<input type="text" ng-model="dates.startDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+					<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
 				</div>
 			</div>
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Fecha final</label>
-				<div class="col-md-8">
-					<input type="date" ng-model="orden.FechaFinal" name="fechaFinal" class="form-control">
+				<div class="col-md-7 input-group">
+					<input type="text" ng-model="dates.finalDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+					<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
 				</div>
 			</div>
 		</div>
