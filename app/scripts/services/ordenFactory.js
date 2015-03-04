@@ -16,6 +16,7 @@ angular
                     var orden = {
                         Id: null,
                         Tipo : null,
+                        Numero: null,
                         FechaOrden: moment().format(Constants.formatDate),
                         Notas: '',
                         OrdenItems: []
@@ -54,7 +55,6 @@ angular
                 },
                 save: function(orden) {
                     var ordenWS = {
-                        Numero: 1,
                         Tipo: orden.Tipo,
                         IdProveedor: orden.IdProveedor,
                         CentroCostos: orden.CentroCostos,

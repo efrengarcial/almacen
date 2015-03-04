@@ -78,6 +78,7 @@ angular.module('almacenApp')
             $scope.clearForm = function() {
                 $scope.orden = null;
                 $scope.orden = ordenFactory.getOrdenObject();
+                $scope.orden.Tipo = tipoOrden;
                 $scope.ordenForm.$setPristine();
                 // Broadcast the event to also clear the grid selection.
                 //$rootScope.$broadcast('clear');
