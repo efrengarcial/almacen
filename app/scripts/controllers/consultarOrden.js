@@ -15,7 +15,7 @@ angular.module('almacenApp')
             $log.debug('Iniciando consultar orden');
             $scope.search = '';
 
-            //Date
+            //Setting starting Date
             $scope.dates = {
                 startDate: new Date().getTime(),
                 finalDate: new Date().getTime()
@@ -58,7 +58,7 @@ angular.module('almacenApp')
 
             $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
             $scope.format = $scope.formats[1];
-            //Date end
+            //Settin end Date
 
             $scope.orden = ordenFactory.getOrdenObject();
             $scope.proveedores = [];
@@ -185,10 +185,27 @@ angular.module('almacenApp')
                 })
             }
 
+            //Setting change fields
+            $scope.changeFields = function(search) {
 
+                if ($scope.search === undefined) {
+                    $scope.truefalse = false;
+
+                } else {
+                    $scope.truefalse = true;
+                };
+
+            };
 
             $scope.buscar = function() {
-                $log.debug("Buscando orden Número: " + $scope.search + " fechaInicial: " +  moment($scope.dates.startDate).format(Constants.formatDate) + " fechaFinal: " +  moment($scope.dates.finalDate).format(Constants.formatDate));
+                $log.debug("Buscando orden Número: " + $scope.search + " fechaInicial: " + moment($scope.dates.startDate).format(Constants.formatDate) + " fechaFinal: " + moment($scope.dates.finalDate).format(Constants.formatDate) + " proveedor: " + $scope.orden.Proveedor);
+
+                var params = {
+                    startingDate: moment($scope.dates.startDate).format(Constants.formatDate),
+                    endDate: moment($scope.dates.finalDate).format(Constants.formatDate),
+                    proveedor: $scope.orden.Proveedor
+                };
+
 
                 $scope.clearForm();
 
