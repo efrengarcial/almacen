@@ -39,6 +39,8 @@ angular
 		pageSizes: [5, 10, 15],
         pageSize: 5,
         ORDEN_COMPRA: 'ORDEN_COMPRA',
+        ORDEN_SERVICIO: 'ORDEN_SERVICIO',
+        REQUISICION: 'REQUISICION',
         plazoMin: 1,
         plazoMax: 90
     });

@@ -22,8 +22,9 @@ angular
     'ui.bootstrap',
     'angularMoment'
   ])
-  .config(function ($routeProvider,$logProvider) {
+  .config(function ($routeProvider,$logProvider,$locationProvider) {
     $logProvider.debugEnabled(true);
+    //$locationProvider.html5Mode(true);
 
     $routeProvider
       .when('/', {
@@ -39,6 +40,14 @@ angular
         controller: 'ProductosCtrl'
       })
       .when('/ordenCompra', {
+        templateUrl: 'views/orden.html',
+        controller: 'OrdenCtrl'
+      })
+      .when('/requisicion', {
+        templateUrl: 'views/orden.html',
+        controller: 'OrdenCtrl'
+      })
+      .when('/ordenServicio', {
         templateUrl: 'views/orden.html',
         controller: 'OrdenCtrl'
       })

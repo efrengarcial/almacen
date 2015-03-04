@@ -53,7 +53,7 @@
                       <div class="required-icon" ng-mouseover="showMessage();">
                        <div class="text">*</div>
                       </div>
-                    <div class="error-message" ng-messages="productoForm.codigo.$error" ng-if="interacted(productoForm.codigo) || productoForm.codigo.$error.pattern || productoForm.$submitted">
+                    <div class="error-message" ng-messages="productoForm.codigo.$error" ng-if="interacted(productoForm.codigo) || productoForm.$submitted">
                         <div class="error-message" ng-message="maxlength">El código es demasiado largo...</div>
                         <div class="error-message" ng-message="required">Debe ingresar un código</div>
                         <div class="error-message" ng-message="pattern">El código debe ser numérico</div>
@@ -67,7 +67,7 @@
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>                    
-                      <div class="error-message" ng-messages="productoForm.referencia.$error" ng-if="interacted(productoForm.referencia) || productoForm.referencia.$error.pattern || productoForm.$submitted">
+                      <div class="error-message" ng-messages="productoForm.referencia.$error" ng-if="interacted(productoForm.referencia) || productoForm.$submitted">
                           <div class="error-message" ng-message="maxlength">La referencia es demasiado largo...</div>
                           <div class="error-message" ng-message="required">Debe ingresasr la Referencia</div>
                           <div class="error-message" ng-message="pattern">Sólo permite letras o números</div>
@@ -84,7 +84,7 @@
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>                     
-                     <div class="error-message" ng-messages="productoForm.maximo.$error" ng-if="interacted(productoForm.maximo) || productoForm.maximo.$error.pattern || productoForm.$submitted">
+                     <div class="error-message" ng-messages="productoForm.maximo.$error" ng-if="interacted(productoForm.maximo) || productoForm.$submitted">
                       <div class="error-message" ng-message="maxlength">El máximo es demasiado largo...</div>
                       <div class="error-message" ng-message="required">Debe ingresar un valor para Máximo</div>
                       <div class="error-message" ng-message="pattern">El valor debe ser numérico</div>
@@ -98,7 +98,7 @@
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>                    
-                    <div class="error-message" ng-messages="productoForm.minimo.$error" ng-if="interacted(productoForm.minimo)  || productoForm.minino.$error.pattern || productoForm.$submitted">
+                    <div class="error-message" ng-messages="productoForm.minimo.$error" ng-if="interacted(productoForm.minimo)  || productoForm.$submitted">
                       <div class="error-message" ng-message="maxlength">El mínimo es demasiado largo...</div>
                       <div class="error-message" ng-message="required">Debe ingresar un valor para Mínimo</div>
                       <div class="error-message" ng-message="pattern">El valor deber ser numérico</div>
@@ -112,7 +112,7 @@
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>
-                      <div class="error-message" ng-messages="productoForm.precio.$error" ng-if="interacted(productoForm.precio) || productoForm.precio.$error.pattern || productoForm.$submitted">
+                      <div class="error-message" ng-messages="productoForm.precio.$error" ng-if="interacted(productoForm.precio) || productoForm.$submitted">
                       <div class="error-message" ng-message="maxlength">La cantidad es demasiado grande....</div>
                       <div class="error-message" ng-message="required">Debe ingresar un valor para Precio</div>
                       <div class="error-message" ng-message="pattern">El valor solo debe tener 2 decimals</div>
@@ -189,7 +189,7 @@
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>
-                      <div class="error-message" ng-messages="productoForm.iva.$error" ng-if="interacted(productoForm.iva) || productoForm.iva.$error.pattern || productoForm.$submitted">
+                      <div class="error-message" ng-messages="productoForm.iva.$error" ng-if="interacted(productoForm.iva) || productoForm.$submitted">
                         <div class="error-message" ng-message="maxlength">El valor es demasiado largo</div>
                         <div class="error-message" ng-message="required">Debe ingresar el IVA</div>
                         <div class="error-message" ng-message="pattern">IVA debe tener tener formato 00.00</div>

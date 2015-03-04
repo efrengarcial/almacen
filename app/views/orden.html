@@ -2,7 +2,7 @@
 
 	<div class="row">
 		<div class="col-md-2">
-			<h1 class="header">Orden de Compra</h1>
+			<h1 class="header">{{tituloPantalla}}</h1>
 		</div>
          <form class="col-md-8 form-group col-md-offset-4" role="form">
              <div class="form-group col-md-6">
@@ -24,17 +24,24 @@
         </form> 
 	</div>
 	<div class="row">		
-	 <div class="col-md-2 estadoFactura">En Elaboración</div> 
-        <div class="col-md-2 col-md-offset-8 required-text">* Campos requeridos</div>
+	   <div class="col-md-2 estadoFactura">En Elaboración</div> 
+	   <div class="col-md-4 form-group" ng-show="isRequisicion">
+				<label class="col-md-3 control-label" for="orden">Solicitante</label>
+				<div class="col-md-7">
+					<input id="orden" ng-model="orden.Id" type="text" name="orden"  readonly class="form-control" >		
+				</div>
+		</div>
+       <div class="col-md-2 col-md-offset-4 required-text"  ng-show="isRequisicion">* Campos requeridos</div>
+       <div class="col-md-2 col-md-offset-8 required-text"  ng-show="!isRequisicion">* Campos requeridos</div>
     </div> 
     <hr/>  
 	<form name="ordenForm" ng-submit="save(ordenForm.$valid)" class="form-horizontal" role="form" novalidate>
 	<fieldset>
 		<div class="row">
 			<div class="col-md-4 form-group">
-				<label class="col-md-5 control-label" for="orden">Orden Compra</label>
+				<label class="col-md-5 control-label" for="orden">{{tituloPantalla}}</label>
 				<div class="col-md-7">
-					<input id="orden" ng-model="orden.Id" type="text" name="orden" placeholder="No. 1520" readonly class="form-control" >		
+					<input id="orden" ng-model="orden.Id" type="text" name="orden"  readonly class="form-control" >		
 				</div>
 			</div>
 
@@ -48,12 +55,12 @@
                   <label class="col-md-5 control-label" for="proveedor">Proveedor</label>
                     <div class="col-md-7">
                     	<input type="text" id="proveedor" name="proveedor" ng-model="orden.Proveedor" placeholder="Proveedor" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" 
-						typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" />
+						typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" ng-required="!isRequisicion" ng-focus typeahead-loading="Cargando" />
                         
-                        <div class="required-icon" ng-mouseover="showMessage();">
+                        <div class="required-icon" ng-mouseover="showMessage();" ng-hide="isRequisicion">
                           <div class="text">*</div>
-                        </div>                        
-                        <div class="error-message" ng-messages="ordenForm.proveedor.$error" ng-if="interacted(ordenForm.proveedor) || ordenForm.proveedor.$error.pattern || ordenForm.$submitted">
+                        </div>                  
+                        <div class="error-message" ng-messages="ordenForm.proveedor.$error" ng-if="interacted(ordenForm.proveedor) || ordenForm.$submitted">
                           <div class="error-message" ng-message="required">Debe ingresar Proveedor</div>
                         </div>                        
                     </div>
@@ -63,19 +70,19 @@
 			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="nit">NIT</label>
 				<div class="col-md-7">
-					<input id="nit" type="text"  name="nit" ng-model="proveedor.Nit" placeholder="565485794" readonly class="form-control">
+					<input id="nit" type="text"  name="nit" ng-model="proveedor.Nit" readonly class="form-control">
 				</div>
 			</div>
 			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="nit">Teléfono</label>
 				<div class="col-md-7">
-					<input id="telefono" type="text" name="telefono" ng-model="proveedor.Telefono" placeholder="2345312" readonly class="form-control">
+					<input id="telefono" type="text" name="telefono" ng-model="proveedor.Telefono" readonly class="form-control">
 				</div>
 			</div>
 			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="nit">Dirección</label>
 				<div class="col-md-7">
-					<input id="direc" type="text" name="direc" ng-model="proveedor.Direccion"  placeholder="Calle 12 # 52-45" readonly class="form-control">
+					<input id="direc" type="text" name="direc" ng-model="proveedor.Direccion"  readonly class="form-control">
 				</div>
 			</div>									
 		</div>
@@ -83,20 +90,20 @@
 			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="plazo">Plazo entrega</label>
 				<div class="col-md-7">
-					<input id="plazo" type="text" name="plazo" ng-model="proveedor.Plazo" placeholder="10 Días" readonly class="form-control">
+					<input id="plazo" type="text" name="plazo" ng-model="proveedor.Plazo" readonly class="form-control">
 				</div>
 			</div>
 
 		    <div class="col-md-4 form-group required-field-block">
             	<label class="col-md-5 control-label" for="">Centro Costos</label>
             	<div class="col-md-7">
-					<input type="radio" name="costos" ng-model="orden.CentroCostos" value="BOVINOS" >Bovinos
-					<input type="radio" name="costos" ng-model="orden.CentroCostos" value="PORCINOS">Porcinos
+					<input type="radio" name="costos" ng-model="orden.CentroCostos" value="BOVINOS" ng-required="true">Bovinos
+					<input type="radio" name="costos" ng-model="orden.CentroCostos" value="PORCINOS" ng-required="true">Porcinos
 
                     <div class="required-icon" ng-mouseover="showMessage();">
                       <div class="text">*</div>
                     </div>                        
-                    <div class="error-message" ng-messages="ordenForm.costos.$error" ng-if="ordenForm.costos.$touched || ordenForm.$submitted">
+                    <div class="error-message" ng-messages="ordenForm.costos.$error" ng-if="interacted(ordenForm.costos) ||  ordenForm.$submitted">
                       <div class="error-message" ng-message="required">Ingresar Centro de Costos</div>
                     </div>
             	</div>
@@ -104,7 +111,7 @@
 			<div class="col-md-4  form-group">
 				<label class="col-md-5 control-label" for="nit">Fecha entrega</label>
 				<div class="col-md-7">
-					<input id="entrega" type="text" name="entrega" placeholder="31-12-2014" readonly class="form-control">
+					<input id="entrega" type="text" name="entrega" readonly class="form-control">
 				</div>
 			</div>
 		</div>			

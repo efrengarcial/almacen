@@ -14,7 +14,8 @@ angular
             return {
                 getOrdenObject: function() {
                     var orden = {
-                        Id: 0,
+                        Id: null,
+                        Tipo : null,
                         FechaOrden: moment().format(Constants.formatDate),
                         Notas: '',
                         OrdenItems: []
@@ -54,7 +55,7 @@ angular
                 save: function(orden) {
                     var ordenWS = {
                         Numero: 1,
-                        Tipo: Constants.ORDEN_COMPRA,
+                        Tipo: orden.Tipo,
                         IdProveedor: orden.IdProveedor,
                         CentroCostos: orden.CentroCostos,
                         Notas: orden.Notas,

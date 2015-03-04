@@ -220,7 +220,7 @@ angular.module('almacenApp')
             };
 
             $scope.interacted = function(field) {
-                return $scope.submitted || field.$dirty;
+                return field.$dirty;
             };
 
             $scope.showMessage = function() {

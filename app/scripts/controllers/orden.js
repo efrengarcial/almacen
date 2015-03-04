@@ -9,11 +9,28 @@
  */
 angular.module('almacenApp')
     .controller('OrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'productoFactory',
-        'ordenFactory', 'toaster',
-        function($scope, $log, $rootScope, proveedorFactory, productoFactory, ordenFactory, toaster) {
+        'ordenFactory', 'toaster','$location','Constants',
+        function($scope, $log, $rootScope, proveedorFactory, productoFactory, ordenFactory, 
+            toaster,$location,Constants) {
             $log.debug('Iniciando Orden....');
+            var tipoOrden;
+
+            if ($location.$$url === '/ordenCompra') {
+                $scope.tituloPantalla = 'Orden de Compra';
+                $scope.isOrdenCompra = true; 
+                tipoOrden= Constants.ORDEN_COMPRA;       
+            } else if ($location.$$url === '/requisicion') {
+                $scope.tituloPantalla = 'Requisición';
+                $scope.isRequisicion = true;  
+                tipoOrden= Constants.REQUISICION;      
+            } else {
+                $scope.tituloPantalla = 'Orden de Servicio';
+                $scope.isOrdenServicio = true;
+                tipoOrden= Constants.ORDEN_SERVICIO;      
+            }
 
             $scope.orden = ordenFactory.getOrdenObject();
+            $scope.orden.Tipo = tipoOrden;
             $scope.proveedores = [];
 
             /* Cargar información de listas */
@@ -67,7 +84,7 @@ angular.module('almacenApp')
             };
 
             $scope.interacted = function(field) {
-                return $scope.submitted || field.$dirty;
+                return field.$dirty;
             };
 
             $scope.showMessage = function() {
