@@ -5,17 +5,16 @@
 				<label class="col-md-4 control-label">Orden</label>
 				<div class="col-md-8">
 					<input type="text" ng-model="search" ng-change="changeFields()" name="numero" placeholder="Número de Orden" class="form-control" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,12}$/" >
-					<div class="required-icon" ng-mouseover="showMessage();">
-						<div class="text">*</div>
-					</div>
+					<!--<div class="required-icon" ng-mouseover="showMessage();">
+								<div class="text">*</div>
+					</div>-->
 					<div class="error-message" ng-messages="consultarOrdenForm.numero.$error" ng-if="interacted(consultarOrdenForm.numero) || consultarOrdenForm.$submitted">
-						<div class="error-message" ng-message="required">Debe ingresar un # de Orden.</div>
-						<div class="error-message" ng-message="pattern">El parámetrto debe ser numérico</div>
+						<!--<div class="error-message" ng-message="required">Debe ingresar un # de Orden.</div>
+						<div class="error-message" ng-message="pattern">El parámetrto debe ser numérico</div> -->
 					</div>
 				</div>
 			</div>
 		</div>
-
 		<div class="row">
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Fecha inicial</label>
@@ -42,7 +41,7 @@
 				<div class="col-md-8">
 					<input type="text" ng-model="orden.Proveedor" name="proveedor" placeholder="Proveedor" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" 						typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" ng-readonly="truefalse" />
 					<!--<div class="required-icon" ng-mouseover="showMessage();">
-								<div class="text">*</div>
+											<div class="text">*</div>
 					</div>-->
 					<div class="error-message" ng-messages="consultarOrdenForm.proveedor.$error" ng-if="interacted(consultarOrdenForm.proveedor) || consultarOrdenForm.$submitted">
 						<!-- <div class="error-message" ng-message="required">Debe ingresar un Proveedor.</div> -->
@@ -58,7 +57,7 @@
 						<option>Usuario-2</option>
 					</select>
 					<!--<div class="required-icon" ng-mouseover="showMessage();">
-						<div class="text">*</div>
+									<div class="text">*</div>
 					</div>-->
 					<div class="error-message" ng-messages="consultarOrdenForm.usuario.$error" ng-if="interacted(consultarOrdenForm.usuario) || consultarOrdenForm.$submitted">
 						<!--<div class="error-message">Debe seleccionar un usuario.</div>-->

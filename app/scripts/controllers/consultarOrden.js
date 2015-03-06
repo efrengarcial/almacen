@@ -198,17 +198,11 @@ angular.module('almacenApp')
             };
 
             $scope.buscar = function() {
-                $log.debug("Buscando orden Número: " + $scope.search + " fechaInicial: " + moment($scope.dates.startDate).format(Constants.formatDate) + " fechaFinal: " + moment($scope.dates.finalDate).format(Constants.formatDate) + " proveedor: " + $scope.orden.Proveedor);
-
-                var params = {
-                    startingDate: moment($scope.dates.startDate).format(Constants.formatDate),
-                    endDate: moment($scope.dates.finalDate).format(Constants.formatDate),
-                    proveedor: $scope.orden.Proveedor
-                };
 
 
                 $scope.clearForm();
 
+                //Numero orden
                 if ($scope.search === "") {
                     toaster.pop('warning', 'Advertencia', 'Debe ingresar un Número de Orden.');
                 } else {
@@ -223,6 +217,41 @@ angular.module('almacenApp')
                         };
                     });
                 }
+
+
+                //Rango Fecha
+                if ($scope.truefalse == false) {
+                    $log.debug("fechaInicial: " + moment($scope.dates.startDate).format(Constants.formatDate) + " fechaFinal: " + moment($scope.dates.finalDate).format(Constants.formatDate));
+
+                    var params = {
+                        startingDate: moment($scope.dates.startDate).format(Constants.formatDate),
+                        endDate: moment($scope.dates.finalDate).format(Constants.formatDate),
+                    };
+
+                    ordenFactory.query(params).then(function(data) {
+                        $scope.allData = data;
+
+                        if ($scope.allData[0] === undefined) {
+                            toaster.pop('warning', 'Advertencia', 'No existe el rango de fecha descrito');
+                        } else {
+                            $scope.pagingOptions.currentPage = 1;
+                            $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                        };
+                    });                    
+
+                }
+
+                //Rango Fecha & proveedor
+                if ($scope.truefalse == false) {
+                    $log.debug("fechaInicial: " + moment($scope.dates.startDate).format(Constants.formatDate) + " fechaFinal: " + moment($scope.dates.finalDate).format(Constants.formatDate) + " proveedor: " + $scope.orden.Proveedor);
+
+                    var params = {
+                        startingDate: moment($scope.dates.startDate).format(Constants.formatDate),
+                        endDate: moment($scope.dates.finalDate).format(Constants.formatDate),
+                        proveedor: $scope.orden.Proveedor
+                    };
+
+                }                
             };
 
 
