@@ -17,20 +17,20 @@ angular.module('almacenApp')
 
             //Setting starting Date
             $scope.dates = {
-                startDate: new Date().getTime(),
-                finalDate: new Date().getTime()
+                startDate: "aaaa/mm/dd",
+                finalDate: "aaaa/mm/dd"
             };
 
             $scope.today = function() {
-                $scope.startDate = new Date().getTime();
-                $scope.finalDate = new Date().getTime();
+                $scope.dates.startDate = new Date().getTime();
+                $scope.dates.finalDate = new Date().getTime();
             };
 
             $scope.today();
 
             $scope.clear = function() {
-                $scope.startDate = null;
-                $scope.finalDate = null;
+                $scope.dates.startDate = null;
+                $scope.dates.finalDate = null;
             };
 
             // Disable weekend selection
@@ -186,72 +186,103 @@ angular.module('almacenApp')
             }
 
             //Setting change fields
-            $scope.changeFields = function(search) {
 
-                if ($scope.search === undefined) {
-                    $scope.truefalse = false;
+            var requestType = 0;
+            var params = {};
+            $scope.changeFields = function() {
 
-                } else {
+                if ($scope.search !== undefined) {
                     $scope.truefalse = true;
-                };
+                    requestType = 1;
+                }
+                if (($scope.search === undefined || $scope.search === '') && ($scope.orden.Proveedor === undefined)){
+                    $scope.truefalse = false;
+                    requestType = 2;
+
+                }
+
+                if (($scope.search === undefined || $scope.search === "") && ($scope.dates.startDate !== undefined) && ($scope.dates.finalDate !== undefined ) && ($scope.orden.Proveedor !== "")){
+                    $scope.truefalse = false;
+                    requestType = 3;
+
+                }               
 
             };
 
             $scope.buscar = function() {
 
+                console.log("orden: " + $scope.search);
+                console.log("Inicial: " + $scope.dates.startDate);
+                console.log("Final: " + $scope.dates.finalDate);
+                console.log("Proveedor: " + $scope.orden.Proveedor);
 
                 $scope.clearForm();
+                console.log("type: " + requestType);
 
-                //Numero orden
-                if ($scope.search === "") {
-                    toaster.pop('warning', 'Advertencia', 'Debe ingresar un Número de Orden.');
-                } else {
-                    ordenFactory.query($scope.search).then(function(data) {
-                        $scope.allData = data;
-
-                        if ($scope.allData[0] === undefined) {
-                            toaster.pop('warning', 'Advertencia', 'No existe Orden con el parámetro de búsqueda.');
+                switch (requestType) {
+                    case 1:
+                        if ($scope.search === "") {
+                            toaster.pop('warning', 'Advertencia', 'Debe ingresar un Número de Orden.');
                         } else {
-                            $scope.pagingOptions.currentPage = 1;
-                            $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+
+                            params = {
+                                orden: $scope.search
+                            };
+                            ordenFactory.query(params).then(function(data) {
+                                $scope.allData = data;
+
+                                if ($scope.allData[0] === undefined) {
+                                    toaster.pop('warning', 'Advertencia', 'No existe Orden con el parámetro de búsqueda.');
+                                } else {
+                                    $scope.pagingOptions.currentPage = 1;
+                                    $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                                };
+                            });
+                        }
+                        break;
+                    case 2:
+                        //Rango Fecha
+                        params = {
+                            startingDate: moment($scope.dates.startDate).format(Constants.formatDate),
+                            endDate: moment($scope.dates.finalDate).format(Constants.formatDate),
                         };
-                    });
-                }
 
+                        ordenFactory.query(params).then(function(data) {
+                            $scope.allData = data;
 
-                //Rango Fecha
-                if ($scope.truefalse == false) {
-                    $log.debug("fechaInicial: " + moment($scope.dates.startDate).format(Constants.formatDate) + " fechaFinal: " + moment($scope.dates.finalDate).format(Constants.formatDate));
+                            if ($scope.allData[0] === undefined) {
+                                toaster.pop('warning', 'Advertencia', 'No existe el rango de fecha descrito');
+                            } else {
+                                $scope.pagingOptions.currentPage = 1;
+                                $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                            };
+                        });
 
-                    var params = {
-                        startingDate: moment($scope.dates.startDate).format(Constants.formatDate),
-                        endDate: moment($scope.dates.finalDate).format(Constants.formatDate),
-                    };
+                        break;
+                    case 3:
+                        //Rango Fecha & proveedor
 
-                    ordenFactory.query(params).then(function(data) {
-                        $scope.allData = data;
-
-                        if ($scope.allData[0] === undefined) {
-                            toaster.pop('warning', 'Advertencia', 'No existe el rango de fecha descrito');
-                        } else {
-                            $scope.pagingOptions.currentPage = 1;
-                            $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                        params = {
+                            startingDate: moment($scope.dates.startDate).format(Constants.formatDate),
+                            endDate: moment($scope.dates.finalDate).format(Constants.formatDate),
+                            proveedor: $scope.orden.Proveedor
                         };
-                    });                    
 
+                        ordenFactory.query(params).then(function(data) {
+                            $scope.allData = data;
+
+                            if ($scope.allData[0] === undefined) {
+                                toaster.pop('warning', 'Advertencia', 'No existe el rango de fecha  o el proveedor descrito.');
+                            } else {
+                                $scope.pagingOptions.currentPage = 1;
+                                $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                            };
+                        });
+
+                        break;
+                    default:
+                        break;
                 }
-
-                //Rango Fecha & proveedor
-                if ($scope.truefalse == false) {
-                    $log.debug("fechaInicial: " + moment($scope.dates.startDate).format(Constants.formatDate) + " fechaFinal: " + moment($scope.dates.finalDate).format(Constants.formatDate) + " proveedor: " + $scope.orden.Proveedor);
-
-                    var params = {
-                        startingDate: moment($scope.dates.startDate).format(Constants.formatDate),
-                        endDate: moment($scope.dates.finalDate).format(Constants.formatDate),
-                        proveedor: $scope.orden.Proveedor
-                    };
-
-                }                
             };
 
 

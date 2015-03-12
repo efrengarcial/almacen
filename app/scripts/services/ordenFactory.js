@@ -15,7 +15,7 @@ angular
                 getOrdenObject: function() {
                     var orden = {
                         Id: null,
-                        Tipo : null,
+                        Tipo: null,
                         Numero: null,
                         FechaOrden: moment().format(Constants.formatDate),
                         Notas: '',
@@ -74,8 +74,9 @@ angular
                     return apiFactory.all(WS.URI_SAVE_ORDEN).post(ordenWS);
                 },
 
-                query: function(search) {
-                    return apiFactory.all(WS.URI_QUERY_ORDEN).one(search).getList();
+                query: function(params) {
+
+                    return apiFactory.all(WS.URI_QUERY_ORDEN).getList(params);
                 }
             };
         }
