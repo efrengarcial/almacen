@@ -36,6 +36,7 @@ angular
 	})
 	.constant('Constants', {
 		formatDate : 'DD/MM/YYYY',
+		datepickerFormatDate : 'dd/MM/yyyy',
 		pageSizes: [5, 10, 15],
         pageSize: 5,
         ORDEN_COMPRA: 'ORDEN_COMPRA',

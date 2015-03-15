@@ -13,54 +13,35 @@ angular.module('almacenApp')
         'modalWindowFactory', 'moment', 'Constants',
         function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants) {
             $log.debug('Iniciando consultar orden');
-            $scope.search = '';
 
             //Setting starting Date
-            $scope.dates = {
-                startDate: "aaaa/mm/dd",
-                finalDate: "aaaa/mm/dd"
-            };
-
-            $scope.today = function() {
-                $scope.dates.startDate = new Date().getTime();
-                $scope.dates.finalDate = new Date().getTime();
-            };
-
-            $scope.today();
-
-            $scope.clear = function() {
-                $scope.dates.startDate = null;
-                $scope.dates.finalDate = null;
-            };
-
-            // Disable weekend selection
-            $scope.disabled = function(date, mode) {
-                return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-            };
+            $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
 
             $scope.toggleMin = function() {
-                $scope.minDate = $scope.minDate ? null : new Date();
+                $scope.minDate = moment("01/01/2015").format(Constants.formatDate)
             };
             $scope.toggleMin();
 
-            $scope.open = function($event) {
-                console.log($event);
+            $scope.open = function($event,fecha) {
+                $log.debug($event);
                 $event.preventDefault();
                 $event.stopPropagation();
-
-                $scope.opened = true;
+                if ('openedStartDate'  === fecha ) {
+                    $scope.openedStartDate = true;
+                } else {
+                    $scope.openedEndDate = true;
+                }
+                
             };
 
             $scope.dateOptions = {
-                formatYear: 'yy',
+                formatYear: 'yyyy',
                 startingDay: 1
             };
 
-            $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-            $scope.format = $scope.formats[1];
+            $scope.format = Constants.datepickerFormatDate;
             //Settin end Date
 
-            $scope.orden = ordenFactory.getOrdenObject();
             $scope.proveedores = [];
 
             /* Cargar información de listas */
@@ -73,8 +54,8 @@ angular.module('almacenApp')
             function saveProveedor(proveedorObj, model, label) {
                 $log.debug('label ' + label);
                 $log.debug('model ' + JSON.stringify(model));
-                $scope.orden.IdProveedor = proveedorObj.Id;
-                $scope.proveedor = proveedorObj;
+                $scope.consultaOrden.IdProveedor = proveedorObj.Id;
+                $scope.consultaOrden.Proveedor = proveedorObj;
             }
 
             $scope.saveProveedor = saveProveedor;
@@ -142,10 +123,8 @@ angular.module('almacenApp')
 
             $scope.clearForm = function() {
                 $log.debug("clearForm");
-                $scope.orden = null;
-                $scope.orden = {
-                    Id: 0
-                };
+                $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
+
                 $scope.allData = null;
                 $scope.gridOptions.ngGrid.config.sortInfo = {
                     fields: ['Numero'],
@@ -185,103 +164,55 @@ angular.module('almacenApp')
                 })
             }
 
-            //Setting change fields
-
-            var requestType = 0;
-            var params = {};
             $scope.changeFields = function() {
-
-                if ($scope.search !== undefined) {
+                if ($scope.consultaOrden.Numero !== undefined) {
                     $scope.truefalse = true;
-                    requestType = 1;
-                }
-                if (($scope.search === undefined || $scope.search === '') && ($scope.orden.Proveedor === undefined)){
+                } else {
                     $scope.truefalse = false;
-                    requestType = 2;
-
                 }
-
-                if (($scope.search === undefined || $scope.search === "") && ($scope.dates.startDate !== undefined) && ($scope.dates.finalDate !== undefined ) && ($scope.orden.Proveedor !== "")){
-                    $scope.truefalse = false;
-                    requestType = 3;
-
-                }               
 
             };
 
+
             $scope.buscar = function() {
 
-                console.log("orden: " + $scope.search);
-                console.log("Inicial: " + $scope.dates.startDate);
-                console.log("Final: " + $scope.dates.finalDate);
-                console.log("Proveedor: " + $scope.orden.Proveedor);
+                $log.debug("orden: " + $scope.consultaOrden.Numero);
+                $log.debug("Inicial: " + $scope.consultaOrden.StartDate);
+                $log.debug("Final: " + $scope.consultaOrden.EndDate);
+                $log.debug("Proveedor: " + $scope.consultaOrden.Proveedor);
+                $log.debug("IdProveedor: " + $scope.consultaOrden.IdProveedor);
 
-                $scope.clearForm();
-                console.log("type: " + requestType);
+                if ($scope.consultaOrden.Numero !== null) {
+                    var params = {
+                        Numero: $scope.consultaOrden.Numero
+                    };
+                    ordenFactory.query(params).then(function(data) {
+                        $scope.allData = data;
 
-                switch (requestType) {
-                    case 1:
-                        if ($scope.search === "") {
-                            toaster.pop('warning', 'Advertencia', 'Debe ingresar un Número de Orden.');
+                        if ($scope.allData[0] === undefined) {
+                            toaster.pop('warning', 'Advertencia', 'No existe Orden con el parámetro de búsqueda.');
                         } else {
-
-                            params = {
-                                orden: $scope.search
-                            };
-                            ordenFactory.query(params).then(function(data) {
-                                $scope.allData = data;
-
-                                if ($scope.allData[0] === undefined) {
-                                    toaster.pop('warning', 'Advertencia', 'No existe Orden con el parámetro de búsqueda.');
-                                } else {
-                                    $scope.pagingOptions.currentPage = 1;
-                                    $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
-                                };
-                            });
-                        }
-                        break;
-                    case 2:
-                        //Rango Fecha
-                        params = {
-                            startingDate: moment($scope.dates.startDate).format(Constants.formatDate),
-                            endDate: moment($scope.dates.finalDate).format(Constants.formatDate),
+                            $scope.pagingOptions.currentPage = 1;
+                            $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
                         };
+                    });
+                } else {
+                    var params = {
+                        StartDate: moment($scope.consultaOrden.StartDate).format(Constants.formatDate),
+                        EndDate: moment($scope.consultaOrden.EndDate).format(Constants.formatDate),
+                        IdProveedor: $scope.consultaOrden.IdProveedor
+                    };
 
-                        ordenFactory.query(params).then(function(data) {
-                            $scope.allData = data;
+                    ordenFactory.query(params).then(function(data) {
+                        $scope.allData = data;
 
-                            if ($scope.allData[0] === undefined) {
-                                toaster.pop('warning', 'Advertencia', 'No existe el rango de fecha descrito');
-                            } else {
-                                $scope.pagingOptions.currentPage = 1;
-                                $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
-                            };
-                        });
-
-                        break;
-                    case 3:
-                        //Rango Fecha & proveedor
-
-                        params = {
-                            startingDate: moment($scope.dates.startDate).format(Constants.formatDate),
-                            endDate: moment($scope.dates.finalDate).format(Constants.formatDate),
-                            proveedor: $scope.orden.Proveedor
+                        if ($scope.allData[0] === undefined) {
+                            toaster.pop('warning', 'Advertencia', 'No existe el rango de fecha  o el proveedor descrito.');
+                        } else {
+                            $scope.pagingOptions.currentPage = 1;
+                            $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
                         };
-
-                        ordenFactory.query(params).then(function(data) {
-                            $scope.allData = data;
-
-                            if ($scope.allData[0] === undefined) {
-                                toaster.pop('warning', 'Advertencia', 'No existe el rango de fecha  o el proveedor descrito.');
-                            } else {
-                                $scope.pagingOptions.currentPage = 1;
-                                $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
-                            };
-                        });
-
-                        break;
-                    default:
-                        break;
+                    });
                 }
             };
 

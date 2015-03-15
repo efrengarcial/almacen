@@ -78,7 +78,7 @@ angular
         function(response) { 
           if(response.status === 0 ) {
             console.log('Error por timeout');
-            $rootScope.$emit('evento', {descripcion: 'PAGE.MSG.TIMEOUT'});  
+            $rootScope.$emit('evento', {descripcion: 'TIMEOUT | ERR_CONNECTION_REFUSED '});  
             return false; // error handled      
           } else if( response.status === 500) { 
             console.log('Error en el servidor');
@@ -86,7 +86,7 @@ angular
             return false; // error handled
           } else if(response.status === 404) {
             console.log('Page not found');
-            $rootScope.$emit('evento', {descripcion : 'PAGE.MSG.PAGENOTFOUND'});
+            $rootScope.$emit('evento', {descripcion : 'Page not found'});
             return false; // error handled
           }
           return true; // error not handled 
