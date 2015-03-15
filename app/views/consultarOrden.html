@@ -4,7 +4,7 @@
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Orden</label>
 				<div class="col-md-8">
-					<input type="text" ng-model="search" ng-change="changeFields()" name="numero" placeholder="Número de Orden" class="form-control" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,12}$/" >
+					<input type="text" ng-model="search" ng-change="changeFields()" name="numero" placeholder="Número de Orden" class="form-control" ng-required="true" value="00000" numbers-only ng-pattern="/^[0-9]{1,12}$/"/>
 					<!--<div class="required-icon" ng-mouseover="showMessage();">
 								<div class="text">*</div>
 					</div>-->
@@ -19,7 +19,7 @@
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Fecha inicial</label>
 				<div class="col-md-7 input-group">
-					<input type="text" ng-model="dates.startDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-readonly="truefalse" />
+					<input type="text" ng-model="dates.startingDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-readonly="truefalse" />
 					<span class="input-group-btn">
 					<button type="button" class="btn btn-default" ng-disabled="truefalse" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 					</span>
@@ -28,7 +28,7 @@
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Fecha final</label>
 				<div class="col-md-7 input-group">
-					<input type="text" ng-model="dates.finalDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-readonly="truefalse" />
+					<input type="text" ng-model="dates.endDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-readonly="truefalse" />
 					<span class="input-group-btn">
 					<button type="button" class="btn btn-default" ng-disabled="truefalse" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 					</span>

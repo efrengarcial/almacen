@@ -17,20 +17,20 @@ angular.module('almacenApp')
 
             //Setting starting Date
             $scope.dates = {
-                startDate: "aaaa/mm/dd",
-                finalDate: "aaaa/mm/dd"
+                startingDate: "aaaa/mm/dd",
+                endDate: "aaaa/mm/dd"
             };
 
             $scope.today = function() {
-                $scope.dates.startDate = new Date().getTime();
-                $scope.dates.finalDate = new Date().getTime();
+                $scope.dates.startingDate = new Date().getTime();
+                $scope.dates.endDate = new Date().getTime();
             };
 
             $scope.today();
 
             $scope.clear = function() {
-                $scope.dates.startDate = null;
-                $scope.dates.finalDate = null;
+                $scope.dates.startingDate = null;
+                $scope.dates.endDate = null;
             };
 
             // Disable weekend selection
@@ -191,29 +191,30 @@ angular.module('almacenApp')
             var params = {};
             $scope.changeFields = function() {
 
-                if ($scope.search !== undefined) {
+                if (typeof $scope.search !== undefined) {
                     $scope.truefalse = true;
                     requestType = 1;
+
                 }
-                if (($scope.search === undefined || $scope.search === '') && ($scope.orden.Proveedor === undefined)){
+                if ((typeof $scope.search === undefined) && (typeof $scope.dates.startingDate !== undefined) && (typeof $scope.dates.endDate !== undefined) && (typeof $scope.orden.Proveedor === undefined)) {
                     $scope.truefalse = false;
                     requestType = 2;
 
                 }
 
-                if (($scope.search === undefined || $scope.search === "") && ($scope.dates.startDate !== undefined) && ($scope.dates.finalDate !== undefined ) && ($scope.orden.Proveedor !== "")){
+                if (($scope.search === undefined) && ($scope.dates.startingDate !== undefined) && ($scope.dates.endDate !== undefined) && ($scope.orden.Proveedor !== undefined)) {
                     $scope.truefalse = false;
                     requestType = 3;
 
-                }               
+                }
 
             };
 
             $scope.buscar = function() {
 
                 console.log("orden: " + $scope.search);
-                console.log("Inicial: " + $scope.dates.startDate);
-                console.log("Final: " + $scope.dates.finalDate);
+                console.log("Inicial: " + $scope.dates.startingDate);
+                console.log("Final: " + $scope.dates.endDate);
                 console.log("Proveedor: " + $scope.orden.Proveedor);
 
                 $scope.clearForm();
@@ -243,8 +244,8 @@ angular.module('almacenApp')
                     case 2:
                         //Rango Fecha
                         params = {
-                            startingDate: moment($scope.dates.startDate).format(Constants.formatDate),
-                            endDate: moment($scope.dates.finalDate).format(Constants.formatDate),
+                            startingDate: moment($scope.dates.startingDate).format(Constants.formatDate),
+                            endDate: moment($scope.dates.endDate).format(Constants.formatDate),
                         };
 
                         ordenFactory.query(params).then(function(data) {
@@ -263,8 +264,8 @@ angular.module('almacenApp')
                         //Rango Fecha & proveedor
 
                         params = {
-                            startingDate: moment($scope.dates.startDate).format(Constants.formatDate),
-                            endDate: moment($scope.dates.finalDate).format(Constants.formatDate),
+                            startingDate: moment($scope.dates.startingDate).format(Constants.formatDate),
+                            endDate: moment($scope.dates.endDate).format(Constants.formatDate),
                             proveedor: $scope.orden.Proveedor
                         };
 
