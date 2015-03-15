@@ -86,7 +86,7 @@ angular.module('almacenApp')
                     field: 'Numero',
                     displayName: 'Numero'
                 }, {
-                    field: 'IdProveedor',
+                    field: 'Proveedor.Nombre',
                     displayName: 'Proveedor'
                 }, {
                     field: 'FechaCreacion',
