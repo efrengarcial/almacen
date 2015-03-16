@@ -4,9 +4,9 @@
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Orden</label>
 				<div class="col-md-8">
-					<input type="text" ng-model="search" ng-change="changeFields()" name="numero" placeholder="Número de Orden" class="form-control" ng-required="true" value="00000" numbers-only ng-pattern="/^[0-9]{1,12}$/"/>
+					<input type="text" ng-model="consultaOrden.Numero" ng-change="changeFields()" name="numero" placeholder="Número de Orden" class="form-control" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,12}$/" >
 					<!--<div class="required-icon" ng-mouseover="showMessage();">
-								<div class="text">*</div>
+									<div class="text">*</div>
 					</div>-->
 					<div class="error-message" ng-messages="consultarOrdenForm.numero.$error" ng-if="interacted(consultarOrdenForm.numero) || consultarOrdenForm.$submitted">
 						<!--<div class="error-message" ng-message="required">Debe ingresar un # de Orden.</div>
@@ -19,18 +19,18 @@
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Fecha inicial</label>
 				<div class="col-md-7 input-group">
-					<input type="text" ng-model="dates.startingDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-readonly="truefalse" />
+					<input type="text" ng-model="consultaOrden.StartDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="openedStartDate" min-date="minDate" max-date="'22/06/2015'" datepicker-options="dateOptions"  ng-required="true" close-text="Close" ng-readonly="truefalse" />
 					<span class="input-group-btn">
-					<button type="button" class="btn btn-default" ng-disabled="truefalse" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+					<button type="button" class="btn btn-default" ng-disabled="truefalse" ng-click="open($event, 'openedStartDate')"><i class="glyphicon glyphicon-calendar"></i></button>
 					</span>
 				</div>
 			</div>
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Fecha final</label>
 				<div class="col-md-7 input-group">
-					<input type="text" ng-model="dates.endDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-readonly="truefalse" />
+					<input type="text" ng-model="consultaOrden.EndDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="openedEndDate" min-date="minDate" max-date="'22/06/2015'" datepicker-options="dateOptions"  ng-required="true" close-text="Close" ng-readonly="truefalse" />
 					<span class="input-group-btn">
-					<button type="button" class="btn btn-default" ng-disabled="truefalse" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+					<button type="button" class="btn btn-default" ng-disabled="truefalse" ng-click="open($event,'openedEndDate')"><i class="glyphicon glyphicon-calendar"></i></button>
 					</span>
 				</div>
 			</div>
@@ -39,9 +39,9 @@
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Proveedor</label>
 				<div class="col-md-8">
-					<input type="text" ng-model="orden.Proveedor" name="proveedor" placeholder="Proveedor" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" 						typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" ng-readonly="truefalse" />
+					<input type="text" ng-model="consultaOrden.Proveedor" name="proveedor" placeholder="Proveedor" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" 						typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" ng-readonly="truefalse" />
 					<!--<div class="required-icon" ng-mouseover="showMessage();">
-											<div class="text">*</div>
+												<div class="text">*</div>
 					</div>-->
 					<div class="error-message" ng-messages="consultarOrdenForm.proveedor.$error" ng-if="interacted(consultarOrdenForm.proveedor) || consultarOrdenForm.$submitted">
 						<!-- <div class="error-message" ng-message="required">Debe ingresar un Proveedor.</div> -->
@@ -51,13 +51,13 @@
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Usuario</label>
 				<div class="col-md-8">
-					<select ng-model="orden.IdUsuario" name="usuario" placeholder="Usuario" class="form-control" ng-required="true" ng-readonly="truefalse">
+					<select ng-model="consultaOrden.IdUsuario" name="usuario" placeholder="Usuario" class="form-control" ng-required="true" ng-readonly="truefalse">
 						<option style="display:none" value="">Seleccione un Usuario</option>
 						<option>Usuario-1</option>
 						<option>Usuario-2</option>
 					</select>
 					<!--<div class="required-icon" ng-mouseover="showMessage();">
-									<div class="text">*</div>
+										<div class="text">*</div>
 					</div>-->
 					<div class="error-message" ng-messages="consultarOrdenForm.usuario.$error" ng-if="interacted(consultarOrdenForm.usuario) || consultarOrdenForm.$submitted">
 						<!--<div class="error-message">Debe seleccionar un usuario.</div>-->
