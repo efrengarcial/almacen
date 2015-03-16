@@ -53,6 +53,18 @@ angular
                     orden.OrdenItems.push(ordenItem);
                     return ordenItem;
                 },
+                getConsultaOrdenObject: function() {
+                    var consultaOrden = {
+                        Numero : null,
+                        StartDate: new Date().getTime(),
+                        EndDate: new Date().getTime(),
+                        Proveedor : null,
+                        IdProveedor : null,
+                        IdUsuario: null
+                    };
+
+                    return consultaOrden;
+                },
                 save: function(orden) {
                     var ordenWS = {
                         Tipo: orden.Tipo,
@@ -75,7 +87,6 @@ angular
                 },
 
                 query: function(params) {
-
                     return apiFactory.all(WS.URI_QUERY_ORDEN).getList(params);
                 }
             };

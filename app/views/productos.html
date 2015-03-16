@@ -76,7 +76,14 @@
             </div>
           </div>
          
-          <div class="row"> 
+          <div class="row">
+            <div class="col-md-4 form-group required-field-block">
+                  <label class="col-md-3 control-label" for="linea">Servicio</label>
+                     <div class="col-md-9">
+                        <input type="checkbox" name="servicio" id="servicio" ng-model="producto.EsServicio"> 
+                    </div>
+            </div>
+
             <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="maximo">Máximo</label>
                    <div class="col-md-9">
@@ -105,20 +112,7 @@
                     </div>
                   </div>
             </div>
-            <div class="col-md-4 form-group required-field-block">
-                  <label class="col-md-3 control-label" for="referencia">Precio</label>
-                  <div class="col-md-9">
-                    <input id="precio" fcsa-number="{ preventInvalidInput: true}" ng-model="producto.Precio" name="precio" type="text" placeholder="$" class="form-control" maxlength="13" ng-required="true" ng-pattern="/^[0-9]{1,11}(\.[0-9]{1,2})?$/">
-                      <div class="required-icon" ng-mouseover="showMessage();">
-                        <div class="text">*</div>
-                      </div>
-                      <div class="error-message" ng-messages="productoForm.precio.$error" ng-if="interacted(productoForm.precio) || productoForm.$submitted">
-                      <div class="error-message" ng-message="maxlength">La cantidad es demasiado grande....</div>
-                      <div class="error-message" ng-message="required">Debe ingresar un valor para Precio</div>
-                      <div class="error-message" ng-message="pattern">El valor solo debe tener 2 decimals</div>
-                    </div>                    
-                  </div>
-            </div>
+           
           </div>
           
           <div class="row">   
@@ -137,7 +131,7 @@
                     </div>
             </div>
             <div class="col-md-4 form-group required-field-block">
-                  <label class="col-md-3 control-label" for="grupo">Grupo</label>
+                  <label class="col-md-3 control-label" for="grupo">Sublinea</label>
                   <div class="col-md-9">
                     <select id="grupo" ng-model="producto.IdSubLinea" name="grupo" class="form-control" ng-required="true" ng-options="grupo.Id as grupo.Nombre for grupo in grupos" >
                          <option style="display:none" value="">Seleccione un Grupo</option>
@@ -168,20 +162,23 @@
 
           </div>
           
-          <div class="row">   
-            <div class="col-md-4 form-group required-field-block">
-                  <label class="col-md-3 control-label" for="ubicacion">Ubicación</label>
+          <div class="row">
+           <div class="col-md-4 form-group required-field-block">
+                  <label class="col-md-3 control-label" for="referencia">Precio</label>
                   <div class="col-md-9">
-                    <input id="ubicacion" ng-model="producto.Ubicacion" name="ubicacion" type="text" placeholder="Ubicación" class="form-control" ng-maxlength="50" ng-required="true">
+                    <input id="precio" fcsa-number="{ preventInvalidInput: true}" ng-model="producto.Precio" name="precio" type="text" placeholder="$" class="form-control" maxlength="13" ng-required="true" ng-pattern="/^[0-9]{1,11}(\.[0-9]{1,2})?$/">
                       <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                       </div>
-                      <div class="error-message" ng-messages="productoForm.ubicacion.$error" ng-if="interacted(productoForm.ubicacion) || productoForm.$submitted">
-                        <div class="error-message" ng-message="maxlength">El valor es demasiado largo</div>
-                        <div class="error-message" ng-message="required">Debe ingresar una Ubicación</div>
-                      </div>                     
+                      <div class="error-message" ng-messages="productoForm.precio.$error" ng-if="interacted(productoForm.precio) || productoForm.$submitted">
+                      <div class="error-message" ng-message="maxlength">La cantidad es demasiado grande....</div>
+                      <div class="error-message" ng-message="required">Debe ingresar un valor para Precio</div>
+                      <div class="error-message" ng-message="pattern">El valor solo debe tener 2 decimals</div>
+                    </div>                    
                   </div>
             </div>
+
+           
              <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-3 control-label" for="iva">IVA</label>
                    <div class="col-md-9">
@@ -197,11 +194,26 @@
                   </div>
             </div>
 
-
-            <div class="col-md-4 form-group">
-                  <label class="col-md-3 control-label" for="verificar">Descripción</label>
+             <div class="col-md-4 form-group required-field-block">
+                  <label class="col-md-3 control-label" for="ubicacion">Ubicación</label>
                   <div class="col-md-9">
-                      <textarea rows="3" ng-model="producto.Descripcion" class="form-control" placeholder="Descripción"></textarea>
+                    <input id="ubicacion" ng-model="producto.Ubicacion" name="ubicacion" type="text" placeholder="Ubicación" class="form-control" ng-maxlength="50" ng-required="true">
+                      <div class="required-icon" ng-mouseover="showMessage();">
+                        <div class="text">*</div>
+                      </div>
+                      <div class="error-message" ng-messages="productoForm.ubicacion.$error" ng-if="interacted(productoForm.ubicacion) || productoForm.$submitted">
+                        <div class="error-message" ng-message="maxlength">El valor es demasiado largo</div>
+                        <div class="error-message" ng-message="required">Debe ingresar una Ubicación</div>
+                      </div>                     
+                  </div>
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="col-md-6 form-group">
+                  <label class="col-md-2 control-label" for="verificar">Descripción</label>
+                  <div class="col-md-8">
+                      <textarea rows="2" ng-model="producto.Descripcion" class="form-control" placeholder="Descripción"></textarea>
                   </div>
             </div>
  
