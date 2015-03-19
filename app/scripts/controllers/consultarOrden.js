@@ -23,7 +23,6 @@ angular.module('almacenApp')
             $scope.toggleMin();
 
             $scope.open = function($event, fecha) {
-                $log.debug($event);
                 $event.preventDefault();
                 $event.stopPropagation();
                 if ('openedStartDate' === fecha) {
@@ -40,7 +39,7 @@ angular.module('almacenApp')
             };
 
             $scope.format = Constants.datepickerFormatDate;
-            //Settin end Date
+            //Setting end Date
 
             $scope.proveedores = [];
 
@@ -55,7 +54,7 @@ angular.module('almacenApp')
                 $log.debug('label ' + label);
                 $log.debug('model ' + JSON.stringify(model));
                 $scope.consultaOrden.IdProveedor = proveedorObj.Id;
-                $scope.consultaOrden.Proveedor = proveedorObj;
+                $scope.consultaOrden.Proveedor = proveedorObj.Nombre;
             }
 
             $scope.saveProveedor = saveProveedor;
@@ -170,15 +169,16 @@ angular.module('almacenApp')
                     $scope.truefalse = true;
                 } else {
                     $scope.truefalse = false;
+                    $scope.consultaOrden.Numero = null;
                 }
 
             };
 
             $scope.buscar = function() {
 
-                $log.debug("orden: " + $scope.consultaOrden.Numero);
-                $log.debug("Inicial: " + $scope.consultaOrden.StartDate);
-                $log.debug("Final: " + $scope.consultaOrden.EndDate);
+                $log.debug("Orden: " + $scope.consultaOrden.Numero);
+                $log.debug("StartinDate: " + moment($scope.consultaOrden.StartDate).format(Constants.formatDate));
+                $log.debug("EndDate: " + moment($scope.consultaOrden.EndDate).format(Constants.formatDate));
                 $log.debug("Proveedor: " + $scope.consultaOrden.Proveedor);
                 $log.debug("IdProveedor: " + $scope.consultaOrden.IdProveedor);
 
@@ -186,6 +186,9 @@ angular.module('almacenApp')
                     var params = {
                         Numero: $scope.consultaOrden.Numero
                     };
+
+                    $scope.clearForm();
+                    
                     ordenFactory.query(params).then(function(data) {
                         $scope.allData = data;
 
@@ -197,11 +200,14 @@ angular.module('almacenApp')
                         };
                     });
                 } else {
+
                     var params = {
                         StartDate: moment($scope.consultaOrden.StartDate).format(Constants.formatDate),
                         EndDate: moment($scope.consultaOrden.EndDate).format(Constants.formatDate),
                         IdProveedor: $scope.consultaOrden.IdProveedor
                     };
+
+                    $scope.clearForm();
 
                     ordenFactory.query(params).then(function(data) {
                         $scope.allData = data;
