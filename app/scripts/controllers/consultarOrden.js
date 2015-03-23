@@ -39,6 +39,8 @@ angular.module('almacenApp')
             };
 
             $scope.format = Constants.datepickerFormatDate;
+
+
             //Setting end Date
 
             $scope.proveedores = [];
@@ -187,8 +189,8 @@ angular.module('almacenApp')
                         Numero: $scope.consultaOrden.Numero
                     };
 
-                    $scope.clearForm();
-                    
+                    //$scope.clearForm();
+
                     ordenFactory.query(params).then(function(data) {
                         $scope.allData = data;
 
@@ -207,7 +209,7 @@ angular.module('almacenApp')
                         IdProveedor: $scope.consultaOrden.IdProveedor
                     };
 
-                    $scope.clearForm();
+                    //$scope.clearForm();
 
                     ordenFactory.query(params).then(function(data) {
                         $scope.allData = data;
