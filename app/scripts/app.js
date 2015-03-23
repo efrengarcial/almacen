@@ -62,7 +62,11 @@ angular
       .when('/proveedor', {
         templateUrl: 'views/proveedor.html',
         controller: 'ProveedorCtrl'
-      })              
+      })
+      .when('/inboxOrden', {
+        templateUrl: 'views/inboxOrden.html',
+        controller: 'inboxOrdenCtrl'
+      })                    
       .otherwise({
         redirectTo: '/'
       });

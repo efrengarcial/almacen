@@ -178,18 +178,18 @@ angular.module('almacenApp')
 
             $scope.buscar = function() {
 
-                $log.debug("Orden: " + $scope.consultaOrden.Numero);
+                /*$log.debug("Orden: " + $scope.consultaOrden.Numero);
                 $log.debug("StartinDate: " + moment($scope.consultaOrden.StartDate).format(Constants.formatDate));
                 $log.debug("EndDate: " + moment($scope.consultaOrden.EndDate).format(Constants.formatDate));
                 $log.debug("Proveedor: " + $scope.consultaOrden.Proveedor);
-                $log.debug("IdProveedor: " + $scope.consultaOrden.IdProveedor);
+                $log.debug("IdProveedor: " + $scope.consultaOrden.IdProveedor);*/
 
                 if ($scope.consultaOrden.Numero !== null) {
                     var params = {
                         Numero: $scope.consultaOrden.Numero
                     };
 
-                    //$scope.clearForm();
+                    $scope.clearForm();
 
                     ordenFactory.query(params).then(function(data) {
                         $scope.allData = data;
@@ -209,7 +209,7 @@ angular.module('almacenApp')
                         IdProveedor: $scope.consultaOrden.IdProveedor
                     };
 
-                    //$scope.clearForm();
+                    $scope.clearForm();
 
                     ordenFactory.query(params).then(function(data) {
                         $scope.allData = data;
