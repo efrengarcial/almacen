@@ -42,6 +42,7 @@ angular
         ORDEN_COMPRA: 'ORDEN_COMPRA',
         ORDEN_SERVICIO: 'ORDEN_SERVICIO',
         REQUISICION: 'REQUISICION',
+        REQUISICION_SERVICIO: 'REQUISICION_SERVICIO',
         plazoMin: 1,
         plazoMax: 90
     });

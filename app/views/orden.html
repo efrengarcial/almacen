@@ -46,7 +46,7 @@
 			</div>
 
             <div class="col-md-4 form-group">
-            	<label class="col-md-5 control-label" for="">Fecha</label>
+            	<label class="col-md-5 control-label" for="fecha">Fecha</label>
             	<div class="col-md-7">
             		<input type="text" name="fecha"  ng-model="orden.FechaOrden" readonly class="form-control">            		
             	</div>
@@ -54,7 +54,7 @@
              <div class="col-md-4 form-group required-field-block">
                   <label class="col-md-5 control-label" for="proveedor">Proveedor</label>
                     <div class="col-md-7">
-                    	<input type="text" id="proveedor" name="proveedor" ng-model="orden.Proveedor" placeholder="Proveedor" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" 
+                    	<input type="text" id="proveedor" name="proveedor" ng-model="orden.NombreProveedor" placeholder="Proveedor" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" 
 						typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" ng-required="!isRequisicion" ng-focus typeahead-loading="Cargando" />
                         
                         <div class="required-icon" ng-mouseover="showMessage();" ng-hide="isRequisicion">
@@ -70,19 +70,19 @@
 			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="nit">NIT</label>
 				<div class="col-md-7">
-					<input id="nit" type="text"  name="nit" ng-model="proveedor.Nit" readonly class="form-control">
+					<input id="nit" type="text"  name="nit" ng-model="orden.Proveedor.Nit" readonly class="form-control">
 				</div>
 			</div>
 			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="nit">Teléfono</label>
 				<div class="col-md-7">
-					<input id="telefono" type="text" name="telefono" ng-model="proveedor.Telefono" readonly class="form-control">
+					<input id="telefono" type="text" name="telefono" ng-model="orden.Proveedor.Telefono" readonly class="form-control">
 				</div>
 			</div>
 			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="nit">Dirección</label>
 				<div class="col-md-7">
-					<input id="direc" type="text" name="direc" ng-model="proveedor.Direccion"  readonly class="form-control">
+					<input id="direc" type="text" name="direc" ng-model="orden.Proveedor.Direccion"  readonly class="form-control">
 				</div>
 			</div>									
 		</div>
@@ -90,7 +90,7 @@
 			<div class="col-md-4 form-group">
 				<label class="col-md-5 control-label" for="plazo">Plazo entrega</label>
 				<div class="col-md-7">
-					<input id="plazo" type="text" name="plazo" ng-model="proveedor.Plazo" readonly class="form-control">
+					<input id="plazo" type="text" name="plazo" ng-model="orden.Proveedor.Plazo" readonly class="form-control">
 				</div>
 			</div>
 
@@ -134,15 +134,14 @@
 		           </button> 
             </div>
 		</div>        
-	</div>
-	</form>
+	</div>	
 	<br/>
 	<div class="row">
 		<div class="col-md-12">			
         	<div ng-include src="'views/ordenItem.html'"></div>		
 		</div>        
 	</div>
-	<!-- end table-->
+	</form>
     <div class="row">
         <div class="col-md-3 form-group">
             <div class="col-md-12">

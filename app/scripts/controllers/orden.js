@@ -9,24 +9,28 @@
  */
 angular.module('almacenApp')
     .controller('OrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'productoFactory',
-        'ordenFactory', 'toaster','$location','Constants',
-        function($scope, $log, $rootScope, proveedorFactory, productoFactory, ordenFactory, 
-            toaster,$location,Constants) {
+        'ordenFactory', 'toaster', '$location', 'Constants',
+        function($scope, $log, $rootScope, proveedorFactory, productoFactory, ordenFactory,
+            toaster, $location, Constants) {
             $log.debug('Iniciando Orden....');
-            var tipoOrden;
+            var tipoOrden, esServicio = false;
 
             if ($location.$$url === '/ordenCompra') {
                 $scope.tituloPantalla = 'Orden de Compra';
-                $scope.isOrdenCompra = true; 
-                tipoOrden= Constants.ORDEN_COMPRA;       
+                tipoOrden = Constants.ORDEN_COMPRA;
             } else if ($location.$$url === '/requisicion') {
                 $scope.tituloPantalla = 'Requisición';
-                $scope.isRequisicion = true;  
-                tipoOrden= Constants.REQUISICION;      
+                $scope.isRequisicion = true;
+                tipoOrden = Constants.REQUISICION;
+            } else if ($location.$$url === '/requisicionServicio') {
+                $scope.tituloPantalla = 'Requisición de Servicio';
+                $scope.isRequisicion = true;
+                esServicio = true;
+                tipoOrden = Constants.REQUISICION_SERVICIO;
             } else {
                 $scope.tituloPantalla = 'Orden de Servicio';
-                $scope.isOrdenServicio = true;
-                tipoOrden= Constants.ORDEN_SERVICIO;      
+                tipoOrden = Constants.ORDEN_SERVICIO;
+                esServicio = true;
             }
 
             $scope.orden = ordenFactory.getOrdenObject();
@@ -44,7 +48,7 @@ angular.module('almacenApp')
                 $log.debug('label ' + label);
                 $log.debug('model ' + JSON.stringify(model));
                 $scope.orden.IdProveedor = proveedorObj.Id;
-                $scope.proveedor = proveedorObj;
+                $scope.orden.Proveedor = proveedorObj;
             }
 
             function saveProducto(productoObj, model, label, ordenItemObj) {
@@ -66,7 +70,7 @@ angular.module('almacenApp')
 
             $scope.getProductos = function(search) {
                 $log.debug('Buscando productos......');
-                return productoFactory.query(search).then(function(data) {
+                return productoFactory.queryProdAndSer(search, esServicio).then(function(data) {
                     return data;
                 });
             };
@@ -97,8 +101,11 @@ angular.module('almacenApp')
 
             $scope.save = function(isValid) {
                 if (isValid) {
+                    if ($scope.orden.OrdenItems.length === 0) {
+                        toaster.pop('error', 'Operación Fallida', 'Debe ingresar por lo menos un producto/servicio.');
+                    }
                     ordenFactory.save($scope.orden).then(function() {
-                        toaster.pop('success', 'mensaje', 'La Orden de Compra fue creada exitosamente.');
+                        toaster.pop('success', 'Operación Exitosa', 'La Orden de Compra fue creada exitosamente.');
                         $scope.clearForm();
                     }, function error(response) {
                         // An error has occurred

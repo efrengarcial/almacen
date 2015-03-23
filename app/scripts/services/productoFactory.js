@@ -31,6 +31,9 @@ angular
                 query: function(search) {
                     return apiFactory.all(WS.URI_QUERY_PRODUCTO).one(search).getList();
                 },
+                queryProdAndSer: function(search,esServicio) {
+                    return apiFactory.all(WS.URI_QUERY_PRODUCTO).one(search).one(esServicio).getList();
+                }
             };
         }
     ]);

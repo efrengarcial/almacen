@@ -17,6 +17,8 @@ angular
                         Id: null,
                         Tipo: null,
                         Numero: null,
+                        IdProveedor: null,
+                        Proveedor : null,
                         FechaOrden: moment().format(Constants.formatDate),
                         Notas: '',
                         OrdenItems: []

@@ -20,7 +20,18 @@
             <td>{{$index + 1}}.</td>
 
             <td>
-                <input class="form-control" type="text" ng-model="ordenItem.Producto.Nombre" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="Cargando" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label,ordenItem)" typeahead-editable="false" required  />
+                <div class="col-md-12 form-group required-field-block">
+                    <input class="form-control" name="producto" type="text" ng-model="ordenItem.Producto.Nombre" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label,ordenItem)" typeahead-editable="false"  ng-required="true" />
+                     <div class="required-icon" ng-mouseover="showMessage();">
+                        <div class="text">*</div>
+                    </div>
+                    <span  ng-show="loadingLocations" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>             
+
+                    <div class="error-message" ng-messages="ordenForm.producto.$error" ng-if="interacted(ordenForm.producto) || ordenForm.$submitted">
+                        <div class="error-message" ng-message="required">Debe ingresar un producto</div>     
+                    </div>  
+
+                </div>    
             </td>           
             <td>
                 {{ ordenItem.Producto.Codigo }}
@@ -29,7 +40,17 @@
                 {{ ordenItem.Producto.Medida.Nombre }}
             </td>
             <td>
-                 <input class="form-control" type="number" ng-model="ordenItem.Cantidad" required  />
+                <div class="col-md-8 form-group required-field-block">
+                    <input class="form-control" type="text" name="cantidad" ng-model="ordenItem.Cantidad"  ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/"  />
+                    <div class="required-icon" ng-mouseover="showMessage();">
+                        <div class="text">*</div>
+                    </div>
+                     <div class="error-message" ng-messages="ordenForm.cantidad.$error" ng-if="interacted(ordenForm.cantidad) || ordenForm.$submitted">
+                          <div class="error-message" ng-message="maxlength">El máximo es demasiado largo...</div>
+                          <div class="error-message" ng-message="required">Debe ingresar un valor para Cantidad</div>
+                          <div class="error-message" ng-message="pattern">El valor debe ser numérico</div>
+                         </div> 
+                     </div>    
             </td>
             <td>
                 {{ ordenItem.Producto.Precio |  currency }}
