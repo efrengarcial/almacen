@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name almacenApp.controller:ConsultarOrdenCtrl
+ * @name almacenApp.controller:inboxOrdenCtrl
  * @description
- * # ConsultarOrdenCtrl
+ * # inboxOrdenCtrl
  * Controller of the almacenApp
  */
 

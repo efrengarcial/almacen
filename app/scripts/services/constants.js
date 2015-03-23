@@ -36,6 +36,7 @@ angular
 	})
 	.constant('Constants', {
 		formatDate : 'DD/MM/YYYY',
+		minDate : 1399919400000,
 		datepickerFormatDate : 'dd/MM/yyyy',
 		pageSizes: [5, 10, 15],
         pageSize: 5,

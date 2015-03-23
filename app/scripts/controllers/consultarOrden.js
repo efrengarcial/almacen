@@ -18,7 +18,7 @@ angular.module('almacenApp')
             $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
 
             $scope.toggleMin = function() {
-                $scope.minDate = moment("01/01/2015").format(Constants.formatDate)
+                $scope.minDate = moment(Constants.minDate).format(Constants.formatDate);
             };
             $scope.toggleMin();
 
@@ -90,8 +90,9 @@ angular.module('almacenApp')
                     field: 'Proveedor.Nombre',
                     displayName: 'Proveedor'
                 }, {
-                    field: 'FechaCreacion',
-                    displayName: 'Fecha Creacion'
+                    field:'FechaCreacion',
+                    displayName: 'Fecha Creacion',
+                     cellFilter: 'date:\'dd/MM/yyyy HH:mm:ss\''
                 }, {
                     field: '',
                     displayName: 'Inhabilitar',
@@ -189,8 +190,6 @@ angular.module('almacenApp')
                         Numero: $scope.consultaOrden.Numero
                     };
 
-                    $scope.clearForm();
-
                     ordenFactory.query(params).then(function(data) {
                         $scope.allData = data;
 
@@ -208,8 +207,6 @@ angular.module('almacenApp')
                         EndDate: moment($scope.consultaOrden.EndDate).format(Constants.formatDate),
                         IdProveedor: $scope.consultaOrden.IdProveedor
                     };
-
-                    $scope.clearForm();
 
                     ordenFactory.query(params).then(function(data) {
                         $scope.allData = data;
