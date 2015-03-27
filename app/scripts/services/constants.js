@@ -26,7 +26,8 @@ angular
 		URI_INACTIVATE_PROVEEDOR: 'proveedor/inactivate',
 		URI_PROVEEDORES: 'proveedor/getAll',
 		URI_SAVE_ORDEN: 'orden/save',
-		URI_QUERY_ORDEN: 'orden/query'
+		URI_QUERY_ORDEN: 'orden/query',
+		URI_INACTIVATE_ORDEN: 'orden/inactivate'
 
 	})
 	.constant('menu', {		
@@ -36,7 +37,7 @@ angular
 	})
 	.constant('Constants', {
 		formatDate : 'DD/MM/YYYY',
-		minDate : 1399919400000,
+		minDate : 1420149727,
 		datepickerFormatDate : 'dd/MM/yyyy',
 		pageSizes: [5, 10, 15],
         pageSize: 5,

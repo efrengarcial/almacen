@@ -13,6 +13,7 @@ function isEmpty(value) {
 }
 
 angular.module('almacenApp').directive('numbersOnly', [
+
     function() {
         return {
             require: 'ngModel',

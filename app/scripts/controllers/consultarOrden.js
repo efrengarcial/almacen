@@ -90,9 +90,9 @@ angular.module('almacenApp')
                     field: 'Proveedor.Nombre',
                     displayName: 'Proveedor'
                 }, {
-                    field:'FechaCreacion',
+                    field: 'FechaCreacion',
                     displayName: 'Fecha Creacion',
-                     cellFilter: 'date:\'dd/MM/yyyy HH:mm:ss\''
+                    cellFilter: 'date:\'dd/MM/yyyy HH:mm:ss\''
                 }, {
                     field: '',
                     displayName: 'Inhabilitar',
@@ -170,6 +170,9 @@ angular.module('almacenApp')
 
                 if ($scope.consultaOrden.Numero !== undefined) {
                     $scope.truefalse = true;
+                    $scope.consultaOrden.StartDate = new Date().getTime();
+                    $scope.consultaOrden.EndDate = new Date().getTime();
+
                 } else {
                     $scope.truefalse = false;
                     $scope.consultaOrden.Numero = null;

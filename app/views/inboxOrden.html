@@ -1,1 +1,16 @@
-<div class="cointainer-fluid"></div>
+<div class="container-fluid">
+	<h2>Resultados</h2>
+	<!-- Table to show data -->
+	<div class="grid">
+		
+		<!-- Binds the grid component to be displayed. -->
+		<div class="gridStyle" ng-grid="gridOptions" ng-show="allData.length > 0"></div>
+		
+		<!--  Bind the pagination component to be displayed. -->
+		<pagination direction-links="true" boundary-links="true" ng-show="allData.length > 0"
+			total-items="pagingOptions.totalServerItems" items-per-page="pagingOptions.pageSize"
+			ng-model="pagingOptions.currentPage" ng-change="refreshGrid()">
+		</pagination>
+	</div>
+	<!-- end table-->
+</div>

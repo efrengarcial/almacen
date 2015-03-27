@@ -18,7 +18,7 @@ angular
                         Tipo: null,
                         Numero: null,
                         IdProveedor: null,
-                        Proveedor : null,
+                        Proveedor: null,
                         FechaOrden: moment().format(Constants.formatDate),
                         Notas: '',
                         OrdenItems: []
@@ -38,6 +38,7 @@ angular
 
                     return orden;
                 },
+
                 addOrdenItemObject: function(orden) {
                     var ordenItem = {
                         Cantidad: null,
@@ -55,18 +56,20 @@ angular
                     orden.OrdenItems.push(ordenItem);
                     return ordenItem;
                 },
+
                 getConsultaOrdenObject: function() {
                     var consultaOrden = {
-                        Numero : null,
+                        Numero: null,
                         StartDate: new Date().getTime(),
                         EndDate: new Date().getTime(),
-                        Proveedor : null,
-                        IdProveedor : null,
+                        Proveedor: null,
+                        IdProveedor: null,
                         IdUsuario: null
                     };
 
                     return consultaOrden;
                 },
+
                 save: function(orden) {
                     var ordenWS = {
                         Tipo: orden.Tipo,
@@ -86,6 +89,10 @@ angular
                         ordenWS.OrdenItems.push(ordenItemWS);
                     }
                     return apiFactory.all(WS.URI_SAVE_ORDEN).post(ordenWS);
+                },
+
+                inactivate: function(idOrden) {
+                    return apiFactory.all(WS.URI_INACTIVATE_ORDEN).post(idOrden);
                 },
 
                 query: function(params) {
