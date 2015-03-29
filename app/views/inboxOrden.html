@@ -1,10 +1,15 @@
 <div class="container-fluid">
-	<h2>Resultados</h2>
+	<div class="row">
+		<div class="col-md-3">
+			<h1 class="header">Mis pendientes</h1>
+		</div>		
+	</div>
+
 	<!-- Table to show data -->
 	<div class="grid">
 		
 		<!-- Binds the grid component to be displayed. -->
-		<div class="gridStyle" ng-grid="gridOptions" ng-show="allData.length > 0"></div>
+		<div class="inboxGrid" ng-grid="gridOptions" ng-show="allData.length > 0"></div>
 		
 		<!--  Bind the pagination component to be displayed. -->
 		<pagination direction-links="true" boundary-links="true" ng-show="allData.length > 0"

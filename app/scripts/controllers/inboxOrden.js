@@ -14,8 +14,8 @@ angular.module('almacenApp')
             $log.debug('Iniciando Mis pendientes: ');
 
             $scope.sortInfo = {
-                fields: ['Nit'],
-                directions: ['asc']
+                fields: ['FechaCreacion'],
+                directions: ['des']
             };
 
             $scope.pagingOptions = {
@@ -35,26 +35,24 @@ angular.module('almacenApp')
                 pagingOptions: $scope.pagingOptions,
 
                 columnDefs: [{
-                    field: 'Nit',
-                    displayName: 'Nit'
+                    field: 'Numero',
+                    displayName: 'Numero'
                 }, {
-                    field: 'Nombre',
-                    displayName: 'Nombre'
+                    field: 'Tipo',
+                    displayName: 'Tipo'
                 }, {
-                    field: 'Telefono',
-                    displayName: 'Telefono'
+                    field: 'FechaCreacion',
+                    displayName: 'Fecha',
+                    cellFilter: 'date:\'dd/MM/yyyy HH:mm:ss\''
                 }, {
-                    field: 'Direccion',
-                    displayName: 'Direccion'
+                    field: 'Cancelada',
+                    displayName: 'Cancelada'
                 }, {
-                    field: 'EMail',
-                    displayName: 'E-mail'
+                    field: 'CentroCostos',
+                    displayName: 'CentroCostos'
                 }, {
-                    field: 'Ciudad',
-                    displayName: 'Ciudad'
-                }, {
-                    field: 'FormaPago',
-                    displayName: 'Forma Pago'
+                    field: 'Estado',
+                    displayName: 'Estado'
                 }, {
                     field: '',
                     displayName: 'Inhabilitar',
@@ -123,20 +121,37 @@ angular.module('almacenApp')
 
 
             // Picks up the event broadcasted when the person is selected from the grid and perform 
-            // the proveedor load by calling the appropiate rest service.
-            $scope.$on('proveedorSelected', function(event, proveedor) {
-                $scope.proveedor = proveedor;
+            // the orden load by calling the appropiate rest service.
+            $scope.$on('inboxOrdenSelected', function(event, orden) {
+                $scope.orden = orden;
             });
 
+            /* Cargar las requesiciones y requesiciones de servicios */
+            function showMisPendientes() {
+                ordenFactory.getAll().then(function(data) {
+                    $scope.allData = data;
+
+                    if ($scope.allData[0] === undefined) {
+                        toaster.pop('warning', 'Advertencia', 'No hay requesiciones ABIERTAS, para mostrar.');
+                    } else {
+                        $scope.pagingOptions.currentPage = 1;
+                        $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                    }
+                });
+                $log.debug('Muestra mis pendientes');
+            }
+
+            showMisPendientes();
 
             // Broadcast an event when an element in the grid is deleted. No real deletion is perfomed at this point.
             $scope.deleteRow = function(row) {
-                var title = 'Inhabilitar \'' + row.entity.Nombre + '\'';
+                $log.debug("Id orden: " + $scope.orden);
+                var title = 'Inhabilitar \'' + row.entity.Numero + '\'';
                 var msg = "Seguro que deseas desactivar este elemento?";
                 var confirmCallback = function() {
-                    proveedorFactory.inactivate($scope.proveedor.Id).then(function() {
-                        toaster.pop('success', 'mensaje', 'El proveedor fue Inhabilitado exitosamente.');
-                        $scope.clearForm();
+                    ordenFactory.inactivate($scope.orden.Id).then(function() {
+                        toaster.pop('success', 'mensaje', 'La orden ha sido Inhabilitada exitosamente.');
+                        //$scope.clearForm();
                     }, function error(response) {
                         // An error has occurred
                         $rootScope.$emit('evento', {
@@ -154,6 +169,5 @@ angular.module('almacenApp')
             $scope.$on('clear', function() {
                 $scope.gridOptions.selectAll(false);
             });
-
         }
     ]);

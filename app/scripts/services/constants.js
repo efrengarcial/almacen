@@ -27,7 +27,8 @@ angular
 		URI_PROVEEDORES: 'proveedor/getAll',
 		URI_SAVE_ORDEN: 'orden/save',
 		URI_QUERY_ORDEN: 'orden/query',
-		URI_INACTIVATE_ORDEN: 'orden/inactivate'
+		URI_INACTIVATE_ORDEN: 'orden/inactivate',
+		URI_ORDENES: 'orden/getAll'
 
 	})
 	.constant('menu', {		
@@ -40,7 +41,7 @@ angular
 		minDate : 1420149727,
 		datepickerFormatDate : 'dd/MM/yyyy',
 		pageSizes: [5, 10, 15],
-        pageSize: 5,
+        pageSize: 15,
         ORDEN_COMPRA: 'ORDEN_COMPRA',
         ORDEN_SERVICIO: 'ORDEN_SERVICIO',
         REQUISICION: 'REQUISICION',
