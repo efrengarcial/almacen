@@ -11,7 +11,7 @@
 angular.module('almacenApp')
     .controller('inboxOrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter', 'modalWindowFactory', 'moment', 'Constants',
         function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants) {
-            $log.debug('Iniciando Mis pendientes: ');
+            $log.debug('Mostrando mis pendientes:');
 
             $scope.sortInfo = {
                 fields: ['FechaCreacion'],
@@ -45,8 +45,8 @@ angular.module('almacenApp')
                     displayName: 'Fecha',
                     cellFilter: 'date:\'dd/MM/yyyy HH:mm:ss\''
                 }, {
-                    field: 'Cancelada',
-                    displayName: 'Cancelada'
+                    field: 'Anulada',
+                    displayName: 'Anulada'
                 }, {
                     field: 'CentroCostos',
                     displayName: 'CentroCostos'
@@ -138,18 +138,17 @@ angular.module('almacenApp')
                         $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
                     }
                 });
-                $log.debug('Muestra mis pendientes');
             }
 
             showMisPendientes();
 
             // Broadcast an event when an element in the grid is deleted. No real deletion is perfomed at this point.
             $scope.deleteRow = function(row) {
-                $log.debug("Id orden: " + $scope.orden);
                 var title = 'Inhabilitar \'' + row.entity.Numero + '\'';
                 var msg = "Seguro que deseas desactivar este elemento?";
                 var confirmCallback = function() {
                     ordenFactory.inactivate($scope.orden.Id).then(function() {
+                        $log.debug("Id orden: " + $scope.orden.Id);
                         toaster.pop('success', 'mensaje', 'La orden ha sido Inhabilitada exitosamente.');
                         //$scope.clearForm();
                     }, function error(response) {
