@@ -151,6 +151,7 @@ angular.module('almacenApp')
                         $log.debug("Id orden: " + $scope.orden.Id);
                         toaster.pop('success', 'mensaje', 'La orden ha sido Inhabilitada exitosamente.');
                         //$scope.clearForm();
+                        showMisPendientes();
                     }, function error(response) {
                         // An error has occurred
                         $rootScope.$emit('evento', {
