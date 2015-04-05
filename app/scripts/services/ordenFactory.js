@@ -99,7 +99,7 @@ angular
                     return apiFactory.all(WS.URI_QUERY_ORDEN).getList(params);
                 },
 
-                getAll: function() {
+                getInboxOrden: function() {
                     return apiFactory.all(WS.URI_ORDENES).getList().then(function(ordenes) {
                         return ordenes;
                     });

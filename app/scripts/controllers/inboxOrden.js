@@ -13,6 +13,7 @@ angular.module('almacenApp')
         function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants) {
             $log.debug('Mostrando mis pendientes:');
 
+
             $scope.sortInfo = {
                 fields: ['FechaCreacion'],
                 directions: ['des']
@@ -36,17 +37,20 @@ angular.module('almacenApp')
 
                 columnDefs: [{
                     field: 'Numero',
-                    displayName: 'Numero'
+                    displayName: 'Numero',
+                    width: 100
                 }, {
                     field: 'Tipo',
-                    displayName: 'Tipo'
+                    displayName: 'Tipo',
+                    width: 220
                 }, {
                     field: 'FechaCreacion',
                     displayName: 'Fecha',
-                    cellFilter: 'date:\'dd/MM/yyyy HH:mm:ss\''
+                    cellFilter: 'date:\'dd/MM/yyyy HH:mm:ss\'',
+                    width: 200
                 }, {
-                    field: 'Anulada',
-                    displayName: 'Anulada'
+                    field: 'Proveedor.Nombre',
+                    displayName: 'Proveedor'
                 }, {
                     field: 'CentroCostos',
                     displayName: 'CentroCostos'
@@ -55,9 +59,14 @@ angular.module('almacenApp')
                     displayName: 'Estado'
                 }, {
                     field: '',
-                    displayName: 'Inhabilitar',
+                    displayName: 'Ir a',
                     width: 100,
-                    cellTemplate: '<span class="glyphicon glyphicon-remove" ng-click="deleteRow(row)"></span>'
+                    cellTemplate: '<span class="glyphicon glyphicon-open" ng-click="deleteRow(row)"></span>'
+                }, {
+                    field: '',
+                    displayName: 'Descartar',
+                    width: 100,
+                    cellTemplate: '<span class="glyphicon glyphicon-trash" ng-click="deleteRow(row)"></span>'
                 }],
 
                 multiSelect: false,
@@ -128,7 +137,7 @@ angular.module('almacenApp')
 
             /* Cargar las requesiciones y requesiciones de servicios */
             function showMisPendientes() {
-                ordenFactory.getAll().then(function(data) {
+                ordenFactory.getInboxOrden().then(function(data) {
                     $scope.allData = data;
 
                     if ($scope.allData[0] === undefined) {
@@ -170,4 +179,4 @@ angular.module('almacenApp')
                 $scope.gridOptions.selectAll(false);
             });
         }
-    ]);
+    ]); 
