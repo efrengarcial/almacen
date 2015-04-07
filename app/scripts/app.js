@@ -66,6 +66,10 @@ angular
       .when('/inboxOrden', {
         templateUrl: 'views/inboxOrden.html',
         controller: 'inboxOrdenCtrl'
+      })
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'AccountCtrl'
       })                    
       .otherwise({
         redirectTo: '/'
