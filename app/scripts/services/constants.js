@@ -28,7 +28,9 @@ angular
 		URI_SAVE_ORDEN: 'orden/save',
 		URI_QUERY_ORDEN: 'orden/query',
 		URI_INACTIVATE_ORDEN: 'orden/inactivate',
-		URI_ORDENES: 'orden/getAll'
+		URI_ORDENES: 'orden/getAll',
+
+		URI_TOKEN: 'token'
 
 	})
 	.constant('menu', {		
