@@ -407,8 +407,8 @@ white-space: nowrap;
 
 }
 
-.glyphicon{
-
-  text-align: center;
+.glyphicon-center{
+  position: relative;
+  left: 50%;
 }
 

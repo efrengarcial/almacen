@@ -55,20 +55,16 @@ angular.module('almacenApp')
                     field: 'CentroCostos',
                     displayName: 'CentroCostos'
                 }, {
-                    field: 'Estado',
-                    displayName: 'Estado'
-                }, {
                     field: '',
                     displayName: 'Ir a',
                     width: 100,
-                    cellTemplate: '<span class="glyphicon glyphicon-open" ng-click="deleteRow(row)"></span>'
+                    cellTemplate: '<span class="glyphicon glyphicon-open glyphicon-center" ng-click="openOrden(row)"></span>'
                 }, {
                     field: '',
                     displayName: 'Descartar',
                     width: 100,
-                    cellTemplate: '<span class="glyphicon glyphicon-trash" ng-click="deleteRow(row)"></span>'
+                    cellTemplate: '<span class="glyphicon glyphicon-trash glyphicon-center" ng-click="deleteRow(row)"></span>'
                 }],
-
                 multiSelect: false,
                 selectedItems: [],
                 // Broadcasts an event when a row is selected, to signal the form that it needs to load the row data.
@@ -173,10 +169,14 @@ angular.module('almacenApp')
                 //$rootScope.$broadcast('deletePerson', row.entity.id);
             };
 
+            $scope.openOrden = function(row) {
+                $log.debug(row.entity.Id);
+            };
+
 
             // Picks the event broadcasted when the form is cleared to also clear the grid selection.
             $scope.$on('clear', function() {
                 $scope.gridOptions.selectAll(false);
             });
         }
-    ]); 
+    ]);
