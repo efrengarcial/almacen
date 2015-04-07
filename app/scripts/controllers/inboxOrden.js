@@ -11,7 +11,8 @@
 angular.module('almacenApp')
     .controller('inboxOrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter', 'modalWindowFactory', 'moment', 'Constants',
         function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants) {
-            $log.debug('Iniciando Mis pendientes: ');
+            $log.debug('Mostrando mis pendientes:');
+
 
             $scope.sortInfo = {
                 fields: ['FechaCreacion'],
@@ -36,17 +37,20 @@ angular.module('almacenApp')
 
                 columnDefs: [{
                     field: 'Numero',
-                    displayName: 'Numero'
+                    displayName: 'Numero',
+                    width: 100
                 }, {
                     field: 'Tipo',
-                    displayName: 'Tipo'
+                    displayName: 'Tipo',
+                    width: 220
                 }, {
                     field: 'FechaCreacion',
                     displayName: 'Fecha',
-                    cellFilter: 'date:\'dd/MM/yyyy HH:mm:ss\''
+                    cellFilter: 'date:\'dd/MM/yyyy HH:mm:ss\'',
+                    width: 200
                 }, {
-                    field: 'Cancelada',
-                    displayName: 'Cancelada'
+                    field: 'Proveedor.Nombre',
+                    displayName: 'Proveedor'
                 }, {
                     field: 'CentroCostos',
                     displayName: 'CentroCostos'
@@ -55,9 +59,14 @@ angular.module('almacenApp')
                     displayName: 'Estado'
                 }, {
                     field: '',
-                    displayName: 'Inhabilitar',
+                    displayName: 'Ir a',
                     width: 100,
-                    cellTemplate: '<span class="glyphicon glyphicon-remove" ng-click="deleteRow(row)"></span>'
+                    cellTemplate: '<span class="glyphicon glyphicon-open" ng-click="deleteRow(row)"></span>'
+                }, {
+                    field: '',
+                    displayName: 'Descartar',
+                    width: 100,
+                    cellTemplate: '<span class="glyphicon glyphicon-trash" ng-click="deleteRow(row)"></span>'
                 }],
 
                 multiSelect: false,
@@ -128,7 +137,7 @@ angular.module('almacenApp')
 
             /* Cargar las requesiciones y requesiciones de servicios */
             function showMisPendientes() {
-                ordenFactory.getAll().then(function(data) {
+                ordenFactory.getInboxOrden().then(function(data) {
                     $scope.allData = data;
 
                     if ($scope.allData[0] === undefined) {
@@ -138,20 +147,20 @@ angular.module('almacenApp')
                         $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
                     }
                 });
-                $log.debug('Muestra mis pendientes');
             }
 
             showMisPendientes();
 
             // Broadcast an event when an element in the grid is deleted. No real deletion is perfomed at this point.
             $scope.deleteRow = function(row) {
-                $log.debug("Id orden: " + $scope.orden);
                 var title = 'Inhabilitar \'' + row.entity.Numero + '\'';
                 var msg = "Seguro que deseas desactivar este elemento?";
                 var confirmCallback = function() {
                     ordenFactory.inactivate($scope.orden.Id).then(function() {
+                        $log.debug("Id orden: " + $scope.orden.Id);
                         toaster.pop('success', 'mensaje', 'La orden ha sido Inhabilitada exitosamente.');
                         //$scope.clearForm();
+                        showMisPendientes();
                     }, function error(response) {
                         // An error has occurred
                         $rootScope.$emit('evento', {
@@ -170,4 +179,4 @@ angular.module('almacenApp')
                 $scope.gridOptions.selectAll(false);
             });
         }
-    ]);
+    ]); 
