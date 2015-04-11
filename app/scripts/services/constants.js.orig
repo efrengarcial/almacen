@@ -15,7 +15,6 @@ angular
 		apiPath : 'api',
 		apiTimeout : 500000
 	})
-	.constant('tokenKey', 'accessToken')
 	.constant('WS', {
 		URI_LINEAS : 'producto/lineas',
 		URI_MEDIDAS: 'producto/medidas',
@@ -29,9 +28,13 @@ angular
 		URI_SAVE_ORDEN: 'orden/save',
 		URI_QUERY_ORDEN: 'orden/query',
 		URI_INACTIVATE_ORDEN: 'orden/inactivate',
-		URI_ORDENES: 'orden/getInboxOrden',
-		
+<<<<<<< HEAD
+		URI_ORDENES: 'orden/getAll',
+
 		URI_TOKEN: 'token'
+=======
+		URI_ORDENES: 'orden/getInboxOrden'
+>>>>>>> e64fe2d4a6cabeea1633508b0ff9984307cf3fc2
 
 	})
 	.constant('menu', {		
