@@ -10,8 +10,8 @@
 
 angular.module('almacenApp')
     .controller('AccountCtrl', ['$scope', '$log', '$rootScope', 'toaster', 'accountFactory',
-
-        function($scope, $log, $rootScope, toaster, accountFactory) {
+        'tokenKey','$location',
+        function($scope, $log, $rootScope, toaster, accountFactory, tokenKey,$location) {
             $log.debug('Iniciando Account...');
 
             $scope.hasLoginError = false;
@@ -25,7 +25,7 @@ angular.module('almacenApp')
 
             var successLoginCallback = function(result) {
                 $log.debug(result);
-                //$location.path("/submitorder");
+                $location.path("/about");
                 sessionStorage.setItem(tokenKey, result.access_token);
                 $scope.hasLoginError = false;
                 $scope.isAuthenticated = true;

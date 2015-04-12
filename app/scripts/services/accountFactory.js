@@ -9,8 +9,8 @@
  */
 angular
     .module('almacenApp')
-    .factory('accountFactory', ['Restangular', 'apiFactory', 'WS','appConfig', '$http',
-        function(Restangular, apiFactory, WS, appConfig, $http) {
+    .factory('accountFactory', ['Restangular', 'apiFactory', 'WS', 'appConfig', '$http','tokenKey',
+        function(Restangular, apiFactory, WS, appConfig, $http, tokenKey) {
             return {
                 generateAccessToken: function(loginData) {
                     var requestToken = $http({
@@ -23,6 +23,14 @@ angular
                     });
 
                     return requestToken;
+                },
+                isUserAuthenticated : function() {
+                    var token = sessionStorage.getItem(tokenKey);
+
+                    if (token)
+                        return true;
+                    else
+                        return false;
                 }
             };
         }
