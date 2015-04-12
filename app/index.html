@@ -33,7 +33,7 @@
      <!-- Fixed navbar -->
         <!-- Fixed navbar -->
     <div class="navbar navbar-default1 navbar-fixed-top">
-      <div class="container">
+      <div  ng-controller="AccountCtrl" class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="icon-bar"></span>
@@ -44,14 +44,22 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#/login">Sign in</a></li>
             <li><a href="#/productos">Productos</a></li>
             <li><a href="#/proveedor">Proveedores</a></li>
-            <li><a href="#/ordenCompra">Orden de Compra</a></li>
-            <li><a href="#/requisicion">Requisición</a></li>
-            <li><a href="#/ordenServicio">Orden de Servicio</a></li>
+            <li class="dropdown">
+                <a href="" data-toggle="dropdown" class="dropdown-toggle">Ordenes <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                   <li><a href="#/ordenCompra">Orden de Compra</a></li>
+                    <li><a href="#/requisicion">Requisición</a></li>
+                    <li><a href="#/ordenServicio">Orden de Servicio</a></li>
+                    <li><a href="#/requisicionServicio">Requisición de Servicio</a></li>
+                    <li class="divider"></li>                   
+                </ul>
+            </li>           
             <li><a href="#/consultarOrden">Consultar Orden</a></li>
             <li><a href="#/inboxOrden">Mis pendientes</a></li>
+            <li ng-show="!isUserAuthenticated()"><a href="#/login">Sign in</a></li>
+            <li ng-show="isUserAuthenticated()"><a href="" ng-click="logout()">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -132,6 +140,7 @@
         <script src="scripts/controllers/inboxOrden.js"></script>
         <script src="scripts/controllers/account.js"></script>
         <script src="scripts/services/accountFactory.js"></script> 
+        <script src="scripts/services/authInterceptorFactory.js"></script> 
         <!-- endbuild -->
 </body>
 </html>

@@ -22,9 +22,10 @@ angular
     'ui.bootstrap',
     'angularMoment'
   ])
-  .config(function ($routeProvider,$logProvider,$locationProvider) {
+  .config(function ($routeProvider,$logProvider,$locationProvider,$httpProvider) {
     $logProvider.debugEnabled(true);
     //$locationProvider.html5Mode(true);
+      $httpProvider.interceptors.push('authInterceptorFactory');
 
     $routeProvider
       .when('/', {
@@ -48,6 +49,10 @@ angular
         controller: 'OrdenCtrl'
       })
       .when('/ordenServicio', {
+        templateUrl: 'views/orden.html',
+        controller: 'OrdenCtrl'
+      })
+      .when('/requisicionServicio', {
         templateUrl: 'views/orden.html',
         controller: 'OrdenCtrl'
       })

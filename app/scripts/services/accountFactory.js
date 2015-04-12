@@ -9,8 +9,14 @@
  */
 angular
     .module('almacenApp')
-    .factory('accountFactory', ['Restangular', 'apiFactory', 'WS', 'appConfig', '$http','tokenKey',
-        function(Restangular, apiFactory, WS, appConfig, $http, tokenKey) {
+    .factory('accountFactory', ['Restangular', 'apiFactory', 'WS', 'appConfig', '$http', 'authorDataKey',
+        function(Restangular, apiFactory, WS, appConfig, $http, authorDataKey) {
+
+            var _authenticationData = {
+                isAuth: false,
+                userName: ""
+            };
+
             return {
                 generateAccessToken: function(loginData) {
                     var requestToken = $http({
@@ -24,13 +30,25 @@ angular
 
                     return requestToken;
                 },
-                isUserAuthenticated : function() {
-                    var token = sessionStorage.getItem(tokenKey);
-
-                    if (token)
-                        return true;
-                    else
-                        return false;
+                isUserAuthenticated: function() {
+                    return _authenticationData.isAuth;
+                },
+                logout: function() {
+                    sessionStorage.removeItem(authorDataKey);
+                    _authenticationData.isAuth = false;
+                    _authenticationData.userName = "";
+                },
+                 getAuthenticationData: function(){
+                    return _authenticationData;
+                 },
+                setAuthenticationData: function(_token, _userName) {
+                    var data = {
+                        token: _token,
+                        userName: _userName
+                    };
+                    sessionStorage.setItem(authorDataKey, JSON.stringify(data));
+                    _authenticationData.isAuth = true;
+                    _authenticationData.userName = _userName;
                 }
             };
         }

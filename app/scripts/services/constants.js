@@ -15,7 +15,7 @@ angular
 		apiPath : 'api',
 		apiTimeout : 500000
 	})
-	.constant('tokenKey', 'accessToken')
+	.constant('authorDataKey', 'authorizationData')
 	.constant('WS', {
 		URI_LINEAS : 'producto/lineas',
 		URI_MEDIDAS: 'producto/medidas',
