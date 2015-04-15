@@ -13,7 +13,6 @@ angular.module('almacenApp')
         function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants) {
             $log.debug('Mostrando mis pendientes:');
 
-
             $scope.sortInfo = {
                 fields: ['FechaCreacion'],
                 directions: ['des']
@@ -170,7 +169,9 @@ angular.module('almacenApp')
             };
 
             $scope.openOrden = function(row) {
-                $log.debug(row.entity.Id);
+                ordenFactory.getById(row.entity.Id).then(function(data) {
+                    $log.debug(JSON.stringify(data));
+                });
             };
 
 

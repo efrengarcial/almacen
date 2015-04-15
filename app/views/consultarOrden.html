@@ -1,4 +1,10 @@
 <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3">
+			<h1 class="header">Consultar Orden</h1>
+		</div>
+	</div>
+	<hr>
 	<form name="consultarOrdenForm" ng-submit="submitForm(consultarOrdenForm.$valid)" role="form" novalidate>
 		<div class="row">
 			<div class="col-md-4 form-group required-field-block">
@@ -6,7 +12,7 @@
 				<div class="col-md-8">
 					<input type="text" ng-model="consultaOrden.Numero" ng-change="changeFields()" name="numero" placeholder="Número de Orden" class="form-control" ng-required="true" ng-pattern="/^[0-9]{1,20}$/" numbers-only/>
 					<!-- <div class="required-icon" ng-mouseover="showMessage();">
-						<div class="text">*</div>
+								<div class="text">*</div>
 					</div>-->
 					<div class="error-message" ng-messages="consultarOrdenForm.numero.$error" ng-if="interacted(consultarOrdenForm.numero || consultarOrdenForm.$pristine)">
 						<!-- <div class="error-message" ng-message="required">Debe ingresar un # de Orden</div> -->
@@ -49,7 +55,7 @@
 				<div class="col-md-8">
 					<input type="text" ng-model="consultaOrden.Proveedor" name="proveedor" placeholder="Proveedor" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" 						typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" ng-readonly="truefalse" />
 					<!--<div class="required-icon" ng-mouseover="showMessage();">
-													<div class="text">*</div>
+															<div class="text">*</div>
 					</div>-->
 					<div class="error-message" ng-messages="consultarOrdenForm.proveedor.$error" ng-if="interacted(consultarOrdenForm.proveedor) || consultarOrdenForm.$submitted">
 						<!-- <div class="error-message" ng-message="required">Debe ingresar un Proveedor.</div> -->
@@ -65,7 +71,7 @@
 						<option>Usuario-2</option>
 					</select>
 					<!--<div class="required-icon" ng-mouseover="showMessage();">
-													<div class="text">*</div>
+															<div class="text">*</div>
 					</div>-->
 					<div class="error-message" ng-messages="consultarOrdenForm.usuario.$error" ng-if="interacted(consultarOrdenForm.usuario) || consultarOrdenForm.$submitted">
 						<!--<div class="error-message">Debe seleccionar un usuario.</div>-->

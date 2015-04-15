@@ -91,6 +91,10 @@ angular
                     return apiFactory.all(WS.URI_SAVE_ORDEN).post(ordenWS);
                 },
 
+                getById: function(idOrden) {
+                    return apiFactory.all(WS.URI_GET_ORDEN).get(idOrden);
+                },
+
                 inactivate: function(idOrden) {
                     return apiFactory.all(WS.URI_INACTIVATE_ORDEN).post(idOrden);
                 },
@@ -100,10 +104,10 @@ angular
                 },
 
                 getInboxOrden: function() {
-                    return apiFactory.all(WS.URI_ORDENES).getList().then(function(ordenes) {
+                    return apiFactory.all(WS.URI_GET_INBOX_ORDEN).getList().then(function(ordenes) {
                         return ordenes;
                     });
-                }                
+                }
             };
         }
     ]);

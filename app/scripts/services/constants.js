@@ -29,8 +29,8 @@ angular
 		URI_SAVE_ORDEN: 'orden/save',
 		URI_QUERY_ORDEN: 'orden/query',
 		URI_INACTIVATE_ORDEN: 'orden/inactivate',
-		URI_ORDENES: 'orden/getInboxOrden',
-		
+		URI_GET_INBOX_ORDEN: 'orden/getInboxOrden',
+		URI_GET_ORDEN: 'orden/getById',		
 		URI_TOKEN: 'token'
 
 	})
