@@ -9,9 +9,9 @@
  */
 angular.module('almacenApp')
     .controller('OrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'productoFactory',
-        'ordenFactory', 'toaster', '$location', 'Constants',
+        'ordenFactory', 'toaster', '$location', 'Constants','accountFactory',
         function($scope, $log, $rootScope, proveedorFactory, productoFactory, ordenFactory,
-            toaster, $location, Constants) {
+            toaster, $location, Constants,accountFactory) {
             $log.debug('Iniciando Orden....');
             var tipoOrden, esServicio = false;
 
@@ -35,6 +35,7 @@ angular.module('almacenApp')
 
             $scope.orden = ordenFactory.getOrdenObject();
             $scope.orden.Tipo = tipoOrden;
+            $scope.orden.Solicitante = accountFactory.getAuthenticationData().userName;
             $scope.proveedores = [];
 
             /* Cargar información de listas */
@@ -84,6 +85,7 @@ angular.module('almacenApp')
                 $scope.orden = ordenFactory.getOrdenObject();
                 $scope.orden.Tipo = tipoOrden;
                 $scope.ordenForm.$setPristine();
+                $scope.orden.Solicitante = accountFactory.getAuthenticationData().userName;
                 // Broadcast the event to also clear the grid selection.
                 //$rootScope.$broadcast('clear');
             };

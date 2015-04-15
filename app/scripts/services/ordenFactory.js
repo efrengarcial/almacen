@@ -14,12 +14,13 @@ angular
             return {
                 getOrdenObject: function() {
                     var orden = {
-                        Id: null,
+                        Id: '00000000',
                         Tipo: null,
                         Numero: null,
                         IdProveedor: null,
                         Proveedor: null,
                         FechaOrden: moment().format(Constants.formatDate),
+                        Solicitante: null,
                         Notas: '',
                         OrdenItems: []
                     };

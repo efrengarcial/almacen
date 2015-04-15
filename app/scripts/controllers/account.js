@@ -10,25 +10,27 @@
 
 angular.module('almacenApp')
     .controller('AccountCtrl', ['$scope', '$log', '$rootScope', 'toaster', 'accountFactory',
-        'tokenKey','$location',
-        function($scope, $log, $rootScope, toaster, accountFactory, tokenKey,$location) {
+        'authorDataKey', '$location',
+        function($scope, $log, $rootScope, toaster, accountFactory, authorDataKey, $location) {
             $log.debug('Iniciando Account...');
 
             $scope.hasLoginError = false;
+            $scope.credentials = {};
 
             // Callbacks
             var errorLoginCallback = function(data, status, headers, config) {
                 $log.debug(data);
                 $scope.hasLoginError = true;
                 $scope.loginErrorDescription = data.error_description;
+                //$rootScope.isAuthenticated = false;
             }
 
             var successLoginCallback = function(result) {
                 $log.debug(result);
                 $location.path("/about");
-                sessionStorage.setItem(tokenKey, result.access_token);
+                accountFactory.setAuthenticationData( result.access_token, $scope.credentials.login);
                 $scope.hasLoginError = false;
-                $scope.isAuthenticated = true;
+                //$rootScope.isAuthenticated = true;
             }
 
             // Generate Token - Login
@@ -37,8 +39,8 @@ angular.module('almacenApp')
 
                 var loginData = {
                     grant_type: 'password',
-                    username: $scope.loginEmail,
-                    password: $scope.loginPassword
+                    username: $scope.credentials.login,
+                    password: $scope.credentials.password
                 };
                 $log.debug("username: " + $scope.loginEmail + " password: " + $scope.loginPassword);
 
@@ -48,6 +50,13 @@ angular.module('almacenApp')
 
             }
 
+            $scope.isUserAuthenticated = function() {
+                return accountFactory.isUserAuthenticated();
+            }
+
+            $scope.logout = function() {
+                accountFactory.logout();
+            }
 
         }
     ]);
