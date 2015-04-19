@@ -91,27 +91,9 @@ angular
                     return apiFactory.all(WS.URI_SAVE_ORDEN).post(ordenWS);
                 },
 
-                inactivate: function(idOrden) {
-                    return apiFactory.all(WS.URI_INACTIVATE_ORDEN).post(idOrden);
-                },
-
-                query: function(params) {
-                    return apiFactory.all(WS.URI_QUERY_ORDEN).getList(params);
-                },
-
-                getInboxOrden: function() {
-                    return apiFactory.all(WS.URI_ORDENES).getList().then(function(ordenes) {
-                        return ordenes;
-                    });
-                },
-                getOrdenesCompraAbiertas: function() {
-                    return apiFactory.all(WS.URI_ORDENES_ORDENES_ABIERTAS).getList().then(function(ordenes) {
-                        return ordenes;
-                    });
-                },
-                getOrdenById: function(id) {
+                getById: function(idOrden) {
                     var orden = this.getOrdenObject();
-                    return apiFactory.one(WS.URI_ORDENES_GETBYID, id).get().then(function(ordenWS) {
+                    return apiFactory.one(WS.URI_GET_ORDEN, idOrden).get().then(function(ordenWS) {
                         orden.Id = ordenWS.Id;
                         orden.Numero = ordenWS.Numero;
                         orden.Proveedor = ordenWS.Proveedor;
@@ -127,6 +109,25 @@ angular
 
                         
                         return orden;
+                    });
+                },
+
+                inactivate: function(idOrden) {
+                    return apiFactory.all(WS.URI_INACTIVATE_ORDEN).post(idOrden);
+                },
+
+                query: function(params) {
+                    return apiFactory.all(WS.URI_QUERY_ORDEN).getList(params);
+                },
+
+                getInboxOrden: function() {
+                    return apiFactory.all(WS.URI_GET_INBOX_ORDEN).getList().then(function(ordenes) {
+                        return ordenes;
+                    });
+                },
+                getOrdenesCompraAbiertas: function() {
+                    return apiFactory.all(WS.URI_ORDENES_ORDENES_ABIERTAS).getList().then(function(ordenes) {
+                        return ordenes;
                     });
                 }
             };

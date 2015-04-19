@@ -16,6 +16,7 @@ angular.module('almacenApp')
             $log.debug('Mostrando Inbox...');
             var tipoPantalla = null;
 
+
             if ($location.$$url === '/inboxOrden') {
                 $scope.tituloPantalla = 'Mis pendientes';
                 tipoPantalla = 'MIS_PENDIENTES';
@@ -201,7 +202,11 @@ angular.module('almacenApp')
 
             $scope.openOrden = function(row) {
                 $log.debug(row.entity.Id);
-                $location.path("/entrada");
+                /*ordenFactory.getById(row.entity.Id).then(function(data) {
+                    $log.debug(JSON.stringify(data));
+                });*/ 
+                //Aqui se redirecciona a entradas o a la orden.              
+                $location.path("/entrada").search({idOrden: row.entity.Id});;
             };
 
 

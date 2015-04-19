@@ -42,6 +42,7 @@ angular.module('almacenApp')
                     username: $scope.credentials.login,
                     password: $scope.credentials.password
                 };
+                $log.debug("username: " + $scope.loginEmail + " password: " + $scope.loginPassword);
 
                 accountFactory.generateAccessToken(loginData)
                     .success(successLoginCallback)
