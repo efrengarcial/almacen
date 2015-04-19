@@ -70,7 +70,15 @@ angular
       })
       .when('/inboxOrden', {
         templateUrl: 'views/inboxOrden.html',
-        controller: 'inboxOrdenCtrl'
+        controller: 'InboxOrdenCtrl'
+      })
+       .when('/entradas', {
+        templateUrl: 'views/inboxOrden.html',
+        controller: 'InboxOrdenCtrl'
+      })
+        .when('/entrada', {
+        templateUrl: 'views/entrada.html',
+        controller: 'EntradaCtrl'
       })
       .when('/login', {
         templateUrl: 'views/login.html',
@@ -80,8 +88,10 @@ angular
         redirectTo: '/'
       });
   })
-   .run(['Restangular','$rootScope','toaster',  
-    function(Restangular, $rootScope,toaster) {
+   .run(['Restangular','$rootScope','toaster', 'accountFactory', 
+    function(Restangular, $rootScope,toaster,accountFactory) {
+
+       accountFactory.fillAuthData();
 
       $rootScope.$on('evento', function(event, message) {
           toaster.pop('error', 'Error', message.descripcion);

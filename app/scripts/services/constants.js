@@ -30,7 +30,9 @@ angular
 		URI_QUERY_ORDEN: 'orden/query',
 		URI_INACTIVATE_ORDEN: 'orden/inactivate',
 		URI_ORDENES: 'orden/getInboxOrden',
-		
+		URI_ORDENES_ORDENES_ABIERTAS: 'orden/getOrdenesCompraAbiertas',
+		URI_ORDENES_GETBYID: 'orden/getById',
+
 		URI_TOKEN: 'token'
 
 	})

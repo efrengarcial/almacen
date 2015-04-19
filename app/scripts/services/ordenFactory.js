@@ -21,10 +21,10 @@ angular
                         Proveedor: null,
                         FechaOrden: moment().format(Constants.formatDate),
                         Solicitante: null,
+                        CentroCostos: null,
                         Notas: '',
                         OrdenItems: []
                     };
-                    this.addOrdenItemObject(orden);
                     orden.PrecioTotal = function() {
                         var total = 0;
                         for (var i = 0; i < orden.OrdenItems.length; i += 1) {
@@ -36,26 +36,25 @@ angular
 
                         return total;
                     };
+                    orden.AddItem = function() {
+                        var ordenItem = {
+                            Cantidad: null,
+                            Producto: {
+                                Precio: null
+                            }
+                        };
+                        ordenItem.PrecioTotal = function() {
+                            if (ordenItem.Cantidad === null ||
+                                ordenItem.Producto.Precio === null) {
+                                return null;
+                            }
+                            return ordenItem.Cantidad * ordenItem.Producto.Precio;
+                        };
+                        this.OrdenItems.push(ordenItem);
+                        return ordenItem;
+                    }
 
                     return orden;
-                },
-
-                addOrdenItemObject: function(orden) {
-                    var ordenItem = {
-                        Cantidad: null,
-                        Producto: {
-                            Precio: null
-                        }
-                    };
-                    ordenItem.PrecioTotal = function() {
-                        if (ordenItem.Cantidad === null ||
-                            ordenItem.Producto.Precio === null) {
-                            return null;
-                        }
-                        return ordenItem.Cantidad * ordenItem.Producto.Precio;
-                    };
-                    orden.OrdenItems.push(ordenItem);
-                    return ordenItem;
                 },
 
                 getConsultaOrdenObject: function() {
@@ -104,7 +103,32 @@ angular
                     return apiFactory.all(WS.URI_ORDENES).getList().then(function(ordenes) {
                         return ordenes;
                     });
-                }                
+                },
+                getOrdenesCompraAbiertas: function() {
+                    return apiFactory.all(WS.URI_ORDENES_ORDENES_ABIERTAS).getList().then(function(ordenes) {
+                        return ordenes;
+                    });
+                },
+                getOrdenById: function(id) {
+                    var orden = this.getOrdenObject();
+                    return apiFactory.one(WS.URI_ORDENES_GETBYID, id).get().then(function(ordenWS) {
+                        orden.Id = ordenWS.Id;
+                        orden.Numero = ordenWS.Numero;
+                        orden.Proveedor = ordenWS.Proveedor;
+                        orden.FechaOrden = moment(ordenWS.FechaCreacion).format(Constants.formatDate);
+                        orden.CentroCostos = ordenWS.CentroCostos;
+
+                        for (var i = 0; i < ordenWS.OrdenItems.length; i += 1) {
+                            var ordenItemWS = ordenWS.OrdenItems[i];
+                            var ordenItem = orden.AddItem();    
+                            ordenItem.Producto = ordenItemWS.Producto;   
+                            ordenItem.Cantidad = ordenItemWS.Cantidad;
+                        }
+
+                        
+                        return orden;
+                    });
+                }
             };
         }
     ]);

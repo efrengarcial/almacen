@@ -38,17 +38,25 @@ angular
                     _authenticationData.isAuth = false;
                     _authenticationData.userName = "";
                 },
-                 getAuthenticationData: function(){
+                getAuthenticationData: function() {
                     return _authenticationData;
-                 },
-                setAuthenticationData: function(_token, _userName) {
+                },
+                setAuthenticationData: function(tokenAuth, userNameAuth) {
                     var data = {
-                        token: _token,
-                        userName: _userName
+                        token: tokenAuth,
+                        userName: userNameAuth
                     };
                     sessionStorage.setItem(authorDataKey, JSON.stringify(data));
                     _authenticationData.isAuth = true;
-                    _authenticationData.userName = _userName;
+                    _authenticationData.userName = userNameAuth;
+                },
+                fillAuthData : function() {
+
+                    var authData = $.parseJSON(sessionStorage.getItem(authorDataKey));
+                    if (authData) {
+                        _authenticationData.isAuth = true;
+                        _authenticationData.userName = authData.userName;
+                    }
                 }
             };
         }

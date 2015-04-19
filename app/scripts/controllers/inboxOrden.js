@@ -9,10 +9,20 @@
  */
 
 angular.module('almacenApp')
-    .controller('inboxOrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter', 'modalWindowFactory', 'moment', 'Constants',
-        function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants) {
-            $log.debug('Mostrando mis pendientes:');
+    .controller('InboxOrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'ordenFactory',
+        'toaster', '$filter', 'modalWindowFactory', 'moment', 'Constants', '$location',
+        function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster,
+            $filter, modalWindowFactory, moment, Constants, $location) {
+            $log.debug('Mostrando Inbox...');
+            var tipoPantalla = null;
 
+            if ($location.$$url === '/inboxOrden') {
+                $scope.tituloPantalla = 'Mis pendientes';
+                tipoPantalla = 'MIS_PENDIENTES';
+            } else {
+                $scope.tituloPantalla = 'Entradas';
+                tipoPantalla = 'ENTRADAS';
+            }
 
             $scope.sortInfo = {
                 fields: ['FechaCreacion'],
@@ -145,7 +155,27 @@ angular.module('almacenApp')
                 });
             }
 
-            showMisPendientes();
+            /* Cargar las ordenes de compra abiertas */
+            function showOrdenesEntradas() {
+                ordenFactory.getOrdenesCompraAbiertas().then(function(data) {
+                    $scope.allData = data;
+
+                    if ($scope.allData[0] === undefined) {
+                        toaster.pop('warning', 'Advertencia', 'No hay Ordenes de Compra ABIERTAS, para mostrar.');
+                    } else {
+                        $scope.pagingOptions.currentPage = 1;
+                        $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                    }
+                });
+            }
+
+            if (tipoPantalla === 'ENTRADAS') {
+                showOrdenesEntradas();    
+            } else {
+                showMisPendientes();
+            }
+
+
 
             // Broadcast an event when an element in the grid is deleted. No real deletion is perfomed at this point.
             $scope.deleteRow = function(row) {
@@ -171,6 +201,7 @@ angular.module('almacenApp')
 
             $scope.openOrden = function(row) {
                 $log.debug(row.entity.Id);
+                $location.path("/entrada");
             };
 
 

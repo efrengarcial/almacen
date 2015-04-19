@@ -1,8 +1,8 @@
 'use strict';
 angular
     .module('almacenApp')
-    .factory('authInterceptorFactory', ['$q', '$injector', '$location','$log',
-        function($q, $injector, $location, $log) {
+    .factory('authInterceptorFactory', ['$q', '$injector', '$location','$log','authorDataKey',
+        function($q, $injector, $location, $log,authorDataKey) {
 
             var authInterceptorServiceFactory = {};
 
@@ -10,7 +10,7 @@ angular
 
                 config.headers = config.headers || {};
 
-                var authData = $.parseJSON(sessionStorage.getItem('authorizationData'));
+                var authData = $.parseJSON(sessionStorage.getItem(authorDataKey));
                 if (authData) {
                     //$log.debug(authData.token);
                     config.headers.Authorization = 'Bearer ' + authData.token;
@@ -22,7 +22,7 @@ angular
             var _responseError = function(rejection) {
                 if (rejection.status === 401) {
                     var accountFactory = $injector.get('accountFactory');
-                    var authData = $.parseJSON(sessionStorage.getItem('authorizationData'));
+                    var authData = $.parseJSON(sessionStorage.getItem(authorDataKey));
 
                     if (authData) {
                         if (authData.useRefreshTokens) {

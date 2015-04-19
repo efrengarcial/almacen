@@ -34,6 +34,7 @@ angular.module('almacenApp')
             }
 
             $scope.orden = ordenFactory.getOrdenObject();
+            $scope.orden.AddItem();
             $scope.orden.Tipo = tipoOrden;
             $scope.orden.Solicitante = accountFactory.getAuthenticationData().userName;
             $scope.proveedores = [];
@@ -77,12 +78,13 @@ angular.module('almacenApp')
             };
 
             $scope.addProducto = function() {
-                ordenFactory.addOrdenItemObject($scope.orden);
+                $scope.orden.AddItem();
             };
 
             $scope.clearForm = function() {
                 $scope.orden = null;
                 $scope.orden = ordenFactory.getOrdenObject();
+                $scope.orden.AddItem();
                 $scope.orden.Tipo = tipoOrden;
                 $scope.ordenForm.$setPristine();
                 $scope.orden.Solicitante = accountFactory.getAuthenticationData().userName;
