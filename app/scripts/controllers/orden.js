@@ -9,20 +9,22 @@
  */
 angular.module('almacenApp')
     .controller('OrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'productoFactory',
-        'ordenFactory', 'toaster', '$location', 'Constants','accountFactory',
+        'ordenFactory', 'toaster', '$location', 'Constants', 'accountFactory', '$routeParams',
         function($scope, $log, $rootScope, proveedorFactory, productoFactory, ordenFactory,
-            toaster, $location, Constants,accountFactory) {
-            $log.debug('Iniciando Orden....');
-            var tipoOrden, esServicio = false;
+            toaster, $location, Constants, accountFactory, $routeParams) {
 
-            if ($location.$$url === '/ordenCompra') {
+            $log.debug('Iniciando Orden....' + $location.$$url);
+            var tipoOrden, esServicio = false,
+                idOrden = $routeParams.idOrden;
+
+            if ($location.path() === '/ordenCompra') {
                 $scope.tituloPantalla = 'Orden de Compra';
                 tipoOrden = Constants.ORDEN_COMPRA;
-            } else if ($location.$$url === '/requisicion') {
+            } else if ($location.path() === '/requisicion') {
                 $scope.tituloPantalla = 'Requisición';
                 $scope.isRequisicion = true;
                 tipoOrden = Constants.REQUISICION;
-            } else if ($location.$$url === '/requisicionServicio') {
+            } else if ($location.path() === '/requisicionServicio') {
                 $scope.tituloPantalla = 'Requisición de Servicio';
                 $scope.isRequisicion = true;
                 esServicio = true;
@@ -32,6 +34,14 @@ angular.module('almacenApp')
                 tipoOrden = Constants.ORDEN_SERVICIO;
                 esServicio = true;
             }
+
+
+            if (idOrden !== undefined) {
+                ordenFactory.getById(idOrden).then(function(orden) {
+                    $scope.orden = orden;
+                });
+            };
+
 
             $scope.orden = ordenFactory.getOrdenObject();
             $scope.orden.AddItem();

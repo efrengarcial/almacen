@@ -51,6 +51,8 @@ angular
         ORDEN_SERVICIO: 'ORDEN_SERVICIO',
         REQUISICION: 'REQUISICION',
         REQUISICION_SERVICIO: 'REQUISICION_SERVICIO',
+        MIS_PENDIENTES: 'MIS_PENDIENTES',
+        ENTRADAS: 'ENTRADAS',
         plazoMin: 1,
         plazoMax: 90
     });

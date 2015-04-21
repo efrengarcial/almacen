@@ -16,13 +16,12 @@ angular.module('almacenApp')
             $log.debug('Mostrando Inbox...');
             var tipoPantalla = null;
 
-
             if ($location.$$url === '/inboxOrden') {
                 $scope.tituloPantalla = 'Mis pendientes';
-                tipoPantalla = 'MIS_PENDIENTES';
+                tipoPantalla = Constants.MIS_PENDIENTES;
             } else {
                 $scope.tituloPantalla = 'Entradas';
-                tipoPantalla = 'ENTRADAS';
+                tipoPantalla = Constants.ENTRADAS;
             }
 
             $scope.sortInfo = {
@@ -170,8 +169,8 @@ angular.module('almacenApp')
                 });
             }
 
-            if (tipoPantalla === 'ENTRADAS') {
-                showOrdenesEntradas();    
+            if (tipoPantalla === Constants.ENTRADAS) {
+                showOrdenesEntradas();
             } else {
                 showMisPendientes();
             }
@@ -202,11 +201,19 @@ angular.module('almacenApp')
 
             $scope.openOrden = function(row) {
                 $log.debug(row.entity.Id);
-                /*ordenFactory.getById(row.entity.Id).then(function(data) {
-                    $log.debug(JSON.stringify(data));
-                });*/ 
-                //Aqui se redirecciona a entradas o a la orden.              
-                $location.path("/entrada").search({idOrden: row.entity.Id});;
+                
+                //Aqui se redirecciona a entradas o a la orden.
+                if ($location.$$url === '/inboxOrden') {
+                    if (row.entity.Tipo === Constants.REQUISICION_SERVICIO) {
+                        $location.path("/requisicionServicio").search({idOrden: row.entity.Id});
+
+                    } else {
+                        $location.path("/requisicion").search({idOrden: row.entity.Id});
+                    };
+
+                } else {
+                        $location.path("/entrada").search({idOrden: row.entity.Id});
+                }
             };
 
 

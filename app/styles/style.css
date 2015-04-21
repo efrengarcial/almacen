@@ -87,6 +87,10 @@ a:before, a:after {
 
 }
 
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+  background-color: #808080;
+}
+
 .alignleft {
     text-align: left;
 }

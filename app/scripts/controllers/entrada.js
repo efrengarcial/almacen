@@ -10,8 +10,8 @@
 angular.module('almacenApp')
     .controller('EntradaCtrl', ['$scope', '$log', '$rootScope', 'ordenFactory', 'toaster',
         '$location', 'Constants','$routeParams',
-        function($scope, $log, $rootScope, ordenFactory, toaster, $location, Constants,$routeParams) {
-            $log.debug('Iniciando Entrada....');
+        function($scope, $log, $rootScope, ordenFactory, toaster, $location, Constants, $routeParams) {
+            $log.debug('Iniciando Entrada....' + $location.$$url);
 
             var idOrden = $routeParams.idOrden;
             ordenFactory.getById(idOrden).then(function(orden) {

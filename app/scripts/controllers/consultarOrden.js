@@ -197,7 +197,7 @@ angular.module('almacenApp')
                         $scope.allData = data;
 
                         if ($scope.allData[0] === undefined) {
-                            toaster.pop('warning', 'Advertencia', 'No existe Orden con el parámetro de búsqueda.');
+                            toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el parámetro de búsqueda.');
                         } else {
                             $scope.pagingOptions.currentPage = 1;
                             $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
@@ -215,7 +215,7 @@ angular.module('almacenApp')
                         $scope.allData = data;
 
                         if ($scope.allData[0] === undefined) {
-                            toaster.pop('warning', 'Advertencia', 'No existe el rango de fecha  o el proveedor descrito.');
+                            toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el rango de fecha  o el proveedor descrito.');
                         } else {
                             $scope.pagingOptions.currentPage = 1;
                             $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
