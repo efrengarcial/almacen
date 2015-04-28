@@ -39,7 +39,7 @@ angular
                     };
                     orden.AddItem = function() {
                         var ordenItem = {
-                   /*Dario*/Id: '00000000',
+                            Id: '00000000',
                             Cantidad: null,
                             Producto: {
                                 Precio: null
@@ -80,8 +80,9 @@ angular
 
                 save: function(orden) {
                     var ordenWS = {
+                        Id: orden.Id,
                         Tipo: orden.Tipo,
-                        IdProveedor: orden.IdProveedor,
+                        IdProveedor: orden.Proveedor.Id,
                         CentroCostos: orden.CentroCostos,
                         Notas: orden.Notas,
                         OrdenItems: []
@@ -89,7 +90,8 @@ angular
                     for (var i = 0; i < orden.OrdenItems.length; i += 1) {
                         var ordenItem = orden.OrdenItems[i];
                         var ordenItemWS = {
-                   /*Dario*/Id: ordenItem.Id,
+                            Id: ordenItem.Id,
+                            IdOrden: orden.Id,
                             IdProducto: ordenItem.Producto.Id,
                             Cantidad: ordenItem.Cantidad,
                             Precio: ordenItem.Producto.Precio,
@@ -114,7 +116,7 @@ angular
                         for (var i = 0; i < ordenWS.OrdenItems.length; i += 1) {
                             var ordenItemWS = ordenWS.OrdenItems[i];
                             var ordenItem = orden.AddItem();
-                   /*Dario*/ordenItem.Id = ordenItemWS.Id;
+                            ordenItem.Id = ordenItemWS.Id;
                             ordenItem.Producto = ordenItemWS.Producto;
                             ordenItem.Cantidad = ordenItemWS.Cantidad;
                         }
