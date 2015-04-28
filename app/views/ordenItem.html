@@ -21,15 +21,17 @@
 
             <td>
                 <div class="col-md-12 form-group required-field-block">
-                    <input class="form-control" name="producto" type="text" ng-model="ordenItem.Producto.Nombre" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label,ordenItem)" typeahead-editable="false"  ng-required="true" />
-                     <div class="required-icon" ng-mouseover="showMessage();">
-                        <div class="text">*</div>
-                    </div>
-                    <span  ng-show="loadingLocations" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>             
+                    <ng-form name="productoForm">
+                        <input class="form-control" name="producto" type="text" ng-model="ordenItem.Producto.Nombre" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label,ordenItem)" typeahead-editable="false"  ng-required="true" />
+                         <div class="required-icon" ng-mouseover="showMessage();">
+                            <div class="text">*</div>
+                        </div>
+                        <span  ng-show="loadingLocations" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>             
 
-                    <div class="error-message" ng-messages="ordenForm.producto.$error" ng-if="interacted(ordenForm.producto) || ordenForm.$submitted">
-                        <div class="error-message" ng-message="required">Debe ingresar un producto</div>     
-                    </div>  
+                        <div class="error-message" ng-messages="productoForm.producto.$error" ng-if="interacted(productoForm.producto) || ordenForm.$submitted">
+                            <div class="error-message" ng-message="required">Debe ingresar un producto</div>     
+                        </div>  
+                    </ng-form>
 
                 </div>    
             </td>           
@@ -41,16 +43,18 @@
             </td>
             <td>
                 <div class="col-md-8 form-group required-field-block">
-                    <input class="form-control" type="text" name="cantidad" ng-model="ordenItem.Cantidad"  ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/"  />
-                    <div class="required-icon" ng-mouseover="showMessage();">
-                        <div class="text">*</div>
-                    </div>
-                     <div class="error-message" ng-messages="ordenForm.cantidad.$error" ng-if="interacted(ordenForm.cantidad) || ordenForm.$submitted">
-                          <div class="error-message" ng-message="maxlength">El máximo es demasiado largo...</div>
-                          <div class="error-message" ng-message="required">Debe ingresar un valor para Cantidad</div>
-                          <div class="error-message" ng-message="pattern">El valor debe ser numérico</div>
-                         </div> 
-                     </div>    
+                    <ng-form name="cantidadForm">
+                        <input class="form-control" type="text" name="cantidad" ng-model="ordenItem.Cantidad"  ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/"  />
+                        <div class="required-icon" ng-mouseover="showMessage();">
+                            <div class="text">*</div>
+                        </div>
+                         <div class="error-message" ng-messages="cantidadForm.cantidad.$error" ng-if="interacted(cantidadForm.cantidad) || ordenForm.$submitted">
+                              <div class="error-message" ng-message="maxlength">La Cantidad es demasiado larga...</div>
+                              <div class="error-message" ng-message="required">Debe ingresar un valor para Cantidad</div>
+                              <div class="error-message" ng-message="pattern">El valor debe ser numérico</div>
+                             </div> 
+                         </div>
+                     </ng-form>        
             </td>
             <td>
                 {{ ordenItem.Producto.Precio |  currency }}

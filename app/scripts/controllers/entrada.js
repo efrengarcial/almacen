@@ -9,7 +9,7 @@
  */
 angular.module('almacenApp')
     .controller('EntradaCtrl', ['$scope', '$log', '$rootScope', 'ordenFactory', 'toaster',
-        '$location', 'Constants','$routeParams',
+        '$location', 'Constants', '$routeParams',
         function($scope, $log, $rootScope, ordenFactory, toaster, $location, Constants, $routeParams) {
             $log.debug('Iniciando Entrada....' + $location.$$url);
 
@@ -17,5 +17,22 @@ angular.module('almacenApp')
             ordenFactory.getById(idOrden).then(function(orden) {
                 $scope.orden = orden;
             });
+
+            $scope.interacted = function(field) {
+                return $scope.submitted || field.$dirty;
+            };
+
+            $scope.showMessage = function() {
+                $('.required-icon, .required-combo-icon').tooltip({
+                    placement: 'left',
+                    title: 'Campo requerido'
+                });
+            };
+
+            $scope.save = function(isValid) {
+                if (isValid) {
+                    
+                }
+            }
         }
     ]);
