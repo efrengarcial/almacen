@@ -23,6 +23,7 @@ angular
                         Solicitante: null,
                         CentroCostos: null,
                         Notas: '',
+                        NombreProveedor: '',
                         OrdenItems: []
                     };
                     orden.PrecioTotal = function() {
@@ -97,6 +98,7 @@ angular
                         orden.Id = ordenWS.Id;
                         orden.Numero = ordenWS.Numero;
                         orden.Proveedor = ordenWS.Proveedor;
+                        orden.NombreProveedor = ordenWS.Proveedor.Nombre;
                         orden.FechaOrden = moment(ordenWS.FechaCreacion).format(Constants.formatDate);
                         orden.CentroCostos = ordenWS.CentroCostos;
 
