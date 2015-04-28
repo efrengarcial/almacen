@@ -63,15 +63,7 @@
 		    <div class="col-md-4 form-group required-field-block">
             	<label class="col-md-5 control-label" for="">Centro Costos</label>
             	<div class="col-md-7">
-					<input type="radio" name="costos" ng-model="orden.CentroCostos" value="BOVINOS" ng-required="true">Bovinos
-					<input type="radio" name="costos" ng-model="orden.CentroCostos" value="PORCINOS" ng-required="true">Porcinos
-
-                    <div class="required-icon" ng-mouseover="showMessage();">
-                      <div class="text">*</div>
-                    </div>                        
-                    <div class="error-message" ng-messages="ordenForm.costos.$error" ng-if="interacted(ordenForm.costos) ||  ordenForm.$submitted">
-                      <div class="error-message" ng-message="required">Ingresar Centro de Costos</div>
-                    </div>
+            		<input id="plazo" type="text" name="plazo" ng-model="orden.CentroCostos" readonly class="form-control">
             	</div>
             </div>
 			<div class="col-md-4  form-group">
@@ -100,9 +92,77 @@
 	<br/>
 	<div class="row">
 		<div class="col-md-12">			
-        	<div ng-include src="'views/ordenItem.html'"></div>		
+        	<table class="table table-hover table-striped table-condensed table-bordered ordersTable">
+		    <thead>
+		        <tr>
+		            <th>No.</th>
+		            <th>Producto</th>
+		            <th>Codigo</th>
+		            <th>Unidad</th>
+		            <th>Cantidad Faltante</th>
+		            <th>Entradas Producto</th>
+		            <th>Precio Unitario</th>
+		            <th>Precio Total</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr ng-hide="orden.OrdenItems || orden.OrdenItems.length > 0" class="error">
+		            <td colspan="7">
+		                <div class="text-center"><strong>No se econtraron ordenes</strong></div>
+		            </td>
+		        </tr>
+		        <tr ng-repeat="ordenItem in orden.OrdenItems" class="repeat-animation">
+		            <td>{{$index + 1}}.</td>
+
+		            <td>
+		                 <div class="col-md-12 form-group">
+			                     {{ ordenItem.Producto.Nombre }}
+
+			             </div>    
+		            </td>           
+		            <td>
+		                {{ ordenItem.Producto.Codigo }}
+		            </td>
+		            <td>
+		                {{ ordenItem.Producto.Medida.Nombre }}
+		            </td>
+		             <td>
+		                {{ ordenItem.Cantidad }}
+		            </td>
+		            <td>
+		                <div class="col-md-8 form-group required-field-block">
+		                    <ng-form name="cantidadForm">
+		                        <input class="form-control" type="text" name="cantidad" ng-model="ordenItem.Cantidad1"  ng-maxlength="9" ng-required="true" numbers-only    ng-min="1" ng-max="ordenItem.Cantidad" />
+		                        <div class="required-icon" ng-mouseover="showMessage();">
+		                            <div class="text">*</div>
+		                        </div>
+		                         <div class="error-message" ng-messages="cantidadForm.cantidad.$error" ng-if="interacted(cantidadForm.cantidad) || ordenForm.$submitted">
+		                              <div class="error-message" ng-message="maxlength">La Cantidad es demasiado larga...</div>
+		                              <div class="error-message" ng-message="required">Debe ingresar un valor para Cantidad</div>
+		                             <div class="error-message" ng-message="ngMax">Cantidad debe ser menor o igual a {{ordenItem.Cantidad}} </div>
+		                             <div class="error-message" ng-message="ngMin">Cantidad debe ser mayor o igual a 1 </div>
+		                         </div>
+		                     </ng-form>        
+		            </td>
+		            <td>
+		                {{ ordenItem.Producto.Precio |  currency }}
+		            </td>
+		            <td>
+		                {{ ordenItem.PrecioTotal() | currency }}
+		            </td>
+		        </tr>
+		        <tr class="info">
+		            <td colspan="7">
+		                &nbsp;
+		            </td>
+		            <td>
+		                <strong>{{ orden.PrecioTotal() | currency }}</strong>
+		            </td>
+		        </tr>
+		    </tbody>
+		</table>	
 		</div>        
 	</div>
-	</form>
+   </form>
        		
 </div>

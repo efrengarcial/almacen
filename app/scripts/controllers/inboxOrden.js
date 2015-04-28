@@ -205,10 +205,10 @@ angular.module('almacenApp')
                 //Aqui se redirecciona a entradas o a la orden.
                 if ($location.$$url === '/inboxOrden') {
                     if (row.entity.Tipo === Constants.REQUISICION_SERVICIO) {
-                        $location.path("/requisicionServicio").search({idOrden: row.entity.Id});
+                        $location.path("/ordenServicio").search({idOrden: row.entity.Id});
 
                     } else {
-                        $location.path("/requisicion").search({idOrden: row.entity.Id});
+                        $location.path("/ordenCompra").search({idOrden: row.entity.Id});
                     };
 
                 } else {

@@ -16,7 +16,7 @@ angular.module('almacenApp')
             $log.debug('Iniciando orden: ' + $location.$$url);
             var tipoOrden, esServicio = false,
                 idOrden = $routeParams.idOrden;
-
+           
             if ($location.path() === '/ordenCompra') {
                 $scope.tituloPantalla = 'Orden de Compra';
                 tipoOrden = Constants.ORDEN_COMPRA;
@@ -34,19 +34,6 @@ angular.module('almacenApp')
                 tipoOrden = Constants.ORDEN_SERVICIO;
                 esServicio = true;
             }
-
-
-            if (idOrden !== undefined) {
-                ordenFactory.getById(idOrden).then(function(orden) {
-                    $scope.orden = orden;
-                });
-            };
-
-
-            $scope.orden = ordenFactory.getOrdenObject();
-            $scope.orden.AddItem();
-            $scope.orden.Tipo = tipoOrden;
-            $scope.orden.Solicitante = accountFactory.getAuthenticationData().userName;
             $scope.proveedores = [];
 
             /* Cargar información de listas */
@@ -54,6 +41,20 @@ angular.module('almacenApp')
                 proveedorFactory.getAll().then(function(proveedores) {
                     $scope.proveedores = proveedores;
                 });
+            }
+
+            cargarProveedores();
+
+            if (idOrden !== undefined) {
+                ordenFactory.getById(idOrden).then(function(orden) {
+                    $scope.orden = orden;
+                    $scope.orden.Tipo = tipoOrden;
+                });
+            } else {
+                $scope.orden = ordenFactory.getOrdenObject();
+                $scope.orden.AddItem();
+                $scope.orden.Tipo = tipoOrden;
+                $scope.orden.Solicitante = accountFactory.getAuthenticationData().userName;
             }
 
             function saveProveedor(proveedorObj, model, label) {
@@ -71,7 +72,7 @@ angular.module('almacenApp')
 
             $scope.saveProveedor = saveProveedor;
             $scope.saveProducto = saveProducto;
-            cargarProveedores();
+
 
 
             $scope.getProductos = function(search) {
