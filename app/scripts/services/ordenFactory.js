@@ -9,8 +9,8 @@
  */
 angular
     .module('almacenApp')
-    .factory('ordenFactory', ['Restangular', 'apiFactory', 'WS', 'moment', 'Constants',
-        function(Restangular, apiFactory, WS, moment, Constants) {
+    .factory('ordenFactory', ['Restangular', 'apiFactory', 'WS', 'moment', 'Constants', '$log',
+        function(Restangular, apiFactory, WS, moment, Constants, $log) {
             return {
                 getOrdenObject: function() {
                     var orden = {
@@ -38,21 +38,28 @@ angular
                     };
                     orden.AddItem = function() {
                         var ordenItem = {
+                   /*Dario*/Id: '00000000',
                             Cantidad: null,
                             Producto: {
                                 Precio: null
                             }
                         };
-                        ordenItem.PrecioTotal = function() {
-                            if (ordenItem.Cantidad === null ||
-                                ordenItem.Producto.Precio === null) {
-                                return null;
-                            }
-                            return ordenItem.Cantidad * ordenItem.Producto.Precio;
-                        };
-                        this.OrdenItems.push(ordenItem);
-                        return ordenItem;
-                    }
+
+                    ordenItem.PrecioTotal = function() {
+                        if (ordenItem.Cantidad === null || ordenItem.Producto.Precio === null) {
+                            return null;
+                        }
+                        return ordenItem.Cantidad * ordenItem.Producto.Precio;
+                    };
+
+                    this.OrdenItems.push(ordenItem);
+
+                    return ordenItem;
+                    };
+
+                    orden.removeItem = function(index) {
+                        this.OrdenItems.splice(index, 1);                                         
+                    };
 
                     return orden;
                 },
@@ -81,6 +88,7 @@ angular
                     for (var i = 0; i < orden.OrdenItems.length; i += 1) {
                         var ordenItem = orden.OrdenItems[i];
                         var ordenItemWS = {
+                   /*Dario*/Id: ordenItem.Id,
                             IdProducto: ordenItem.Producto.Id,
                             Cantidad: ordenItem.Cantidad,
                             Precio: ordenItem.Producto.Precio,
@@ -88,6 +96,7 @@ angular
                         };
                         ordenWS.OrdenItems.push(ordenItemWS);
                     }
+                    $log.debug(ordenWS);
                     return apiFactory.all(WS.URI_SAVE_ORDEN).post(ordenWS);
                 },
 
@@ -102,12 +111,12 @@ angular
 
                         for (var i = 0; i < ordenWS.OrdenItems.length; i += 1) {
                             var ordenItemWS = ordenWS.OrdenItems[i];
-                            var ordenItem = orden.AddItem();    
-                            ordenItem.Producto = ordenItemWS.Producto;   
+                            var ordenItem = orden.AddItem();
+                   /*Dario*/ordenItem.Id = ordenItemWS.Id;
+                            ordenItem.Producto = ordenItemWS.Producto;
                             ordenItem.Cantidad = ordenItemWS.Cantidad;
                         }
 
-                        
                         return orden;
                     });
                 },

@@ -414,5 +414,6 @@ white-space: nowrap;
 .glyphicon-center{
   position: relative;
   left: 50%;
+  cursor: pointer;
 }
 

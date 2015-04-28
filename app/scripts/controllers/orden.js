@@ -9,11 +9,11 @@
  */
 angular.module('almacenApp')
     .controller('OrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'productoFactory',
-        'ordenFactory', 'toaster', '$location', 'Constants', 'accountFactory', '$routeParams',
-        function($scope, $log, $rootScope, proveedorFactory, productoFactory, ordenFactory,
+        'ordenFactory', 'modalWindowFactory', 'toaster', '$location', 'Constants', 'accountFactory', '$routeParams',
+        function($scope, $log, $rootScope, proveedorFactory, productoFactory, ordenFactory, modalWindowFactory,
             toaster, $location, Constants, accountFactory, $routeParams) {
 
-            $log.debug('Iniciando Orden....' + $location.$$url);
+            $log.debug('Iniciando orden: ' + $location.$$url);
             var tipoOrden, esServicio = false,
                 idOrden = $routeParams.idOrden;
 
@@ -73,12 +73,6 @@ angular.module('almacenApp')
             $scope.saveProducto = saveProducto;
             cargarProveedores();
 
-            $scope.showMessage = function() {
-                $('.required-icon, .required-combo-icon').tooltip({
-                    placement: 'left',
-                    title: 'Campo requerido'
-                });
-            };
 
             $scope.getProductos = function(search) {
                 $log.debug('Buscando productos......');
@@ -90,6 +84,11 @@ angular.module('almacenApp')
             $scope.addProducto = function() {
                 $scope.orden.AddItem();
             };
+
+            $scope.removeProduct = function(index){
+                   $scope.orden.removeItem(index);    
+            };
+
 
             $scope.clearForm = function() {
                 $scope.orden = null;

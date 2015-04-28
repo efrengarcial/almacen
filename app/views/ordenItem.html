@@ -8,6 +8,8 @@
             <th>Cantidad</th>
             <th>Precio Unitario</th>
             <th>Precio Total</th>
+            <th>Id</th>
+            <th>Eliminar Producto</th>
         </tr>
     </thead>
     <tbody>
@@ -58,6 +60,12 @@
             <td>
                 {{ ordenItem.PrecioTotal() | currency }}
             </td>
+            <td>
+                {{ ordenItem.Id }}
+            </td>            
+            <td>
+                <span class="glyphicon glyphicon-trash glyphicon-center" ng-click="removeProduct($index)"></span>
+            </td>            
         </tr>
         <tr class="info">
             <td colspan="6">
@@ -66,6 +74,8 @@
             <td>
                 <strong>{{ orden.PrecioTotal() | currency }}</strong>
             </td>
+            <td></td>            
         </tr>
+
     </tbody>
 </table>

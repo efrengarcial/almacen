@@ -13,7 +13,7 @@ angular.module('almacenApp')
         'toaster', '$filter', 'modalWindowFactory', 'moment', 'Constants', '$location',
         function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster,
             $filter, modalWindowFactory, moment, Constants, $location) {
-            $log.debug('Mostrando Inbox...');
+            $log.debug('Mostrando inboxOrden...');
             var tipoPantalla = null;
 
             if ($location.$$url === '/inboxOrden') {
@@ -201,7 +201,7 @@ angular.module('almacenApp')
 
             $scope.openOrden = function(row) {
                 $log.debug(row.entity.Id);
-                
+
                 //Aqui se redirecciona a entradas o a la orden.
                 if ($location.$$url === '/inboxOrden') {
                     if (row.entity.Tipo === Constants.REQUISICION_SERVICIO) {
