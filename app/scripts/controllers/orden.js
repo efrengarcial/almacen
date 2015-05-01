@@ -16,7 +16,7 @@ angular.module('almacenApp')
             $log.debug('Iniciando orden: ' + $location.$$url);
             var tipoOrden, esServicio = false,
                 idOrden = $routeParams.idOrden;
-           
+
             if ($location.path() === '/ordenCompra') {
                 $scope.tituloPantalla = 'Orden de Compra';
                 tipoOrden = Constants.ORDEN_COMPRA;
@@ -49,6 +49,13 @@ angular.module('almacenApp')
                 ordenFactory.getById(idOrden).then(function(orden) {
                     $scope.orden = orden;
                     $scope.orden.Tipo = tipoOrden;
+                    $scope.orden.IdOrdenBase = orden.Id;
+                    $scope.orden.Id = 0;
+
+                    for (var i = 0; i < orden.OrdenItems.length; i += 1) {
+                        orden.OrdenItems[i].Id = 0;
+                    }
+
                 });
             } else {
                 $scope.orden = ordenFactory.getOrdenObject();
@@ -86,8 +93,8 @@ angular.module('almacenApp')
                 $scope.orden.AddItem();
             };
 
-            $scope.removeProduct = function(index){
-                   $scope.orden.removeItem(index);    
+            $scope.removeProduct = function(index) {
+                $scope.orden.removeItem(index);
             };
 
 
