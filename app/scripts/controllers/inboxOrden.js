@@ -200,7 +200,6 @@ angular.module('almacenApp')
             };
 
             $scope.openOrden = function(row) {
-                $log.debug(row.entity.Id);
 
                 //Aqui se redirecciona a entradas o a la orden.
                 if ($location.$$url === '/inboxOrden') {
