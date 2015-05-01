@@ -43,7 +43,8 @@ angular
                             Cantidad: null,
                             Producto: {
                                 Precio: null
-                            }
+                            },
+                            Entradas: []
                         };
 
                     ordenItem.PrecioTotal = function() {
@@ -108,6 +109,7 @@ angular
                     return apiFactory.one(WS.URI_GET_ORDEN, idOrden).get().then(function(ordenWS) {
                         orden.Id = ordenWS.Id;
                         orden.Numero = ordenWS.Numero;
+                        orden.Tipo = ordenWS.Tipo;
                         orden.Proveedor = ordenWS.Proveedor;
                         orden.NombreProveedor = ordenWS.Proveedor.Nombre;
                         orden.FechaOrden = moment(ordenWS.FechaCreacion).format(Constants.formatDate);
@@ -119,6 +121,10 @@ angular
                             ordenItem.Id = ordenItemWS.Id;
                             ordenItem.Producto = ordenItemWS.Producto;
                             ordenItem.Cantidad = ordenItemWS.Cantidad;
+
+                            if (ordenItemWS.Entradas !== null) {
+                                
+                            }
                         }
 
                         return orden;
