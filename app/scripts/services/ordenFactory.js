@@ -23,6 +23,7 @@ angular
                         Solicitante: null,
                         CentroCostos: null,
                         Notas: '',
+                        IdOrdenBase: null,
                         NombreProveedor: '',
                         OrdenItems: []
                     };
@@ -86,6 +87,7 @@ angular
                         IdProveedor: orden.Proveedor.Id,
                         CentroCostos: orden.CentroCostos,
                         Notas: orden.Notas,
+                        IdOrdenBase: orden.IdOrdenBase,
                         OrdenItems: []
                     };
                     for (var i = 0; i < orden.OrdenItems.length; i += 1) {
