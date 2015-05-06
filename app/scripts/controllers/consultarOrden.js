@@ -10,8 +10,8 @@
 
 angular.module('almacenApp')
     .controller('ConsultarOrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter',
-        'modalWindowFactory', 'moment', 'Constants',
-        function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants) {
+        'modalWindowFactory', 'moment', 'Constants', '$location',
+        function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants, $location) {
             $log.debug('Iniciando consultar orden');
 
             //Setting starting Date
@@ -84,8 +84,14 @@ angular.module('almacenApp')
                 pagingOptions: $scope.pagingOptions,
 
                 columnDefs: [{
+                    field: 'Id',
+                    displayName: 'Id'
+                }, {
                     field: 'Numero',
                     displayName: 'Numero'
+                }, {
+                    field: 'Tipo',
+                    displayName: 'Tipo Orden'
                 }, {
                     field: 'Proveedor.Nombre',
                     displayName: 'Proveedor'
@@ -95,9 +101,8 @@ angular.module('almacenApp')
                     cellFilter: 'date:\'dd/MM/yyyy HH:mm:ss\''
                 }, {
                     field: '',
-                    displayName: 'Inhabilitar',
-                    width: 100,
-                    cellTemplate: '<span class="glyphicon glyphicon-remove" ng-click="deleteRow(row)"></span>'
+                    displayName: 'Detalles Orden',
+                    cellTemplate: '<span class="glyphicon glyphicon-open glyphicon-center" ng-click="showDetails(row)"></span>'
                 }],
 
                 multiSelect: false,
@@ -182,12 +187,7 @@ angular.module('almacenApp')
 
             $scope.buscar = function() {
 
-                /*$log.debug("Orden: " + $scope.consultaOrden.Numero);
-                $log.debug("StartinDate: " + moment($scope.consultaOrden.StartDate).format(Constants.formatDate));
-                $log.debug("EndDate: " + moment($scope.consultaOrden.EndDate).format(Constants.formatDate));
-                $log.debug("Proveedor: " + $scope.consultaOrden.Proveedor);
-                $log.debug("IdProveedor: " + $scope.consultaOrden.IdProveedor);*/
-
+                //$log.debug("Orden: " + $scope.consultaOrden.Numero);
                 if ($scope.consultaOrden.Numero !== null) {
                     var params = {
                         Numero: $scope.consultaOrden.Numero
@@ -256,24 +256,9 @@ angular.module('almacenApp')
             });
 
 
-            // Broadcast an event when an element in the grid is deleted. No real deletion is perfomed at this point.
-            $scope.deleteRow = function(row) {
-                var title = 'Inhabilitar \'' + row.entity.Numero + '\'';
-                var msg = "Seguro que deseas desactivar este elemento?";
-                var confirmCallback = function() {
-                    ordenFactory.inactivate($scope.orden.Id).then(function() {
-                        toaster.pop('success', 'mensaje', 'La Orden fue Inhabilitada exitosamente.');
-                        $scope.clearForm();
-                    }, function error(response) {
-                        // An error has occurred
-                        $rootScope.$emit('evento', {
-                            descripcion: response.statusText
-                        });
-                    });
-                }
-
-                modalWindowFactory.show(title, msg, confirmCallback);
-                //$rootScope.$broadcast('deletePerson', row.entity.id);
+            //From here you can go to details orden
+            $scope.showDetails = function(row) {
+                $location.path("/ordenDetails").search({idOrden: row.entity.Id});
             };
 
 

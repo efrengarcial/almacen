@@ -46,7 +46,7 @@ angular
 		minDate : 1420149727,
 		datepickerFormatDate : 'dd/MM/yyyy',
 		pageSizes: [5, 10, 15],
-        pageSize: 15,
+        pageSize: 10,
         ORDEN_COMPRA: 'ORDEN_COMPRA',
         ORDEN_SERVICIO: 'ORDEN_SERVICIO',
         REQUISICION: 'REQUISICION',

@@ -83,7 +83,7 @@ angular
                     var ordenWS = {
                         Id: orden.Id,
                         Tipo: orden.Tipo,
-                        IdProveedor: orden.Proveedor.Id,
+                        IdProveedor: (orden.Proveedor !== null?orden.Proveedor.Id:null),
                         CentroCostos: orden.CentroCostos,
                         Notas: orden.Notas,
                         IdOrdenBase: orden.IdOrdenBase,
@@ -111,7 +111,7 @@ angular
                         orden.Id = ordenWS.Id;
                         orden.Numero = ordenWS.Numero;
                         orden.Proveedor = ordenWS.Proveedor;
-                        orden.NombreProveedor = ordenWS.Proveedor.Nombre;
+                        orden.NombreProveedor =  (ordenWS.Proveedor !== null?ordenWS.Proveedor.Nombre:null);
                         orden.FechaOrden = moment(ordenWS.FechaCreacion).format(Constants.formatDate);
                         orden.CentroCostos = ordenWS.CentroCostos;
 

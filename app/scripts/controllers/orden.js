@@ -94,9 +94,9 @@ angular.module('almacenApp')
             };
 
             $scope.removeProduct = function(index) {
+                $scope.ordenForm.$setPristine();
                 $scope.orden.removeItem(index);
             };
-
 
             $scope.clearForm = function() {
                 $scope.orden = null;
@@ -124,18 +124,19 @@ angular.module('almacenApp')
                 if (isValid) {
                     if ($scope.orden.OrdenItems.length === 0) {
                         toaster.pop('error', 'Operación Fallida', 'Debe ingresar por lo menos un producto/servicio.');
-                    }
-                    ordenFactory.save($scope.orden).then(function() {
-                        toaster.pop('success', 'Operación Exitosa', 'La Orden de Compra fue creada exitosamente.');
-                        $scope.clearForm();
-                    }, function error(response) {
-                        // An error has occurred
-                        $rootScope.$emit('evento', {
-                            descripcion: response.statusText
+                    } else {
+                        ordenFactory.save($scope.orden).then(function() {
+                            toaster.pop('success', 'Operación Exitosa', 'La Orden de Compra fue creada exitosamente.');
+                            $scope.clearForm();
+                        }, function error(response) {
+                            // An error has occurred
+                            $rootScope.$emit('evento', {
+                                descripcion: response.statusText
+                            });
                         });
-                    });
+                    }
+
                 }
             };
-
         }
     ]);
