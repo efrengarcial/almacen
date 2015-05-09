@@ -19,21 +19,18 @@
         </tr>
         <tr ng-repeat="ordenItem in orden.OrdenItems" class="repeat-animation">
             <td>{{$index + 1}}.</td>
-
             <td>
                 <div class="col-md-12 form-group required-field-block">
                     <input class="form-control" name="producto" type="text" ng-model="ordenItem.Producto.Nombre" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label,ordenItem)" typeahead-editable="false"  ng-required="true" />
-                     <div class="required-icon" ng-mouseover="showMessage();">
+                    <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                     </div>
-                    <span  ng-show="loadingLocations" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>             
-
+                    <span  ng-show="loadingLocations" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
                     <div class="error-message" ng-messages="ordenForm.producto.$error" ng-if="ordenForm.$submitted">
-                        <div class="error-message" ng-message="required">Debe ingresar un producto</div>     
-                    </div>  
-
-                </div>    
-            </td>           
+                        <div class="error-message" ng-message="required">Debe ingresar un producto</div>
+                    </div>
+                </div>
+            </td>
             <td>
                 {{ ordenItem.Producto.Codigo }}
             </td>
@@ -46,12 +43,12 @@
                     <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                     </div>
-                     <div class="error-message" ng-messages="ordenForm.cantidad.$error" ng-if="ordenForm.$submitted">
-                          <div class="error-message" ng-message="maxlength">El máximo es demasiado largo...</div>
-                          <div class="error-message" ng-message="required">Debe ingresar un valor para Cantidad</div>
-                          <div class="error-message" ng-message="pattern">El valor debe ser numérico</div>
-                         </div> 
-                     </div>    
+                    <div class="error-message" ng-messages="ordenForm.cantidad.$error" ng-if="ordenForm.$submitted">
+                        <div class="error-message" ng-message="maxlength">El máximo es demasiado largo...</div>
+                        <div class="error-message" ng-message="required">Debe ingresar un valor para Cantidad</div>
+                        <div class="error-message" ng-message="pattern">El valor debe ser numérico</div>
+                    </div>
+                </div>
             </td>
             <td>
                 {{ ordenItem.Producto.Precio |  currency }}
@@ -59,12 +56,12 @@
             <td>
                 {{ ordenItem.PrecioTotal() | currency }}
             </td>
-        <!--<td>
+            <!--<td>
                 {{ ordenItem.Id }}
-            </td>-->           
+            </td>-->
             <td>
                 <span class="glyphicon glyphicon-trash glyphicon-center" ng-click="removeProduct($index)"></span>
-            </td>            
+            </td>
         </tr>
         <tr class="info">
             <td colspan="6">
@@ -73,8 +70,7 @@
             <td>
                 <strong>{{ orden.PrecioTotal() | currency }}</strong>
             </td>
-            <td></td>            
+            <td></td>
         </tr>
-
     </tbody>
 </table>
