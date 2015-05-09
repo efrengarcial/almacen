@@ -42,7 +42,7 @@ angular.module('almacenApp')
                 sortInfo: $scope.sortInfo,
                 //enablePaging : true,
                 //showFooter : true,    
-                //totalServerItems:'totalServerItems',
+                //totalServerItems:'totalServerItems',               
                 pagingOptions: $scope.pagingOptions,
 
                 columnDefs: [{
