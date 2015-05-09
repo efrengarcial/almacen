@@ -42,6 +42,8 @@ angular
                         var ordenItem = {
                             Id: '00000000',
                             Cantidad: null,
+                            Aprovisionado : null,
+                            CantidadEntrada: null,
                             Producto: {
                                 Precio: null
                             },
@@ -83,6 +85,8 @@ angular
                 save: function(orden) {
                     var ordenWS = {
                         Id: orden.Id,
+                        Numero: orden.Numero,
+                        UserId: orden.UserId,
                         Tipo: orden.Tipo,
                         IdProveedor: orden.Proveedor.Id,
                         CentroCostos: orden.CentroCostos,
@@ -97,6 +101,7 @@ angular
                             IdOrden: orden.Id,
                             IdProducto: ordenItem.Producto.Id,
                             Cantidad: ordenItem.Cantidad,
+                            Aprovisionado: ordenItem.Aprovisionado + ordenItem.CantidadEntrada, 
                             Precio: ordenItem.Producto.Precio,
                             Iva: ordenItem.Producto.Iva
                         };
@@ -112,6 +117,7 @@ angular
                         orden.Id = ordenWS.Id;
                         orden.Numero = ordenWS.Numero;
                         orden.Tipo = ordenWS.Tipo;
+                        orden.UserId  = ordenWS.UserId;
                         orden.Proveedor = ordenWS.Proveedor;
                         orden.NombreProveedor = ordenWS.Proveedor.Nombre;
                         orden.FechaOrden = moment(ordenWS.FechaCreacion).format(Constants.formatDate);
@@ -123,10 +129,7 @@ angular
                             ordenItem.Id = ordenItemWS.Id;
                             ordenItem.Producto = ordenItemWS.Producto;
                             ordenItem.Cantidad = ordenItemWS.Cantidad;
-
-                            if (ordenItemWS.Entradas !== null) {
-                                
-                            }
+                            ordenItem.Aprovisionado = ordenItemWS.Aprovisionado;
                         }
 
                         return orden;

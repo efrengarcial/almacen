@@ -31,7 +31,15 @@ angular.module('almacenApp')
 
             $scope.save = function(isValid) {
                 if (isValid) {
-                    
+                    ordenFactory.save($scope.orden).then(function() {
+                        toaster.pop('success', 'Operación Exitosa', 'La Entrada fue regitrada exitosamente.');
+                        $location.path("/entradas");
+                    }, function error(response) {
+                        // An error has occurred
+                        $rootScope.$emit('evento', {
+                            descripcion: response.statusText
+                        });
+                    });
                 }
             }
         }

@@ -99,6 +99,7 @@
 		            <th>Producto</th>
 		            <th>Codigo</th>
 		            <th>Unidad</th>
+		            <th>Cantidad</th>
 		            <th>Cantidad Faltante</th>
 		            <th>Entradas Producto</th>
 		            <th>Precio Unitario</th>
@@ -130,16 +131,19 @@
 		                {{ ordenItem.Cantidad }}
 		            </td>
 		            <td>
+		                {{ ordenItem.Cantidad - ordenItem.Aprovisionado  }}
+		            </td>
+		            <td>
 		                <div class="col-md-8 form-group required-field-block">
 		                    <ng-form name="cantidadForm">
-		                        <input class="form-control" type="text" name="cantidad" ng-model="ordenItem.Cantidad1"  ng-maxlength="9" ng-required="true" numbers-only    ng-min="1" ng-max="ordenItem.Cantidad" />
+		                        <input class="form-control" type="text" name="cantidad" ng-model="ordenItem.CantidadEntrada"  ng-maxlength="9" ng-required="true" numbers-only    ng-min="0" ng-max="ordenItem.Cantidad - ordenItem.Aprovisionado" />
 		                        <div class="required-icon" ng-mouseover="showMessage();">
 		                            <div class="text">*</div>
 		                        </div>
 		                         <div class="error-message" ng-messages="cantidadForm.cantidad.$error" ng-if="interacted(cantidadForm.cantidad) || ordenForm.$submitted">
 		                              <div class="error-message" ng-message="maxlength">La Cantidad es demasiado larga...</div>
 		                              <div class="error-message" ng-message="required">Debe ingresar un valor para Cantidad</div>
-		                             <div class="error-message" ng-message="ngMax">Cantidad debe ser menor o igual a {{ordenItem.Cantidad}} </div>
+		                             <div class="error-message" ng-message="ngMax">Cantidad debe ser menor o igual a {{ordenItem.Cantidad - ordenItem.Aprovisionado}} </div>
 		                             <div class="error-message" ng-message="ngMin">Cantidad debe ser mayor o igual a 1 </div>
 		                         </div>
 		                     </ng-form>        
@@ -152,7 +156,7 @@
 		            </td>
 		        </tr>
 		        <tr class="info">
-		            <td colspan="7">
+		            <td colspan="8">
 		                &nbsp;
 		            </td>
 		            <td>
