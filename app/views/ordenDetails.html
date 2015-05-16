@@ -6,19 +6,11 @@
 			</div>
 		</div>
 	</form>
-
 	<!-- Table to show data -->
-	<div class="grid">
-		
-		<!-- Binds the grid component to be displayed. -->
-		<div class="inboxGrid" ng-grid="gridOptions" ng-show="allData.length > 0"></div>
-		
-		<!--  Bind the pagination component to be displayed. -->
-		<pagination direction-links="true" boundary-links="true" ng-show="allData.length > 0"
-			total-items="pagingOptions.totalServerItems" items-per-page="pagingOptions.pageSize"
-			ng-model="pagingOptions.currentPage" ng-change="refreshGrid()">
-		</pagination>
+	<div class="row">
+		<div class="col-md-12">
+			<div ng-include src="'views/ordenItem.html'"></div>
+		</div>
 	</div>
-	<!-- end table-->
-	
+	<!-- new table-->	
 </div>

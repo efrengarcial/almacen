@@ -386,7 +386,10 @@ white-space: nowrap;
  }
 
 .ordersTable {
+  position: relative;
     width:90%;
+    left: 5%;
+
 }
 
 .orders th, .customers th {
