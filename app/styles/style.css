@@ -392,6 +392,11 @@ white-space: nowrap;
 
 }
 
+.notes{
+  position: relative;
+  left: 4%;
+}
+
 .orders th, .customers th {
     width:20%;
     cursor: pointer;

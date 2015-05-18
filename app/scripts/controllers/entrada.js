@@ -9,14 +9,24 @@
  */
 angular.module('almacenApp')
     .controller('EntradaCtrl', ['$scope', '$log', '$rootScope', 'ordenFactory', 'toaster',
-        '$location', 'Constants', '$routeParams',
-        function($scope, $log, $rootScope, ordenFactory, toaster, $location, Constants, $routeParams) {
+        '$location', 'Constants', '$routeParams', 'moment',
+        function($scope, $log, $rootScope, ordenFactory, toaster, $location, Constants, $routeParams, moment) {
             $log.debug('Iniciando Entrada....' + $location.$$url);
 
             var idOrden = $routeParams.idOrden;
             ordenFactory.getById(idOrden).then(function(orden) {
                 $scope.orden = orden;
+
+                //Set Fecha Entrega
+                setFechaEntrega();
+
             });
+
+            function setFechaEntrega() {
+                var date = moment($scope.orden.FechaOrden, Constants.formatDate);
+                date.add($scope.orden.Proveedor.Plazo, 'days');
+                $scope.orden.FechaEntrega = moment(date).format(Constants.formatDate);
+            }            
 
             $scope.interacted = function(field) {
                 return $scope.submitted || field.$dirty;

@@ -143,6 +143,7 @@ angular.module('almacenApp')
                 $scope.consultarOrdenForm.$setPristine();
                 // Broadcast the event to also clear the grid selection.
                 //$rootScope.$broadcast('clear');
+                $scope.truefalse = false;
             };
 
             $scope.setPagingData = function(data, page, pageSize) {
@@ -180,7 +181,7 @@ angular.module('almacenApp')
 
                 } else {
                     $scope.truefalse = false;
-                    $scope.consultaOrden.Numero = null;
+                    //$scope.consultaOrden.Numero = null;
                 }
 
             };
@@ -188,7 +189,7 @@ angular.module('almacenApp')
             $scope.buscar = function() {
 
                 //$log.debug("Orden: " + $scope.consultaOrden.Numero);
-                if ($scope.consultaOrden.Numero !== null) {
+                if ($scope.consultaOrden.Numero !== null && $scope.consultaOrden.Numero !== undefined) {
                     var params = {
                         Numero: $scope.consultaOrden.Numero
                     };
@@ -258,7 +259,9 @@ angular.module('almacenApp')
 
             //From here you can go to details orden
             $scope.showDetails = function(row) {
-                $location.path("/ordenDetails").search({idOrden: row.entity.Id});
+                $location.path("/ordenDetails").search({
+                    idOrden: row.entity.Id
+                });
             };
 
 

@@ -1,0 +1,55 @@
+<table class="table table-hover table-striped table-condensed table-bordered ordersTable">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Producto</th>
+            <th>Codigo</th>
+            <th>Unidad</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>IVA</th>
+            <th>Precio Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-hide="orden.OrdenItems || orden.OrdenItems.length > 0" class="error">
+            <td colspan="7">
+                <div class="text-center"><strong>No se econtraron ordenes</strong></div>
+            </td>
+        </tr>
+        <tr ng-repeat="ordenItem in orden.OrdenItems" class="repeat-animation">
+            <td>{{ $index + 1 }}.</td>
+            <td>
+                {{ ordenItem.Producto.Nombre }}
+            </td>
+            <td>
+                {{ ordenItem.Producto.Codigo }}
+            </td>
+            <td>
+                {{ ordenItem.Producto.Medida.Nombre }}
+            </td>
+            <td>
+                {{ ordenItem.Cantidad }}
+            </td>
+            <td>
+                {{ ordenItem.Producto.Precio | currency }}
+            </td>
+            <td>
+                {{ ordenItem.Producto.Iva | currency }}
+            </td>
+            <td>
+                {{ ordenItem.PrecioTotal() | currency }}
+            </td>
+        </tr>
+        <tr class="info">
+            <td colspan="6">
+                &nbsp;
+            </td>
+            <td>
+            </td>
+            <td>
+                <strong>{{ orden.PrecioTotal() | currency }}</strong>
+            </td>
+        </tr>
+    </tbody>
+</table>

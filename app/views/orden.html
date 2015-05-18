@@ -109,9 +109,9 @@
             	</div>
             </div>
 			<div class="col-md-4  form-group">
-				<label class="col-md-5 control-label" for="nit">Fecha entrega</label>
+				<label class="col-md-5 control-label" for="nit">Fecha entrega*</label>
 				<div class="col-md-7">
-					<input id="entrega" type="text" name="entrega" readonly class="form-control">
+					<input id="entrega" type="text" name="entrega" ng-model="orden.FechaEntrega" readonly class="form-control">
 				</div>
 			</div>
 		</div>			
@@ -143,7 +143,7 @@
 	</div>
 	</form>
     <div class="row">
-        <div class="col-md-3 form-group">
+        <div class="col-md-3 form-group notes">
             <div class="col-md-12">
                 <textarea class="form-control" ng-model="orden.Notas" id="descrip" name="descrip" placeholder="Notas" rows="4" col="16"></textarea>
             </div>

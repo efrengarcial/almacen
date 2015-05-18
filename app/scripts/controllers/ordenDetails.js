@@ -30,8 +30,11 @@ angular.module('almacenApp')
                     //Set Fecha Entrega
                     var date = moment($scope.orden.FechaOrden, Constants.formatDate);
                     date.add($scope.orden.Proveedor.Plazo, 'days');
-                    $scope.orden.PlazoEntrega = moment(date).format(Constants.formatDate);
+                    $scope.orden.FechaEntrega = moment(date).format(Constants.formatDate);
                     $log.debug($scope.orden);
+
+                    //Remove tr in table
+                    $log.debug($scope.orden.OrdenItems);
                 });
             }
         }

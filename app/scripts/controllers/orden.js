@@ -9,9 +9,9 @@
  */
 angular.module('almacenApp')
     .controller('OrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'productoFactory',
-        'ordenFactory', 'modalWindowFactory', 'toaster', '$location', 'Constants', 'accountFactory', '$routeParams',
+        'ordenFactory', 'modalWindowFactory', 'toaster', '$location', 'Constants', 'accountFactory', '$routeParams', 'moment',
         function($scope, $log, $rootScope, proveedorFactory, productoFactory, ordenFactory, modalWindowFactory,
-            toaster, $location, Constants, accountFactory, $routeParams) {
+            toaster, $location, Constants, accountFactory, $routeParams, moment) {
 
             $log.debug('Iniciando orden: ' + $location.$$url);
             var tipoOrden, esServicio = false,
@@ -52,6 +52,9 @@ angular.module('almacenApp')
                     $scope.orden.IdOrdenBase = orden.Id;
                     $scope.orden.Id = 0;
 
+                    //Set Fecha Entrega
+                    setFechaEntrega();
+
                     for (var i = 0; i < orden.OrdenItems.length; i += 1) {
                         orden.OrdenItems[i].Id = 0;
                     }
@@ -62,6 +65,13 @@ angular.module('almacenApp')
                 $scope.orden.AddItem();
                 $scope.orden.Tipo = tipoOrden;
                 $scope.orden.Solicitante = accountFactory.getAuthenticationData().userName;
+
+            }
+
+            function setFechaEntrega() {
+                var date = moment($scope.orden.FechaOrden, Constants.formatDate);
+                date.add($scope.orden.Proveedor.Plazo, 'days');
+                $scope.orden.FechaEntrega = moment(date).format(Constants.formatDate);
             }
 
             function saveProveedor(proveedorObj, model, label) {
@@ -69,6 +79,8 @@ angular.module('almacenApp')
                 $log.debug('model ' + JSON.stringify(model));
                 $scope.orden.IdProveedor = proveedorObj.Id;
                 $scope.orden.Proveedor = proveedorObj;
+                setFechaEntrega();
+                
             }
 
             function saveProducto(productoObj, model, label, ordenItemObj) {
