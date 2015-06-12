@@ -10,9 +10,20 @@
 
 angular.module('almacenApp')
     .controller('ConsultarOrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter',
-        'modalWindowFactory', 'moment', 'Constants', '$location',
-        function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants, $location) {
+        'modalWindowFactory', 'moment', 'Constants', '$location', '$routeParams',
+        function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants, $location, $routeParams) {
             $log.debug('Iniciando consultar orden');
+
+            var params = $routeParams;
+            
+            //Check wether params object is empty when it is coming back from ordenes
+            if (isEmptyObject(params) === false) {
+                ordenFactory.query(params).then(function(data) {
+                    $scope.allData = data;
+                    $scope.pagingOptions.currentPage = 1;
+                    $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                });
+            }
 
             //Setting starting Date
             $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
@@ -38,10 +49,8 @@ angular.module('almacenApp')
                 startingDay: 1
             };
 
+
             $scope.format = Constants.datepickerFormatDate;
-
-
-            //Setting end Date
 
             $scope.proveedores = [];
 
@@ -58,6 +67,14 @@ angular.module('almacenApp')
                 $scope.consultaOrden.IdProveedor = proveedorObj.Id;
                 $scope.consultaOrden.Proveedor = proveedorObj.Nombre;
             }
+
+            //Check whether a object is empty
+            function isEmptyObject(obj) {
+               for(var p in obj){
+                  return false;
+               }
+               return true;
+            }            
 
             $scope.saveProveedor = saveProveedor;
             cargarProveedores();
@@ -190,7 +207,7 @@ angular.module('almacenApp')
 
                 //$log.debug("Orden: " + $scope.consultaOrden.Numero);
                 if ($scope.consultaOrden.Numero !== null && $scope.consultaOrden.Numero !== undefined) {
-                    var params = {
+                    params = {
                         Numero: $scope.consultaOrden.Numero
                     };
 
@@ -206,7 +223,7 @@ angular.module('almacenApp')
                     });
                 } else {
 
-                    var params = {
+                    params = {
                         StartDate: moment($scope.consultaOrden.StartDate).format(Constants.formatDate),
                         EndDate: moment($scope.consultaOrden.EndDate).format(Constants.formatDate),
                         IdProveedor: $scope.consultaOrden.IdProveedor
@@ -259,9 +276,8 @@ angular.module('almacenApp')
 
             //From here you can go to details orden
             $scope.showDetails = function(row) {
-                $location.path("/ordenDetails").search({
-                    idOrden: row.entity.Id
-                });
+                params.idOrden = row.entity.Id;
+                $location.path("/ordenDetails").search(params);
             };
 
 

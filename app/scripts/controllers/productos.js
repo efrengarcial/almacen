@@ -10,12 +10,12 @@
 
 angular.module('almacenApp')
     .controller('ProductosCtrl', ['$scope', '$log', '$rootScope', 'productoFactory', 'toaster', '$filter',
-        'modalWindowFactory','Constants',
-        function($scope, $log, $rootScope, productoFactory, toaster, $filter, 
-        	modalWindowFactory,Constants) {
+        'modalWindowFactory', 'Constants',
+        function($scope, $log, $rootScope, productoFactory, toaster, $filter,
+            modalWindowFactory, Constants) {
             $log.debug('Iniciando Productos...');
 
-             /* Cargar información de listas */
+            /* Cargar información de listas */
             function cargarLineas() {
                 productoFactory.getLineas().then(function(lineas) {
                     $scope.lineas = lineas;
@@ -29,21 +29,22 @@ angular.module('almacenApp')
             }
 
             function seleccionarLinea(idLinea) {
-               $scope.producto.IdSubLinea = '';
-               buscarSubLineas(idLinea);
+                $scope.producto.IdSubLinea = '';
+                buscarSubLineas(idLinea);
             }
+
             function buscarSubLineas(idLinea) {
                 var found = $filter('filter')($scope.lineas, {
                     Id: idLinea
                 }, true);
                 if (found.length) {
-                    
+
                     $scope.grupos = found[0].SubLineas;
                 } else {
                     $scope.grupos = [];
                 }
             }
-            
+
             cargarLineas();
             cargarMedidas();
             $scope.seleccionarLinea = seleccionarLinea;
@@ -80,7 +81,7 @@ angular.module('almacenApp')
                     displayName: 'Referencia'
                 }, {
                     field: '',
-                    displayName: 'Inhabilitar', 
+                    displayName: 'Inhabilitar',
                     width: 100,
                     cellTemplate: '<span class="glyphicon glyphicon-remove" ng-click="deleteRow(row)"></span>'
                 }],
@@ -99,28 +100,40 @@ angular.module('almacenApp')
             $scope.clearForm = function() {
                 $scope.producto = null;
                 $scope.producto = {
-                	Id:0
-            	};
-            	$scope.allData=null;
-            	$scope.gridOptions.ngGrid.config.sortInfo = { fields:['Codigo'], 
-            		directions: ['asc'], columns:[] };
+                    Id: 0
+                };
+                $scope.allData = null;
+                $scope.gridOptions.ngGrid.config.sortInfo = {
+                    fields: ['Codigo'],
+                    directions: ['asc'],
+                    columns: []
+                };
                 // Resets the form validation state.
                 //https://github.com/angular/angular.js/issues/10006
                 //https://docs.angularjs.org/api/ng/type/form.FormController
-                 $scope.productoForm.$setPristine();
+                $scope.productoForm.$setPristine();
                 // Broadcast the event to also clear the grid selection.
                 //$rootScope.$broadcast('clear');
             };
 
+            $scope.settingProducto = function() {
+                $scope.producto = null;
+                $scope.producto = {
+                    Id: 0
+                };
+            };
+
+            $scope.settingProducto();
+
             $scope.submitForm = function(isValid) {
-                $log.debug(isValid);
                 if (isValid) {
                     productoFactory.save($scope.producto).then(function() {
-                    	if ($scope.producto.Id === 0){
-                        	toaster.pop('success', 'mensaje', 'El producto fue creado exitosamente.');
-                    	} else {
-                    		toaster.pop('success', 'mensaje', 'El producto fue actualizado exitosamente.');
-                    	}
+                        $log.debug($scope.producto.Id);
+                        if ($scope.producto.Id === 0) {
+                            toaster.pop('success', 'mensaje', 'El producto fue creado exitosamente.');
+                        } else {
+                            toaster.pop('success', 'mensaje', 'El producto fue actualizado exitosamente.');
+                        }
                         $scope.clearForm();
                     }, function error(response) {
                         // An error has occurred
@@ -133,8 +146,8 @@ angular.module('almacenApp')
             };
 
             $scope.setPagingData = function(data, page, pageSize) {
-                if (!data) { 
-                	return;
+                if (!data) {
+                    return;
                 }
                 var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
                 $scope.dataGrid = pagedData;
@@ -147,7 +160,7 @@ angular.module('almacenApp')
             // sort over all data
             function sortData(field, direction) {
                 if (!$scope.allData) {
-                	return;
+                    return;
                 }
                 $scope.allData.sort(function(a, b) {
                     if (direction === 'asc') {
@@ -161,11 +174,21 @@ angular.module('almacenApp')
             $scope.buscar = function() {
                 $log.debug('Buscando productos......');
                 $scope.clearForm();
-                productoFactory.query($scope.search).then(function(data) {
-                    $scope.allData = data;
-                    $scope.pagingOptions.currentPage = 1;
-                    $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
-                });
+
+                if ($scope.search === "") {
+                    toaster.pop('warning', 'mensaje', 'Debe ingresar un Código o Nombre de Producto.');
+                } else {
+                    productoFactory.query($scope.search).then(function(data) {
+                        $scope.allData = data;
+
+                        if ($scope.allData[0] === undefined) {
+                            toaster.pop('warning', 'Advertencia', 'No existe un producto con el parametro de búsqueda.');
+                        } else {
+                            $scope.pagingOptions.currentPage = 1;
+                            $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                        };
+                    });
+                };
             };
 
             $scope.$watch('pagingOptions', function(newVal, oldVal) {
@@ -204,8 +227,8 @@ angular.module('almacenApp')
                 var title = 'Inhabilitar \'' + row.entity.Nombre + '\'';
                 var msg = 'Seguro que deseas des activar este elemento?';
                 var confirmCallback = function() {
-                	 productoFactory.inactivate($scope.producto.Id).then(function() {
-                    	toaster.pop('success', 'mensaje', 'El producto fue Inhabilitado exitosamente.');
+                    productoFactory.inactivate($scope.producto.Id).then(function() {
+                        toaster.pop('success', 'mensaje', 'El producto fue Inhabilitado exitosamente.');
                         $scope.clearForm();
                     }, function error(response) {
                         // An error has occurred
@@ -229,11 +252,11 @@ angular.module('almacenApp')
                     title: 'Campo requerido'
                 });
             };
-           
-               // Picks the event broadcasted when the form is cleared to also clear the grid selection.
-    		$scope.$on('clear', function () {
-        		$scope.gridOptions.selectAll(false);
-    		});          
+
+            // Picks the event broadcasted when the form is cleared to also clear the grid selection.
+            $scope.$on('clear', function() {
+                $scope.gridOptions.selectAll(false);
+            });
 
         }
     ]);

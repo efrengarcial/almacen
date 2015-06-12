@@ -95,6 +95,14 @@ angular.module('almacenApp')
                 //$rootScope.$broadcast('clear');
             };
 
+            $scope.settingProveedor = function(){
+                $scope.proveedor = null;
+                $scope.proveedor = {
+                    Id: 0
+                };
+            };
+
+            $scope.settingProveedor();
 
             $scope.submitForm = function(isValid) {
                 $log.debug(isValid);

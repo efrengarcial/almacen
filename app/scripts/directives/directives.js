@@ -22,7 +22,7 @@ angular.module('almacenApp').directive('numbersOnly', [
                 if (!ngModel) return;
                 ngModel.$parsers.unshift(function(inputValue) {
                     var digits = inputValue.split('').filter(function(s) {
-                        return (!isNaN(s) && s != ' ');
+                        return (!isNaN(s) && s !== ' ');
                     }).join('');
                     ngModel.$viewValue = digits;
                     ngModel.$render();
@@ -58,7 +58,7 @@ angular.module('almacenApp').directive('ngFocus', [
     }
 ]);
 
-angular.module('almacenApp').directive('dateLowerThan', ["$filter",
+angular.module('almacenApp').directive('dateLowerThan', ['$filter',
     function($filter) {
         return {
             require: 'ngModel',
@@ -82,7 +82,7 @@ angular.module('almacenApp').directive('dateLowerThan', ["$filter",
 ]);
 
 
-angular.module('almacenApp').directive('dateGreaterThan', ["$filter",
+angular.module('almacenApp').directive('dateGreaterThan', ['$filter',
     function($filter) {
         return {
             require: 'ngModel',
@@ -157,7 +157,7 @@ angular.module('almacenApp').directive('ngMax', function() {
 });
 
 var isValidDate = function(dateStr) {
-    if (dateStr == undefined)
+    if (dateStr === undefined)
         return false;
     var dateTime = Date.parse(dateStr);
 
@@ -172,12 +172,12 @@ var getDateDifference = function(fromDate, toDate) {
 };
 
 var isValidDateRange = function(fromDate, toDate) {
-    if (fromDate == "" || toDate == "")
+    if (fromDate === '' || toDate === '')
         return true;
-    if (isValidDate(fromDate) == false) {
+    if (isValidDate(fromDate) === false) {
         return false;
     }
-    if (isValidDate(toDate) == true) {
+    if (isValidDate(toDate) === true) {
         var days = getDateDifference(fromDate, toDate);
         if (days < 0) {
             return false;

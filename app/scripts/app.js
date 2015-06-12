@@ -88,6 +88,10 @@ angular
         templateUrl: 'views/login.html',
         controller: 'AccountCtrl'
       })                    
+      .when('/salida', {
+        templateUrl: 'views/salida.html',
+        controller: 'SalidaCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

@@ -13,10 +13,9 @@ angular.module('almacenApp')
         function($scope, $log, $rootScope, proveedorFactory, productoFactory, ordenFactory, modalWindowFactory,
             toaster, $location, Constants, accountFactory, $routeParams, moment) {
 
-            $log.debug('Iniciando ordenDetails: ' + $location.$$url);
-            var tipoPantalla = null;
-
-            var idOrden = $routeParams.idOrden;
+            $log.debug('Iniciando ordenDetails...');
+            var tipoPantalla = null,
+                idOrden = $routeParams.idOrden;
 
             if ($location.path() === '/ordenDetails') {
                 $scope.tituloPantalla = 'Detalles del Producto';
@@ -26,16 +25,18 @@ angular.module('almacenApp')
                 ordenFactory.getById(idOrden).then(function(orden) {
                     $scope.orden = orden;
                     $scope.truefalse = true;
+                    $scope.orden.params = $routeParams;
 
-                    //Set Fecha Entrega
+                    //Set FechaEntrega
                     var date = moment($scope.orden.FechaOrden, Constants.formatDate);
                     date.add($scope.orden.Proveedor.Plazo, 'days');
                     $scope.orden.FechaEntrega = moment(date).format(Constants.formatDate);
-                    $log.debug($scope.orden);
-
-                    //Remove tr in table
-                    $log.debug($scope.orden.OrdenItems);
                 });
+            }
+
+            //From here you can back to consultaOrden
+            $scope.backBuscarOrden = function() {
+                $location.path("/consultarOrden").search($scope.orden.params);
             }
         }
     ]);

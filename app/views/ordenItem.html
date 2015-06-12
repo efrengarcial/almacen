@@ -3,11 +3,11 @@
         <tr>
             <th>No.</th>
             <th>Producto</th>
-            <th>Codigo</th>
-            <th>Unidad</th>
+            <th>Código</th>
             <th>Cantidad</th>
-            <th>Precio Unitario</th>
-            <th>Precio Total</th>
+            <th>Centro de Costo</th>
+            <th>Equipo/Obra</th>
+            <th>Nm. Orden</th>
             <th>Eliminar Producto</th>
         </tr>
     </thead>
@@ -21,7 +21,7 @@
             <td>{{$index + 1}}.</td>
             <td>
                 <div class="col-md-12 form-group required-field-block">
-                    <input class="form-control" name="producto" type="text" ng-model="ordenItem.Producto.Nombre" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label,ordenItem)" typeahead-editable="false"  ng-required="true" ng-readonly="truefalse" />
+                    <input class="form-control" name="producto" type="text" ng-model="ordenItem.Producto.Nombre" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label,ordenItem)" typeahead-editable="false"  ng-required="true"/>
                     <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                     </div>
@@ -39,7 +39,7 @@
             </td>
             <td>
                 <div class="col-md-8 form-group required-field-block">
-                    <input class="form-control" type="text" name="cantidad" ng-model="ordenItem.Cantidad"  ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/" ng-readonly="truefalse"/>
+                    <input class="form-control" type="text" name="cantidad" ng-model="ordenItem.Cantidad"  ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/"/>
                     <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                     </div>
