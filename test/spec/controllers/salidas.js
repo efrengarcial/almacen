@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: SalidasCtrl', function () {
+describe('Controller: SalidaCtrl', function () {
 
   // load the controller's module
   beforeEach(module('almacenApp'));
 
-  var SalidasCtrl,
+  var SalidaCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    SalidasCtrl = $controller('SalidasCtrl', {
+    SalidaCtrl = $controller('SalidaCtrl', {
       $scope: scope
     });
   }));

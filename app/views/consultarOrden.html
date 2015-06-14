@@ -54,7 +54,7 @@
 			<div class="col-md-4 form-group required-field-block">
 				<label class="col-md-4 control-label">Proveedor</label>
 				<div class="col-md-8">
-					<input type="text" ng-model="consultaOrden.Proveedor" name="proveedor" placeholder="Proveedor" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" 						typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" ng-readonly="truefalse" />
+					<input type="text" ng-model="consultaOrden.Proveedor" name="proveedor" placeholder="Proveedor" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" ng-readonly="truefalse" />
 					<!--<div class="required-icon" ng-mouseover="showMessage();">
 																<div class="text">*</div>
 					</div>-->
