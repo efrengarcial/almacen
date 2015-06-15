@@ -7,8 +7,8 @@
             <th>Centro de Costo</th>
             <th>Cantidad</th>
             <th>Equipo/Obra</th>
-            <th>Núm. Orden</th>
-            <th>Eliminar Producto</th>
+            <th>Núm Orden</th>
+            <th>Eliminar</th>
         </tr>
     </thead>
     <tbody>
@@ -36,12 +36,12 @@
             </td>
             <td>
                  <div class="col-md-12 form-group required-field-block">
-                    <input class="form-control" name="centrocostos" type="text" ng-model="salidaItem.Orden.CentroCostos" typeahead="Orden.CentroCostos for orden in getOrdenes($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveOrden($item, $model, $label, salidaItem)" typeahead-editable="false" ng-required="true" />
+                    <input class="form-control" name="proveedor" type="text" ng-model="salida.Proveedor.Nombre" typeahead="proveedor.Nombre for proveedor in proveedores | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" ng-required="true" />
                     <div class="required-icon" ng-mouseover="showMessage();">
                         <div class="text">*</div>
                     </div>
                     <span ng-show="loadingLocations" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-                    <div class="error-message" ng-messages="salidaForm.orden.$error" ng-if="salidaForm.$submitted">
+                    <div class="error-message" ng-messages="salidaForm.proveedor.$error" ng-if="salidaForm.$submitted">
                         <div class="error-message" ng-message="required">Debe ingresar un Centro de Costo</div>
                     </div>
                 </div>

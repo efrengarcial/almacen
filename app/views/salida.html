@@ -23,13 +23,13 @@
 			</div>
 			<div class="row">
 				<div class="col-md-4 form-group required-field-block">
-					<label class="col-md-4 control-label">Proveedor operario temp</label>
+					<label class="col-md-4 control-label">Solicitador</label>
 					<div class="col-md-8">
 						<input type="text" ng-model="salida.Proveedor" name="solicita" placeholder="Solicita" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control">
 					</div>
 				</div>
 				<div class="col-md-4 form-group required-field-block">
-					<label class="col-md-4 control-label">Recibe</label>
+					<label class="col-md-4 control-label">Recibidor</label>
 					<div class="col-md-8">
 						<input type="text" ng-model="salida.Recibe" name="recibe" placeholder="Recibe" class="form-control" ng-maxlength="20" ng-required="true"  numbers-only ng-pattern="/^[0-9]{1,20}$/">
 					</div>
