@@ -18,55 +18,38 @@ angular.module('almacenApp')
             $scope.salida.AddItem();
 
             /* Cargar información de listas */
-            $scope.proveedores = [];
+            $scope.users = [];
 
-            function cargarProveedores() {
-                proveedorFactory.getAll().then(function(proveedores) {
-                    $scope.proveedores = proveedores;
+            function getUsers() {
+                accountFactory.getUsers().then(function(users) {
+                    $scope.users = users;
                 });
             }
 
-            function setFechaEntrega() {
-                var date = moment($scope.salida.Fecha, Constants.formatDate);
-                date.add($scope.salida.Proveedor.Plazo, 'days');
-                $scope.salida.FechaEntrega = moment(date).format(Constants.formatDate);
-            }
+            getUsers();
 
-            cargarProveedores();
-
-            function saveProveedor(proveedorObj, model, label) {
+            function saveUsers(usersObj, model, label) {
                 $log.debug('label ' + label);
-                $log.debug('model ' + JSON.stringify(model));
-                $scope.salida.IdProveedor = proveedorObj.Id;
-                $scope.salida.Proveedor = proveedorObj;
-                setFechaEntrega();
+                $log.debug('model ' + JSON.stringify(usersObj));
+                $scope.salida.IdUser = usersObj.Id;
+                $scope.salida.User = usersObj;
+            }
+
+
+            function saveProducto(productoObj, model, label, salidaItemObj) {
+                $log.debug('productoObj: \n' + JSON.stringify(productoObj));
+                $log.debug('salidaItemObj: \n' + JSON.stringify(salidaItemObj));
+                //salidaItemObj.Producto = productoObj;
+                salidaItemObj.SalidaItems = productoObj;
+                $log.debug('Orden: \n' + JSON.stringify(salidaItemObj.SalidaItems));
 
             }
 
-            function saveProducto(productoObj, model, label, ordenItemObj) {
-                $log.debug('label ' + label);
-                $log.debug('model ' + JSON.stringify(productoObj));
-                ordenItemObj.Producto = productoObj;
-            }
-            
-            function saveOrden(ordenObj, model, label, ordenItemObj) {
-                $log.debug('label ' + label);
-                $log.debug('model ' + JSON.stringify(ordenObj));
-                ordenItemObj.Orden = ordenObj;
-            }
-
-            $scope.saveProveedor = saveProveedor;
+            $scope.saveUsers = saveUsers;
             $scope.saveProducto = saveProducto;
 
             $scope.getProductos = function(search) {
                 $log.debug('Buscando productos......');
-                return productoFactory.queryProdAndSer(search, esServicio).then(function(data) {
-                    return data;
-                });
-            };
-            
-            $scope.getOrdenes = function(search) {
-                $log.debug('Buscando centro de costos...');
                 return productoFactory.queryProdAndSer(search, esServicio).then(function(data) {
                     return data;
                 });
@@ -86,7 +69,7 @@ angular.module('almacenApp')
                 $scope.salida = salidaFactory.getSalidaObject();
                 $scope.salida.AddItem();
                 $scope.salidaForm.$setPristine();
-                $scope.salida.Solicitante = accountFactory.getAuthenticationData().userName;
+                $scope.salida.Solicitante = accountFactory.getAuthenticationData().userName; //Revisar
                 // Broadcast the event to also clear the grid selection.
                 //$rootScope.$broadcast('clear');
             };
@@ -101,7 +84,6 @@ angular.module('almacenApp')
                     title: 'Campo requerido'
                 });
             };
-
 
             $scope.save = function() {
                 $log.debug('save');

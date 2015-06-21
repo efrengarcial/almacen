@@ -12,40 +12,33 @@ angular
     .factory('salidaFactory', ['Restangular', 'apiFactory', 'WS', 'moment', 'Constants', '$log',
         function(Restangular, apiFactory, WS, moment, Constants, $log) {
             return {
-            getSalidaObject: function() {
+                getSalidaObject: function() {
 
                     var salida = {
                         Codigo: '000000',
                         FechaEntrega: moment().format(Constants.formatDate),
-                        Fecha: moment().format(Constants.formatDate),
-                        Recibe: null,
+                        Solicitador: null,
+                        Recibidor: null,
+                        IdSolicitador: null,
+                        IdRecibidor: null,
                         SalidaItems: []
                     }
 
                     salida.AddItem = function() {
                         var salidaItem = {
                             Id: '00000000',
+                            IdProducto: null,
+                            IdCentroCostos: null,
                             Cantidad: null,
-                            Aprovisionado: null,
-                            CantidadEntrada: null,
+                            EquipoObra: null,
+                            IdOrden: null,
+                            IdSalida: null,
                             Orden: {
-                                CentroCostos: null
-                            },
-                            Producto: {
-                                Precio: null
-                            },
-                            Entradas: []
+                                Numero: null
+                            }
                         };
 
-                        salidaItem.PrecioTotal = function() {
-                            if (salidaItem.Cantidad === null || salidaItem.Producto.Precio === null) {
-                                return null;
-                            }
-                            return salidaItem.Cantidad * salidaItem.Producto.Precio;
-                        }
-
                         this.SalidaItems.push(salidaItem);
-
                         return salidaItem;
                     }
 

@@ -25,13 +25,25 @@
 				<div class="col-md-4 form-group required-field-block">
 					<label class="col-md-4 control-label">Solicitador</label>
 					<div class="col-md-8">
-						<input type="text" ng-model="salida.Proveedor" name="solicita" placeholder="Solicita" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control">
+						<input type="text" ng-model="salida.Solicitador" name="solicitador" placeholder="Solicita" typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control"/>
+						<div class="required-icon" ng-mouseover="showMessage();">
+							<div class="text">*</div>
+						</div>
+						<div class="error-message" ng-messages="salidaForm.solicitador.$error" ng-if="interacted(salidaForm.solicitador) || salidaForm.$submitted">
+							<div class="error-message" ng-message="required">Debe ingresar un Solicitador</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-4 form-group required-field-block">
 					<label class="col-md-4 control-label">Recibidor</label>
 					<div class="col-md-8">
-						<input type="text" ng-model="salida.Recibe" name="recibe" placeholder="Recibe" class="form-control" ng-maxlength="20" ng-required="true"  numbers-only ng-pattern="/^[0-9]{1,20}$/">
+						<input type="text" ng-model="salida.Recibidor" name="recibidor" placeholder="Recibe" typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control"/>
+						<div class="required-icon" ng-mouseover="showMessage();">
+							<div class="text">*</div>
+						</div>
+						<div class="error-message" ng-messages="salidaForm.recibidor.$error" ng-if="interacted(salidaForm.recibidor) || salidaForm.$submitted">
+							<div class="error-message" ng-message="required">Debe ingresar un Recibidor</div>
+						</div>
 					</div>
 				</div>
 			</div>

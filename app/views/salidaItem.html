@@ -4,8 +4,8 @@
             <th>No.</th>
             <th>Producto</th>
             <th>Código</th>
-            <th>Centro de Costo</th>
             <th>Cantidad</th>
+            <th>Centro de Costo</th>
             <th>Equipo/Obra</th>
             <th>Núm Orden</th>
             <th>Eliminar</th>
@@ -21,13 +21,15 @@
             <td>{{$index + 1}}.</td>
             <td>
                 <div class="col-md-12 form-group required-field-block">
-                    <input class="form-control" name="producto" type="text" ng-model="salidaItem.Producto.Nombre" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label, salidaItem)" typeahead-editable="false" ng-required="true" />
-                    <div class="required-icon" ng-mouseover="showMessage();">
-                        <div class="text">*</div>
-                    </div>
-                    <span ng-show="loadingLocations" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-                    <div class="error-message" ng-messages="salidaForm.producto.$error" ng-if="salidaForm.$submitted">
-                        <div class="error-message" ng-message="required">Debe ingresar un producto</div>
+                    <div class="col-md-10">
+                        <input class="form-control" name="producto" type="text" ng-model="salidaItem.Producto.Nombre" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label, salidaItem)" typeahead-editable="false" ng-required="true" />
+                        <div class="required-icon" ng-mouseover="showMessage();">
+                            <div class="text">*</div>
+                        </div>
+                        <span ng-show="loadingLocations" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                        <div class="error-message" ng-messages="salidaForm.producto.$error" ng-if="salidaForm.$submitted">
+                            <div class="error-message" ng-message="required">Debe ingresar un producto</div>
+                        </div>
                     </div>
                 </div>
             </td>
@@ -35,27 +37,34 @@
                 {{ salidaItem.Producto.Codigo }}
             </td>
             <td>
-                 <div class="col-md-12 form-group required-field-block">
-                    <input class="form-control" name="proveedor" type="text" ng-model="salida.Proveedor.Nombre" typeahead="proveedor.Nombre for proveedor in proveedores | filter:$viewValue | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" ng-required="true" />
-                    <div class="required-icon" ng-mouseover="showMessage();">
-                        <div class="text">*</div>
-                    </div>
-                    <span ng-show="loadingLocations" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-                    <div class="error-message" ng-messages="salidaForm.proveedor.$error" ng-if="salidaForm.$submitted">
-                        <div class="error-message" ng-message="required">Debe ingresar un Centro de Costo</div>
+                <div class="col-md-12 form-group required-field-block">
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" name="cantidad" ng-model="salidaItem.Cantidad" ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/" />
+                        <div class="required-icon" ng-mouseover="showMessage();">
+                            <div class="text">*</div>
+                        </div>
+                        <div class="error-message" ng-messages="salidaForm.cantidad.$error" ng-if="salidaForm.$submitted">
+                            <div class="error-message" ng-message="maxlength">El máximo es demasiado largo...</div>
+                            <div class="error-message" ng-message="required">Debe ingresar un valor</div>
+                            <div class="error-message" ng-message="pattern">El valor debe ser numérico</div>
+                        </div>
                     </div>
                 </div>
             </td>
             <td>
-                <div class="col-md-9 form-group required-field-block">
-                    <input class="form-control" type="text" name="cantidad" ng-model="salidaItem.Cantidad" ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/" />
-                    <div class="required-icon" ng-mouseover="showMessage();">
-                        <div class="text">*</div>
-                    </div>
-                    <div class="error-message" ng-messages="salidaForm.cantidad.$error" ng-if="salidaForm.$submitted">
-                        <div class="error-message" ng-message="maxlength">El máximo es demasiado largo...</div>
-                        <div class="error-message" ng-message="required">Debe ingresar un valor</div>
-                        <div class="error-message" ng-message="pattern">El valor debe ser numérico</div>
+                <div class="col-md-12 form-group required-field-block">
+                    <div class="col-md-12">
+                        <select ng-model="salidaItem.CentroCosto" name="centroCosto" placeHolder="Centro de Costo" class="form-control" ng-required="true">
+                            <option style="display:none" value="">SELECCIONE</option>
+                            <option>BOVINOS</option>
+                            <option>PORCINOS</option>
+                        </select>
+                        <div class="required-icon" ng-mouseover="showMessage();">
+                            <div class="text">*</div>
+                        </div>
+                        <div class="error-message" ng-messages="salidaForm.centroCosto.$error" ng-if="salidaForm.$submitted">
+                            <div class="error-message" ng-message="required">Debe ingresar un Centro de Costo</div>
+                        </div>
                     </div>
                 </div>
             </td>

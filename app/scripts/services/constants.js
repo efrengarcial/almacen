@@ -32,9 +32,8 @@ angular
 		URI_GET_INBOX_ORDEN: 'orden/getInboxOrden',
 		URI_GET_ORDEN: 'orden/getById',	
 		URI_ORDENES_ORDENES_ABIERTAS: 'orden/getOrdenesCompraAbiertas',
-		
+		URI_USERS: 'account/users',
 		URI_TOKEN: 'token'
-
 	})
 	.constant('menu', {		
 		step1 : 'PASO 1 - COTIZACIÓN',

@@ -57,7 +57,12 @@ angular
                         _authenticationData.isAuth = true;
                         _authenticationData.userName = authData.userName;
                     }
-                }
+                },
+                getUsers: function() {
+                    return apiFactory.all(WS.URI_USERS).getList().then(function(users) {
+                        return users;
+                    });
+                }                
             };
         }
     ]);
