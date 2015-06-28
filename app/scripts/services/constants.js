@@ -33,6 +33,8 @@ angular
 		URI_GET_ORDEN: 'orden/getById',	
 		URI_ORDENES_ORDENES_ABIERTAS: 'orden/getOrdenesCompraAbiertas',
 		URI_USERS: 'account/users',
+		URI_SAVE_SALIDA: 'salida/save',
+		URI_CENTRO_COSTOS: 'salida/centroCostos',
 		URI_TOKEN: 'token'
 	})
 	.constant('menu', {		

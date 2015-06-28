@@ -6,8 +6,8 @@
             <th>Código</th>
             <th>Cantidad</th>
             <th>Centro de Costo</th>
-            <th>Equipo/Obra</th>
-            <th>Núm Orden</th>
+            <th>Equipo-Obra</th>
+            <th>Número Orden</th>
             <th>Eliminar</th>
         </tr>
     </thead>
@@ -20,9 +20,9 @@
         <tr ng-repeat="salidaItem in salida.SalidaItems" class="repeat-animation">
             <td>{{$index + 1}}.</td>
             <td>
-                <div class="col-md-12 form-group required-field-block">
-                    <div class="col-md-10">
-                        <input class="form-control" name="producto" type="text" ng-model="salidaItem.Producto.Nombre" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label, salidaItem)" typeahead-editable="false" ng-required="true" />
+                <div class="col-md-13 form-group required-field-block">
+                    <div class="col-md-12">
+                        <input class="form-control" name="producto" type="text" ng-model="salidaItem.Producto.Nombre" placeHolder="Producto" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label, salidaItem)" typeahead-editable="false" ng-required="true" />
                         <div class="required-icon" ng-mouseover="showMessage();">
                             <div class="text">*</div>
                         </div>
@@ -37,9 +37,9 @@
                 {{ salidaItem.Producto.Codigo }}
             </td>
             <td>
-                <div class="col-md-12 form-group required-field-block">
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" name="cantidad" ng-model="salidaItem.Cantidad" ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/" />
+                <div class="col-md-13 form-group required-field-block">
+                    <div class="col-md-12">
+                        <input class="form-control" type="text" name="cantidad" ng-model="salidaItem.Cantidad" placeHolder="Cantidad" ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/" />
                         <div class="required-icon" ng-mouseover="showMessage();">
                             <div class="text">*</div>
                         </div>
@@ -52,12 +52,10 @@
                 </div>
             </td>
             <td>
-                <div class="col-md-12 form-group required-field-block">
+                <div class="col-md-13 form-group required-field-block">
                     <div class="col-md-12">
-                        <select ng-model="salidaItem.CentroCosto" name="centroCosto" placeHolder="Centro de Costo" class="form-control" ng-required="true">
+                        <select ng-model="salidaItem.IdCentroCostos" name="centroCosto" placeHolder="Centro de Costo" class="form-control" ng-required="true" ng-options="centroCosto.Id as centroCosto.Nombre for centroCosto in centroCostos" ng-change="selectCentroCostos(salidaItem.IdCentroCostos)">
                             <option style="display:none" value="">SELECCIONE</option>
-                            <option>BOVINOS</option>
-                            <option>PORCINOS</option>
                         </select>
                         <div class="required-icon" ng-mouseover="showMessage();">
                             <div class="text">*</div>
@@ -69,10 +67,30 @@
                 </div>
             </td>
             <td>
-                {{ salidaItem.Producto.Precio | currency }}
+                <div class="col-md-13 form-group required-field-block">
+                    <div class="col-md-12">
+                        <input type="text" ng-model="salidaItem.EquipoObra" name="equipoObra" placeholder="Equipo Obra" required class="form-control"/>
+                        <div class="required-icon" ng-mouseover="showMessage();">
+                            <div class="text">*</div>
+                        </div>
+                        <div class="error-message" ng-messages="salidaForm.equipoObra.$error" ng-if="interacted(salidaForm.equipoObra) || salidaForm.$submitted">
+                            <div class="error-message" ng-message="required">Debe ingresar un Equipo Obra</div>
+                        </div>
+                    </div>
+                </div>
             </td>
             <td>
-                {{ salidaItem.PrecioTotal() | currency }}
+                <div class="col-md-13 form-group required-field-block">
+                    <div class="col-md-12">
+                        <input type="text" ng-model="salidaItem.IdOrden" name="idorden" placeholder="Número Orden" required class="form-control"/>
+                        <div class="required-icon" ng-mouseover="showMessage();">
+                            <div class="text">*</div>
+                        </div>
+                        <div class="error-message" ng-messages="salidaForm.idorden.$error" ng-if="interacted(salidaForm.idorden) || salidaForm.$submitted">
+                            <div class="error-message" ng-message="required">Debe ingresar un # orden</div>
+                        </div>
+                    </div>
+                </div>
             </td>
             <!--<td>
                 {{ salidaItem.Id }}
@@ -80,15 +98,6 @@
             <td>
                 <span class="glyphicon glyphicon-trash glyphicon-center" ng-click="removeProduct($index)"></span>
             </td>
-        </tr>
-        <tr class="info">
-            <td colspan="6">
-                &nbsp;
-            </td>
-            <td>
-                <strong>{{ salida.PrecioTotal() | currency }}</strong>
-            </td>
-            <td></td>
         </tr>
     </tbody>
 </table>

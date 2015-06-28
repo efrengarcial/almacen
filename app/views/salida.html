@@ -5,18 +5,18 @@
 		</div>
 	</div>
 	<hr>
-	<form name="salidaForm" ng-submit="submitForm(salidaForm.$valid)" role="form" novalidate>
+	<form name="salidaForm" ng-submit="save(salidaForm.$valid)" role="form" novalidate>
 		<fieldset>
 			<div class="row">
 				<div class="col-md-4 form-group">
 					<label class="col-md-4 control-label" for="salida">Código</label>
-					<div class="col-md-8">
-						<input type="text" ng-model="salida.Codigo" name="codigo" readonly class="form-control" placeholder="Código">
+					<div class="col-md-6">
+						<input type="text" ng-model="salida.Id" name="codigo" readonly class="form-control" placeholder="Código">
 					</div>
 				</div>
 				<div class="col-md-4 form-group">
 					<label class="col-md-4 control-label" for="fechaEntrega">FechaEntrega</label>
-					<div class="col-md-8">
+					<div class="col-md-6">
 						<input type="text" ng-model="salida.FechaEntrega" name="fechaEntrega" readonly class="form-control">
 					</div>
 				</div>
@@ -24,8 +24,8 @@
 			<div class="row">
 				<div class="col-md-4 form-group required-field-block">
 					<label class="col-md-4 control-label">Solicitador</label>
-					<div class="col-md-8">
-						<input type="text" ng-model="salida.Solicitador" name="solicitador" placeholder="Solicita" typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control"/>
+					<div class="col-md-6">
+						<input type="text" ng-model="salida.Solicitador" ng-change="salida.esSolicitador=true" name="solicitador" placeholder="Solicita" typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control"/>
 						<div class="required-icon" ng-mouseover="showMessage();">
 							<div class="text">*</div>
 						</div>
@@ -36,8 +36,8 @@
 				</div>
 				<div class="col-md-4 form-group required-field-block">
 					<label class="col-md-4 control-label">Recibidor</label>
-					<div class="col-md-8">
-						<input type="text" ng-model="salida.Recibidor" name="recibidor" placeholder="Recibe" typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control"/>
+					<div class="col-md-6">
+						<input type="text" ng-model="salida.Recibidor" ng-change="salida.esSolicitador=false" name="recibidor" placeholder="Recibe" typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control"/>
 						<div class="required-icon" ng-mouseover="showMessage();">
 							<div class="text">*</div>
 						</div>
@@ -58,7 +58,7 @@
 					<i class="glyphicon glyphicon-plus"></i>
 					Agregar producto
 					</button>
-					<button type="submit" class="btn btn-primary" ng-click="save()">
+					<button type="submit" class="btn btn-primary">
 					<span class="glyphicon glyphicon-floppy-disk"></span> Guardar
 					</button>
 					<button type="button" class="btn btn-danger" ng-click="clearForm()">
