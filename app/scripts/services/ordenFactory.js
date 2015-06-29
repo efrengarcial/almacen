@@ -42,7 +42,7 @@ angular
                         var ordenItem = {
                             Id: '00000000',
                             Cantidad: null,
-                            Aprovisionado : null,
+                            Aprovisionado: null,
                             CantidadEntrada: null,
                             Producto: {
                                 Precio: null
@@ -50,20 +50,20 @@ angular
                             Entradas: []
                         };
 
-                    ordenItem.PrecioTotal = function() {
-                        if (ordenItem.Cantidad === null || ordenItem.Producto.Precio === null) {
-                            return null;
-                        }
-                        return ordenItem.Cantidad * ordenItem.Producto.Precio;
-                    };
+                        ordenItem.PrecioTotal = function() {
+                            if (ordenItem.Cantidad === null || ordenItem.Producto.Precio === null) {
+                                return null;
+                            }
+                            return ordenItem.Cantidad * ordenItem.Producto.Precio;
+                        };
 
-                    this.OrdenItems.push(ordenItem);
+                        this.OrdenItems.push(ordenItem);
 
-                    return ordenItem;
+                        return ordenItem;
                     };
 
                     orden.removeItem = function(index) {
-                        this.OrdenItems.splice(index, 1);                                         
+                        this.OrdenItems.splice(index, 1);
                     };
 
                     return orden;
@@ -88,7 +88,7 @@ angular
                         Numero: orden.Numero,
                         UserId: orden.UserId,
                         Tipo: orden.Tipo,
-                        IdProveedor: (orden.Proveedor !== null?orden.Proveedor.Id:null),
+                        IdProveedor: (orden.Proveedor !== null ? orden.Proveedor.Id : null),
                         CentroCostos: orden.CentroCostos,
                         Notas: orden.Notas,
                         IdOrdenBase: orden.IdOrdenBase,
@@ -101,7 +101,7 @@ angular
                             IdOrden: orden.Id,
                             IdProducto: ordenItem.Producto.Id,
                             Cantidad: ordenItem.Cantidad,
-                            Aprovisionado: ordenItem.Aprovisionado + ordenItem.CantidadEntrada, 
+                            Aprovisionado: ordenItem.Aprovisionado + ordenItem.CantidadEntrada,
                             Precio: ordenItem.Producto.Precio,
                             Iva: ordenItem.Producto.Iva
                         };
@@ -117,9 +117,9 @@ angular
                         orden.Id = ordenWS.Id;
                         orden.Numero = ordenWS.Numero;
                         orden.Tipo = ordenWS.Tipo;
-                        orden.UserId  = ordenWS.UserId;
+                        orden.UserId = ordenWS.UserId;
                         orden.Proveedor = ordenWS.Proveedor;
-                        orden.NombreProveedor =  (ordenWS.Proveedor !== null?ordenWS.Proveedor.Nombre:null);
+                        orden.NombreProveedor = (ordenWS.Proveedor !== null ? ordenWS.Proveedor.Nombre : null);
                         orden.FechaOrden = moment(ordenWS.FechaCreacion).format(Constants.formatDate);
                         orden.CentroCostos = ordenWS.CentroCostos;
 
@@ -153,7 +153,12 @@ angular
                     return apiFactory.all(WS.URI_ORDENES_ORDENES_ABIERTAS).getList().then(function(ordenes) {
                         return ordenes;
                     });
+                },
+
+                getOrdenByNum: function(ordenNum) {
+                    $log.debug(ordenNum);
+                    return apiFactory.all(WS.URI_ORDEN_BY_NUM).getList(ordenNum);
                 }
-            };
+            }
         }
     ]);

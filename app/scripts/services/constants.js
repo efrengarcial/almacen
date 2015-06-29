@@ -35,6 +35,7 @@ angular
 		URI_USERS: 'account/users',
 		URI_SAVE_SALIDA: 'salida/save',
 		URI_CENTRO_COSTOS: 'salida/centroCostos',
+		URI_ORDEN_BY_NUM: 'orden/getOrdenByNum',
 		URI_TOKEN: 'token'
 	})
 	.constant('menu', {		

@@ -8,9 +8,9 @@
  * Controller of the almacenApp
  */
 angular.module('almacenApp')
-    .controller('SalidaCtrl', ['$scope', '$log', '$rootScope', 'salidaFactory', 'proveedorFactory', 'productoFactory', 'toaster',
+    .controller('SalidaCtrl', ['$scope', '$log', '$rootScope', 'salidaFactory', 'proveedorFactory', 'productoFactory', 'ordenFactory', 'toaster',
         '$location', 'Constants', 'accountFactory', '$routeParams', 'moment',
-        function($scope, $log, $rootScope, salidaFactory, proveedorFactory, productoFactory, toaster, $location, Constants, accountFactory, $routeParams, moment) {
+        function($scope, $log, $rootScope, salidaFactory, proveedorFactory, productoFactory, ordenFactory, toaster, $location, Constants, accountFactory, $routeParams, moment) {
             $log.debug('Iniciando Salida....');
             var esServicio = false;
 
@@ -31,8 +31,8 @@ angular.module('almacenApp')
                 salidaFactory.getCentroCostos().then(function(centroCostos) {
                     $scope.centroCostos = centroCostos;
                 });
-            }  
-            
+            }
+
             function selectCentroCostos(IdCentroCostos) {
                 $log.debug('IdCentroCostos: ' + IdCentroCostos)
                 $scope.salida.SalidaItems.IdCentroCostos = '';
@@ -40,7 +40,7 @@ angular.module('almacenApp')
 
             getUsers();
             getCentroCostos();
-            $scope.selectCentroCostos = selectCentroCostos;            
+            $scope.selectCentroCostos = selectCentroCostos;
 
             function saveUsers(usersObj, model, label) {
                 if ($scope.salida.esSolicitador === true) {
@@ -114,5 +114,35 @@ angular.module('almacenApp')
                     }
                 }
             };
+
+            $scope.getOrdenByNum = function(ordenNum, index) {
+                var orden = {
+                    Numero: ordenNum
+                };
+
+                $log.debug('result: ' + JSON.stringify(orden));
+
+                if (orden.Numero !== null && orden.Numero !== "") {
+                    ordenFactory.query(orden).then(function(data) {
+
+                        if (isEmptyObject(data[0]) === true) {
+                            $scope.salida.SalidaItems[index].IdOrden = null;
+                        } else {
+                            //pendiente por revisar
+                            $scope.salida.SalidaItems[index].IdOrden = ordenNum;
+                        };
+                    });
+                } else {
+                    $scope.salida.SalidaItems[index].IdOrden = null;
+                }
+            };
+
+            //Check whether a object is empty
+            function isEmptyObject(obj) {
+                for (var p in obj) {
+                    return false;
+                }
+                return true;
+            }
         }
     ]);

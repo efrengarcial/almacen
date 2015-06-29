@@ -82,12 +82,14 @@
             <td>
                 <div class="col-md-13 form-group required-field-block">
                     <div class="col-md-12">
-                        <input type="text" ng-model="salidaItem.IdOrden" name="idorden" placeholder="Número Orden" required class="form-control"/>
+                        <input type="text" ng-model="salidaItem.IdOrden" ng-blur="getOrdenByNum(salidaItem.IdOrden, $index)" name="idorden" placeholder="Número Orden" class="form-control" ng-maxlength="20" required numbers-only ng-pattern="/^[0-9]{1,20}$/">
                         <div class="required-icon" ng-mouseover="showMessage();">
                             <div class="text">*</div>
                         </div>
                         <div class="error-message" ng-messages="salidaForm.idorden.$error" ng-if="interacted(salidaForm.idorden) || salidaForm.$submitted">
-                            <div class="error-message" ng-message="required">Debe ingresar un # orden</div>
+                            <div class="error-message" ng-message="required">Debe ingresar un # orden válido</div>
+                            <div class="error-message" ng-message="maxlength">El número es demasiado largo...</div>
+                            <div class="error-message" ng-message="pattern">El valor debe ser numérico</div>
                         </div>
                     </div>
                 </div>
