@@ -20,7 +20,8 @@ angular
     'toaster',
     'ngGrid',
     'ui.bootstrap',
-    'angularMoment'
+    'angularMoment',
+    'angular-jwt'
   ])
   .config(function ($routeProvider,$logProvider,$locationProvider,$httpProvider) {
     $logProvider.debugEnabled(true);
