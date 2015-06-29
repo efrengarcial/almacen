@@ -116,33 +116,19 @@ angular.module('almacenApp')
             };
 
             $scope.getOrdenByNum = function(ordenNum, index) {
-                var orden = {
-                    Numero: ordenNum
-                };
 
-                $log.debug('result: ' + JSON.stringify(orden));
-
-                if (orden.Numero !== null && orden.Numero !== "") {
-                    ordenFactory.query(orden).then(function(data) {
-
-                        if (isEmptyObject(data[0]) === true) {
-                            $scope.salida.SalidaItems[index].IdOrden = null;
-                        } else {
+                if (ordenNum !== null && ordenNum !== "") {
+                    ordenFactory.getOrdenByNum(ordenNum).then(function(orden) {
+                        if (orden.length > 0) {
                             //pendiente por revisar
                             $scope.salida.SalidaItems[index].IdOrden = ordenNum;
+                        } else {
+                            $scope.salida.SalidaItems[index].IdOrden = null;
                         };
                     });
                 } else {
                     $scope.salida.SalidaItems[index].IdOrden = null;
                 }
             };
-
-            //Check whether a object is empty
-            function isEmptyObject(obj) {
-                for (var p in obj) {
-                    return false;
-                }
-                return true;
-            }
         }
     ]);

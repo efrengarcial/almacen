@@ -154,10 +154,8 @@ angular
                         return ordenes;
                     });
                 },
-
                 getOrdenByNum: function(ordenNum) {
-                    $log.debug(ordenNum);
-                    return apiFactory.all(WS.URI_ORDEN_BY_NUM).getList(ordenNum);
+                    return apiFactory.all(WS.URI_ORDEN_BY_NUM).get(ordenNum);
                 }
             }
         }
