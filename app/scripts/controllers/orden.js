@@ -9,8 +9,8 @@
  */
 angular.module('almacenApp')
     .controller('OrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'productoFactory',
-        'ordenFactory', 'modalWindowFactory', 'toaster', '$location', 'Constants', 'accountFactory', '$routeParams', 'moment',
-        function($scope, $log, $rootScope, proveedorFactory, productoFactory, ordenFactory, modalWindowFactory,
+        'ordenFactory', 'salidaFactory', 'modalWindowFactory', 'toaster', '$location', 'Constants', 'accountFactory', '$routeParams', 'moment',
+        function($scope, $log, $rootScope, proveedorFactory, productoFactory, ordenFactory, salidaFactory, modalWindowFactory,
             toaster, $location, Constants, accountFactory, $routeParams, moment) {
 
             $log.debug('Iniciando orden: ' + $location.$$url);
@@ -43,6 +43,18 @@ angular.module('almacenApp')
                 });
             }
 
+            function getCentroCostos() {
+                salidaFactory.getCentroCostos().then(function(centroCostos) {
+                    $scope.centroCostos = centroCostos;
+                });
+            }
+
+            function selectCentroCostos(centroCosto) {
+                $scope.orden.CentroCostos = centroCosto;
+            }
+
+            getCentroCostos();
+            $scope.selectCentroCostos = selectCentroCostos;
             cargarProveedores();
 
             if (idOrden !== undefined) {

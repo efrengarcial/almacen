@@ -68,9 +68,7 @@ angular
                             IdSalida: salida.Id
                         };
                         salidaWS.SalidaItems.push(salidaItemWS);
-                    }
-                    
-                    $log.debug("save salida: " + JSON.stringify(salidaWS));                    
+                    }                    
                     return apiFactory.all(WS.URI_SAVE_SALIDA).post(salidaWS);
                 },
                 getCentroCostos: function() {

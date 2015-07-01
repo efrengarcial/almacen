@@ -107,7 +107,6 @@ angular
                         };
                         ordenWS.OrdenItems.push(ordenItemWS);
                     }
-                    $log.debug("save ordenes: " + JSON.stringify(ordenWS));
                     return apiFactory.all(WS.URI_SAVE_ORDEN).post(ordenWS);
                 },
 

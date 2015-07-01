@@ -214,11 +214,11 @@ angular.module('almacenApp')
                     ordenFactory.query(params).then(function(data) {
                         $scope.allData = data;
 
-                        if ($scope.allData[0] === undefined) {
-                            toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el parámetro de búsqueda.');
-                        } else {
+                        if ($scope.allData.length > 0) {
                             $scope.pagingOptions.currentPage = 1;
                             $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                        } else {
+                            toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el parámetro de búsqueda.');
                         };
                     });
                 } else {
@@ -232,11 +232,11 @@ angular.module('almacenApp')
                     ordenFactory.query(params).then(function(data) {
                         $scope.allData = data;
 
-                        if ($scope.allData[0] === undefined) {
-                            toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el rango de fecha  o el proveedor descrito.');
-                        } else {
+                        if ($scope.allData.length > 0) {
                             $scope.pagingOptions.currentPage = 1;
                             $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                        } else {
+                            toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el rango de fecha  o el proveedor descrito.');
                         };
                     });
                 }

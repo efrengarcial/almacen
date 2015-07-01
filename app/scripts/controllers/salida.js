@@ -34,7 +34,6 @@ angular.module('almacenApp')
             }
 
             function selectCentroCostos(IdCentroCostos) {
-                $log.debug('IdCentroCostos: ' + IdCentroCostos)
                 $scope.salida.SalidaItems.IdCentroCostos = '';
             }
 
@@ -62,8 +61,8 @@ angular.module('almacenApp')
             $scope.saveProducto = saveProducto;
 
             $scope.getProductos = function(search) {
-                return productoFactory.queryProdAndSer(search, esServicio).then(function(data) {
-                    return data;
+                return productoFactory.queryProdAndSer(search, esServicio).then(function(productos) {
+                    return productos;
                 });
             };
 
@@ -115,20 +114,37 @@ angular.module('almacenApp')
                 }
             };
 
-            $scope.getOrdenByNum = function(ordenNum, index) {
+            $scope.getOrdenByNum = function(ordenNum, index, IdProduct) {
 
                 if (ordenNum !== null && ordenNum !== "") {
                     ordenFactory.getOrdenByNum(ordenNum).then(function(orden) {
                         if (orden.length > 0) {
                             //pendiente por revisar
-                            $scope.salida.SalidaItems[index].IdOrden = ordenNum;
+                            $log.debug(JSON.stringify(orden));
+                            if (getProductId(orden, IdProduct) === true) {
+                                $log.debug('true');
+                                $scope.salida.SalidaItems[index].IdOrden = ordenNum;
+                            } else {
+                                $scope.salida.SalidaItems[index].IdOrden = null;
+                            }
                         } else {
                             $scope.salida.SalidaItems[index].IdOrden = null;
-                        };
+                        }
                     });
                 } else {
                     $scope.salida.SalidaItems[index].IdOrden = null;
                 }
             };
+
+            function getProductId(orden, IdProduct) {
+                for (var i = 0; i < orden.length; i++) {
+                    for (var j = 0; j < orden[i].OrdenItems.length; j++) {
+                        if (orden[i].OrdenItems[j].IdProducto === IdProduct) {
+                            return true;
+                        };
+                    }
+                }
+                return false;
+            }
         }
     ]);
