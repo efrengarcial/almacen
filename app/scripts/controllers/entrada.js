@@ -16,7 +16,6 @@ angular.module('almacenApp')
             var idOrden = $routeParams.idOrden;
             ordenFactory.getById(idOrden).then(function(orden) {
                 $scope.orden = orden;
-
                 //Set Fecha Entrega
                 setFechaEntrega();
 
@@ -26,7 +25,7 @@ angular.module('almacenApp')
                 var date = moment($scope.orden.FechaOrden, Constants.formatDate);
                 date.add($scope.orden.Proveedor.Plazo, 'days');
                 $scope.orden.FechaEntrega = moment(date).format(Constants.formatDate);
-            }            
+            }
 
             $scope.interacted = function(field) {
                 return $scope.submitted || field.$dirty;
@@ -51,6 +50,10 @@ angular.module('almacenApp')
                         });
                     });
                 }
-            }
+            };
+
+            $scope.backOrdenesEntradas = function() {
+                $location.path("/entradas");
+            };
         }
     ]);

@@ -13,7 +13,7 @@ angular.module('almacenApp')
         'toaster', '$filter', 'modalWindowFactory', 'moment', 'Constants', '$location',
         function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster,
             $filter, modalWindowFactory, moment, Constants, $location) {
-            $log.debug('Mostrando inboxOrden...');
+            $log.debug('Mostrando inboxOrden...' + $location.$$url);
             var tipoPantalla = null;
 
             if ($location.$$url === '/inboxOrden') {
@@ -146,11 +146,11 @@ angular.module('almacenApp')
                 ordenFactory.getInboxOrden().then(function(data) {
                     $scope.allData = data;
 
-                    if ($scope.allData[0] === undefined) {
-                        toaster.pop('warning', 'Advertencia', 'No hay requesiciones ABIERTAS, para mostrar.');
-                    } else {
+                    if ($scope.allData.length > 0) {
                         $scope.pagingOptions.currentPage = 1;
-                        $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                        $scope.setPagingData($scope.allData, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                    } else {
+                        toaster.pop('warning', 'Advertencia', 'No hay requesiciones ABIERTAS, para mostrar.');
                     }
                 });
             }
@@ -160,11 +160,11 @@ angular.module('almacenApp')
                 ordenFactory.getOrdenesCompraAbiertas().then(function(data) {
                     $scope.allData = data;
 
-                    if ($scope.allData[0] === undefined) {
-                        toaster.pop('warning', 'Advertencia', 'No hay Ordenes de Compra ABIERTAS, para mostrar.');
-                    } else {
+                    if ($scope.allData.length > 0) {
                         $scope.pagingOptions.currentPage = 1;
-                        $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                        $scope.setPagingData($scope.allData, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                    } else {
+                        toaster.pop('warning', 'Advertencia', 'No hay Ordenes de Compra ABIERTAS, para mostrar.');
                     }
                 });
             }
@@ -204,14 +204,20 @@ angular.module('almacenApp')
                 //Aqui se redirecciona a entradas o a la orden.
                 if ($location.$$url === '/inboxOrden') {
                     if (row.entity.Tipo === Constants.REQUISICION_SERVICIO) {
-                        $location.path("/ordenServicio").search({idOrden: row.entity.Id});
+                        $location.path("/ordenServicio").search({
+                            idOrden: row.entity.Id
+                        });
 
                     } else {
-                        $location.path("/ordenCompra").search({idOrden: row.entity.Id});
+                        $location.path("/ordenCompra").search({
+                            idOrden: row.entity.Id
+                        });
                     };
 
                 } else {
-                        $location.path("/entrada").search({idOrden: row.entity.Id});
+                    $location.path("/entrada").search({
+                        idOrden: row.entity.Id
+                    });
                 }
             };
 

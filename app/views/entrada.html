@@ -1,172 +1,167 @@
 <div class="container-fluid">
-
 	<div class="row">
 		<div class="col-md-2">
 			<h1 class="header">Entrada de Productos</h1>
 		</div>
 	</div>
-	<div class="row">		
-	   <div class="col-md-2 col-md-offset-10 required-text">* Campos requeridos</div>
-    </div> 
-    <hr/>  
+	<div class="row">
+		<div class="col-md-2 col-md-offset-10 required-text">* Campos requeridos</div>
+	</div>
+	<hr/>
 	<form name="ordenForm" ng-submit="save(ordenForm.$valid)" class="form-horizontal" role="form" novalidate>
-	<fieldset>
+		<fieldset>
+			<div class="row">
+				<div class="col-md-4 form-group">
+					<label class="col-md-5 control-label" for="orden">Orden de Compra</label>
+					<div class="col-md-7">
+						<input id="orden" ng-model="orden.Id" type="text" name="orden"  readonly class="form-control" >
+					</div>
+				</div>
+				<div class="col-md-4 form-group">
+					<label class="col-md-5 control-label" for="fecha">Fecha</label>
+					<div class="col-md-7">
+						<input type="text" name="fecha"  ng-model="orden.FechaOrden" readonly class="form-control">
+					</div>
+				</div>
+				<div class="col-md-4 form-group required-field-block">
+					<label class="col-md-5 control-label" for="proveedor">Proveedor</label>
+					<div class="col-md-7">
+						<input id="nit" type="text"  name="nit" ng-model="orden.Proveedor.Nombre" readonly class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 form-group">
+					<label class="col-md-5 control-label" for="nit">NIT</label>
+					<div class="col-md-7">
+						<input id="nit" type="text"  name="nit" ng-model="orden.Proveedor.Nit" readonly class="form-control">
+					</div>
+				</div>
+				<div class="col-md-4 form-group">
+					<label class="col-md-5 control-label" for="nit">Teléfono</label>
+					<div class="col-md-7">
+						<input id="telefono" type="text" name="telefono" ng-model="orden.Proveedor.Telefono" readonly class="form-control">
+					</div>
+				</div>
+				<div class="col-md-4 form-group">
+					<label class="col-md-5 control-label" for="nit">Dirección</label>
+					<div class="col-md-7">
+						<input id="direc" type="text" name="direc" ng-model="orden.Proveedor.Direccion"  readonly class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 form-group">
+					<label class="col-md-5 control-label" for="plazo">Plazo entrega</label>
+					<div class="col-md-7">
+						<input id="plazo" type="text" name="plazo" ng-model="orden.Proveedor.Plazo" readonly class="form-control">
+					</div>
+				</div>
+				<div class="col-md-4 form-group required-field-block">
+					<label class="col-md-5 control-label" for="">Centro Costos</label>
+					<div class="col-md-7">
+						<input id="plazo" type="text" name="plazo" ng-model="orden.CentroCostos" readonly class="form-control">
+					</div>
+				</div>
+				<div class="col-md-4  form-group">
+					<label class="col-md-5 control-label" for="nit">Fecha entrega</label>
+					<div class="col-md-7">
+						<input id="entrega" type="text" name="entrega" ng-model="orden.FechaEntrega" readonly class="form-control">
+					</div>
+				</div>
+			</div>
+		</fieldset>
 		<div class="row">
-			<div class="col-md-4 form-group">
-				<label class="col-md-5 control-label" for="orden">Orden de Compra</label>
-				<div class="col-md-7">
-					<input id="orden" ng-model="orden.Id" type="text" name="orden"  readonly class="form-control" >		
-				</div>
+			<div class="col-md-12">
+				<div class="panel panel-primary"></div>
 			</div>
-
-            <div class="col-md-4 form-group">
-            	<label class="col-md-5 control-label" for="fecha">Fecha</label>
-            	<div class="col-md-7">
-            		<input type="text" name="fecha"  ng-model="orden.FechaOrden" readonly class="form-control">            		
-            	</div>
-            </div>
-             <div class="col-md-4 form-group required-field-block">
-                  <label class="col-md-5 control-label" for="proveedor">Proveedor</label>
-                    <div class="col-md-7">
-                    	<input id="nit" type="text"  name="nit" ng-model="orden.Proveedor.Nombre" readonly class="form-control">                   
-                    </div>
-            </div>
 		</div>
+		<!-- Table to show data -->
 		<div class="row">
-			<div class="col-md-4 form-group">
-				<label class="col-md-5 control-label" for="nit">NIT</label>
-				<div class="col-md-7">
-					<input id="nit" type="text"  name="nit" ng-model="orden.Proveedor.Nit" readonly class="form-control">
-				</div>
+		<div class="col-md-12 form-group text-center">
+				<button type="submit" class="btn btn-primary" >
+				<span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+				</button>
+				<button type="button" class="btn btn-success" ng-click="backOrdenesEntradas()">
+				<span class="glyphicon glyphicon-arrow-left"></span> Regresar
+				</button>
 			</div>
-			<div class="col-md-4 form-group">
-				<label class="col-md-5 control-label" for="nit">Teléfono</label>
-				<div class="col-md-7">
-					<input id="telefono" type="text" name="telefono" ng-model="orden.Proveedor.Telefono" readonly class="form-control">
-				</div>
-			</div>
-			<div class="col-md-4 form-group">
-				<label class="col-md-5 control-label" for="nit">Dirección</label>
-				<div class="col-md-7">
-					<input id="direc" type="text" name="direc" ng-model="orden.Proveedor.Direccion"  readonly class="form-control">
-				</div>
-			</div>									
 		</div>
+		<br/>
 		<div class="row">
-			<div class="col-md-4 form-group">
-				<label class="col-md-5 control-label" for="plazo">Plazo entrega</label>
-				<div class="col-md-7">
-					<input id="plazo" type="text" name="plazo" ng-model="orden.Proveedor.Plazo" readonly class="form-control">
+			<div class="col-md-12">
+				<table class="table table-hover table-striped table-condensed table-bordered ordersTable">
+					<thead>
+						<tr>
+							<th>No.</th>
+							<th>Producto</th>
+							<th>Codigo</th>
+							<th>Unidad</th>
+							<th>Cantidad</th>
+							<th>Cantidad Faltante</th>
+							<th>Entradas Producto</th>
+							<th>Precio Unitario</th>
+							<th>Precio Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-hide="orden.OrdenItems || orden.OrdenItems.length > 0" class="error">
+							<td colspan="7">
+								<div class="text-center"><strong>No se econtraron ordenes</strong></div>
+							</td>
+						</tr>
+						<tr ng-repeat="ordenItem in orden.OrdenItems" class="repeat-animation">
+							<td>{{$index + 1}}.</td>
+							<td>
+								<div class="col-md-12 form-group">
+									{{ ordenItem.Producto.Nombre }}
+								</div>
+							</td>
+							<td>
+								{{ ordenItem.Producto.Codigo }}
+							</td>
+							<td>
+								{{ ordenItem.Producto.Medida.Nombre }}
+							</td>
+							<td>
+								{{ ordenItem.Cantidad }}
+							</td>
+							<td>
+								{{ ordenItem.Cantidad - ordenItem.Aprovisionado  }}
+							</td>
+							<td>
+								<div class="col-md-8 form-group required-field-block">
+									<ng-form name="cantidadForm">
+									<input class="form-control" type="text" name="cantidad" ng-model="ordenItem.CantidadEntrada"  ng-maxlength="9" ng-required="true" numbers-only    ng-min="0" ng-max="ordenItem.Cantidad - ordenItem.Aprovisionado" />
+									<div class="required-icon" ng-mouseover="showMessage();">
+										<div class="text">*</div>
+									</div>
+									<div class="error-message" ng-messages="cantidadForm.cantidad.$error" ng-if="interacted(cantidadForm.cantidad) || ordenForm.$submitted">
+										<div class="error-message" ng-message="maxlength">La Cantidad es demasiado larga...</div>
+										<div class="error-message" ng-message="required">Debe ingresar un valor para Cantidad</div>
+										<div class="error-message" ng-message="ngMax">Cantidad debe ser menor o igual a {{ordenItem.Cantidad - ordenItem.Aprovisionado}} </div>
+										<div class="error-message" ng-message="ngMin">Cantidad debe ser mayor o igual a 1 </div>
+									</div>
+									</ng-form>
+								</td>
+								<td>
+									{{ ordenItem.Producto.Precio |  currency }}
+								</td>
+								<td>
+									{{ ordenItem.PrecioTotal() | currency }}
+								</td>
+							</tr>
+							<tr class="info">
+								<td colspan="8">
+									&nbsp;
+								</td>
+								<td>
+									<strong>{{ orden.PrecioTotal() | currency }}</strong>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
-
-		    <div class="col-md-4 form-group required-field-block">
-            	<label class="col-md-5 control-label" for="">Centro Costos</label>
-            	<div class="col-md-7">
-            		<input id="plazo" type="text" name="plazo" ng-model="orden.CentroCostos" readonly class="form-control">
-            	</div>
-            </div>
-			<div class="col-md-4  form-group">
-				<label class="col-md-5 control-label" for="nit">Fecha entrega</label>
-				<div class="col-md-7">
-					<input id="entrega" type="text" name="entrega" ng-model="orden.FechaEntrega" readonly class="form-control">
-				</div>
-			</div>
-		</div>			
-	</fieldset>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="panel panel-primary"></div>	
-		</div>
+		</form>
 	</div>
-	<!-- Table to show data -->
-	<div class="row">
-		<div class="col-md-12">
-           	<div class="col-md-2 col-md-offset-5">
-                 <button type="submit" class="btn btn-primary" >
-		               <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Guardar
-		           </button> 
-            </div>
-		</div>        
-	</div>	
-	<br/>
-	<div class="row">
-		<div class="col-md-12">			
-        	<table class="table table-hover table-striped table-condensed table-bordered ordersTable">
-		    <thead>
-		        <tr>
-		            <th>No.</th>
-		            <th>Producto</th>
-		            <th>Codigo</th>
-		            <th>Unidad</th>
-		            <th>Cantidad</th>
-		            <th>Cantidad Faltante</th>
-		            <th>Entradas Producto</th>
-		            <th>Precio Unitario</th>
-		            <th>Precio Total</th>
-		        </tr>
-		    </thead>
-		    <tbody>
-		        <tr ng-hide="orden.OrdenItems || orden.OrdenItems.length > 0" class="error">
-		            <td colspan="7">
-		                <div class="text-center"><strong>No se econtraron ordenes</strong></div>
-		            </td>
-		        </tr>
-		        <tr ng-repeat="ordenItem in orden.OrdenItems" class="repeat-animation">
-		            <td>{{$index + 1}}.</td>
-
-		            <td>
-		                 <div class="col-md-12 form-group">
-			                     {{ ordenItem.Producto.Nombre }}
-
-			             </div>    
-		            </td>           
-		            <td>
-		                {{ ordenItem.Producto.Codigo }}
-		            </td>
-		            <td>
-		                {{ ordenItem.Producto.Medida.Nombre }}
-		            </td>
-		             <td>
-		                {{ ordenItem.Cantidad }}
-		            </td>
-		            <td>
-		                {{ ordenItem.Cantidad - ordenItem.Aprovisionado  }}
-		            </td>
-		            <td>
-		                <div class="col-md-8 form-group required-field-block">
-		                    <ng-form name="cantidadForm">
-		                        <input class="form-control" type="text" name="cantidad" ng-model="ordenItem.CantidadEntrada"  ng-maxlength="9" ng-required="true" numbers-only    ng-min="0" ng-max="ordenItem.Cantidad - ordenItem.Aprovisionado" />
-		                        <div class="required-icon" ng-mouseover="showMessage();">
-		                            <div class="text">*</div>
-		                        </div>
-		                         <div class="error-message" ng-messages="cantidadForm.cantidad.$error" ng-if="interacted(cantidadForm.cantidad) || ordenForm.$submitted">
-		                              <div class="error-message" ng-message="maxlength">La Cantidad es demasiado larga...</div>
-		                              <div class="error-message" ng-message="required">Debe ingresar un valor para Cantidad</div>
-		                             <div class="error-message" ng-message="ngMax">Cantidad debe ser menor o igual a {{ordenItem.Cantidad - ordenItem.Aprovisionado}} </div>
-		                             <div class="error-message" ng-message="ngMin">Cantidad debe ser mayor o igual a 1 </div>
-		                         </div>
-		                     </ng-form>        
-		            </td>
-		            <td>
-		                {{ ordenItem.Producto.Precio |  currency }}
-		            </td>
-		            <td>
-		                {{ ordenItem.PrecioTotal() | currency }}
-		            </td>
-		        </tr>
-		        <tr class="info">
-		            <td colspan="8">
-		                &nbsp;
-		            </td>
-		            <td>
-		                <strong>{{ orden.PrecioTotal() | currency }}</strong>
-		            </td>
-		        </tr>
-		    </tbody>
-		</table>	
-		</div>        
-	</div>
-   </form>
-       		
-</div>
