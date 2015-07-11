@@ -122,17 +122,18 @@ angular.module('almacenApp')
                             //pendiente por revisar
                             $log.debug(JSON.stringify(orden));
                             if (getProductId(orden, IdProduct) === true) {
-                                $log.debug('true');
-                                $scope.salida.SalidaItems[index].IdOrden = ordenNum;
+                                $log.debug('true ' +  orden[0].Id);
+                                $scope.salida.SalidaItems[index].NumeroOrden = ordenNum;
+                                $scope.salida.SalidaItems[index].IdOrden = orden[0].Id;
                             } else {
-                                $scope.salida.SalidaItems[index].IdOrden = null;
+                                $scope.salida.SalidaItems[index].NumeroOrden = null;
                             }
                         } else {
-                            $scope.salida.SalidaItems[index].IdOrden = null;
+                            $scope.salida.SalidaItems[index].NumeroOrden = null;
                         }
                     });
                 } else {
-                    $scope.salida.SalidaItems[index].IdOrden = null;
+                    $scope.salida.SalidaItems[index].NumeroOrden = null;
                 }
             };
 

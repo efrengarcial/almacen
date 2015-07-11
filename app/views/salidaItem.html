@@ -90,7 +90,7 @@
                 <div class="col-md-13 form-group required-field-block">
                     <div class="col-md-12">
                         <ng-form name="ordenForm">
-                        <input type="text" ng-model="salidaItem.IdOrden" ng-blur="getOrdenByNum(salidaItem.IdOrden, $index, salidaItem.Producto.Id)" name="idorden" placeholder="Número Orden" class="form-control" ng-maxlength="20" required numbers-only ng-pattern="/^[0-9]{1,20}$/">
+                        <input type="text" ng-model="salidaItem.NumeroOrden" ng-blur="getOrdenByNum(salidaItem.NumeroOrden, $index, salidaItem.Producto.Id)" name="idorden" placeholder="Número Orden" class="form-control" ng-maxlength="20" required numbers-only ng-pattern="/^[0-9]{1,20}$/">
                         <div class="required-icon" ng-mouseover="showMessage();">
                             <div class="text">*</div>
                         </div>

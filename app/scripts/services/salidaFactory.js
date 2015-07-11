@@ -33,7 +33,8 @@ angular
                             Cantidad: null,
                             EquipoObra: null,
                             IdOrden: null,
-                            IdSalida: null
+                            IdSalida: null,
+                            NumeroOrden: null
                         };
 
                         this.SalidaItems.push(salidaItem);
@@ -65,6 +66,7 @@ angular
                             Cantidad: salidaItem.Cantidad,
                             EquipoObra: salidaItem.EquipoObra,
                             IdOrden: salidaItem.IdOrden,
+                            NumeroOrden: salidaItem.NumeroOrden,
                             IdSalida: salida.Id
                         };
                         salidaWS.SalidaItems.push(salidaItemWS);
