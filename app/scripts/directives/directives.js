@@ -189,3 +189,4 @@ var isValidDateRange = function(fromDate, toDate) {
 var isEmpty = function(value) {
     return angular.isUndefined(value) || value === '' || value === null || value !== value;
 };
+

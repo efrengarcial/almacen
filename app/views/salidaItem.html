@@ -4,6 +4,7 @@
             <th>No.</th>
             <th>Producto</th>
             <th>Código</th>
+            <th>Inventario</th>
             <th>Cantidad</th>
             <th>Centro de Costo</th>
             <th>Equipo-Obra</th>
@@ -23,14 +24,14 @@
                 <div class="col-md-13 form-group required-field-block">
                     <div class="col-md-12">
                         <ng-form name="productoForm">
-                        <input class="form-control" name="producto" type="text" ng-model="salidaItem.Producto.Nombre" placeHolder="Producto" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label, salidaItem)" typeahead-editable="false" ng-required="true" />
-                        <div class="required-icon" ng-mouseover="showMessage();">
-                            <div class="text">*</div>
-                        </div>
-                        <span ng-show="loadingLocations" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-                        <div class="error-message" ng-messages="productoForm.producto.$error" ng-if="interacted(productoForm.producto) || salidaForm.$submitted">
-                            <div class="error-message" ng-message="required">Debe ingresar un producto</div>
-                        </div>
+                            <input class="form-control" name="producto" type="text" ng-model="salidaItem.Producto.Nombre" placeHolder="Producto" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label, salidaItem)" typeahead-editable="true" ng-blur="noRepeatProduct()" ng-required="true" />
+                            <div class="required-icon" ng-mouseover="showMessage();">
+                                <div class="text">*</div>
+                            </div>
+                            <span ng-show="loadingLocations" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                            <div class="error-message" ng-messages="productoForm.producto.$error" ng-if="interacted(productoForm.producto) || salidaForm.$submitted">
+                                <div class="error-message" ng-message="required">Debe ingresar un producto o eligir uno diferente</div>
+                            </div>
                         </ng-form>
                     </div>
                 </div>
@@ -39,18 +40,22 @@
                 {{ salidaItem.Producto.Codigo }}
             </td>
             <td>
+                {{ salidaItem.Producto.CantidadInventario - salidaItem.Cantidad }}
+            </td>
+            <td>
                 <div class="col-md-13 form-group required-field-block">
                     <div class="col-md-12">
                         <ng-form name="cantidadForm">
-                        <input class="form-control" type="text" name="cantidad" ng-model="salidaItem.Cantidad" placeHolder="Cantidad" ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/" />
-                        <div class="required-icon" ng-mouseover="showMessage();">
-                            <div class="text">*</div>
-                        </div>
-                        <div class="error-message" ng-messages="cantidadForm.cantidad.$error" ng-if="interacted(cantidadForm.cantidad) || salidaForm.$submitted">
-                            <div class="error-message" ng-message="maxlength">El máximo es demasiado largo...</div>
-                            <div class="error-message" ng-message="required">Debe ingresar un valor</div>
-                            <div class="error-message" ng-message="pattern">El valor debe ser numérico</div>
-                        </div>
+                            <input class="form-control" type="text" name="cantidad" ng-model="salidaItem.Cantidad" placeHolder="Cantidad" ng-maxlength="9" ng-required="true" numbers-only ng-min="{{1}}" ng-max="salidaItem.Producto.CantidadInventario" />
+                            <div class="required-icon" ng-mouseover="showMessage();">
+                                <div class="text">*</div>
+                            </div>
+                            <div class="error-message" ng-messages="cantidadForm.cantidad.$error" ng-if="interacted(cantidadForm.cantidad) || salidaForm.$submitted">
+                                <div class="error-message" ng-message="maxlength">El máximo es demasiado largo...</div>
+                                <div class="error-message" ng-message="required">Debe ingresar un valor</div>
+                                <div class="error-message" ng-message="ngMax">El valor debe ser menor o igual a {{salidaItem.Producto.CantidadInventario}}</div>
+                                <div class="error-message" ng-message="ngMin">Cantidad debe ser mayor o igual a 1</div>
+                            </div>
                         </ng-form>
                     </div>
                 </div>
@@ -59,15 +64,15 @@
                 <div class="col-md-13 form-group required-field-block">
                     <div class="col-md-12">
                         <ng-form name="centroCostosForm">
-                        <select ng-model="salidaItem.IdCentroCostos" name="centroCosto" placeHolder="Centro de Costo" class="form-control" ng-required="true" ng-options="centroCosto.Id as centroCosto.Nombre for centroCosto in centroCostos" ng-change="selectCentroCostos(salidaItem.IdCentroCostos)">
-                            <option style="display:none" value="">SELECCIONE</option>
-                        </select>
-                        <div class="required-icon" ng-mouseover="showMessage();">
-                            <div class="text">*</div>
-                        </div>
-                        <div class="error-message" ng-messages="centroCostosForm.centroCosto.$error" ng-if="interacted(centroCostosForm.centroCosto) || salidaForm.$submitted">
-                            <div class="error-message" ng-message="required">Debe ingresar un Centro de Costo</div>
-                        </div>
+                            <select ng-model="salidaItem.IdCentroCostos" name="centroCosto" placeHolder="Centro de Costo" class="form-control" ng-required="true" ng-options="centroCosto.Id as centroCosto.Nombre for centroCosto in centroCostos" ng-change="selectCentroCostos(salidaItem.IdCentroCostos)">
+                                <option style="display:none" value="">SELECCIONE</option>
+                            </select>
+                            <div class="required-icon" ng-mouseover="showMessage();">
+                                <div class="text">*</div>
+                            </div>
+                            <div class="error-message" ng-messages="centroCostosForm.centroCosto.$error" ng-if="interacted(centroCostosForm.centroCosto) || salidaForm.$submitted">
+                                <div class="error-message" ng-message="required">Debe ingresar un Centro de Costo</div>
+                            </div>
                         </ng-form>
                     </div>
                 </div>
@@ -76,13 +81,13 @@
                 <div class="col-md-13 form-group required-field-block">
                     <div class="col-md-12">
                         <ng-form name="equipoObraForm">
-                        <input type="text" ng-model="salidaItem.EquipoObra" name="equipoObra" placeholder="Equipo Obra" required class="form-control"/>
-                        <div class="required-icon" ng-mouseover="showMessage();">
-                            <div class="text">*</div>
-                        </div>
-                        <div class="error-message" ng-messages="equipoObraForm.equipoObra.$error" ng-if="interacted(equipoObraForm.equipoObra) || salidaForm.$submitted">
-                            <div class="error-message" ng-message="required">Debe ingresar un Equipo Obra</div>
-                        </div>
+                            <input type="text" ng-model="salidaItem.EquipoObra" name="equipoObra" placeholder="Equipo Obra" required class="form-control" />
+                            <div class="required-icon" ng-mouseover="showMessage();">
+                                <div class="text">*</div>
+                            </div>
+                            <div class="error-message" ng-messages="equipoObraForm.equipoObra.$error" ng-if="interacted(equipoObraForm.equipoObra) || salidaForm.$submitted">
+                                <div class="error-message" ng-message="required">Debe ingresar un Equipo Obra</div>
+                            </div>
                     </div>
                 </div>
             </td>
@@ -90,15 +95,15 @@
                 <div class="col-md-13 form-group required-field-block">
                     <div class="col-md-12">
                         <ng-form name="ordenForm">
-                        <input type="text" ng-model="salidaItem.NumeroOrden" ng-blur="getOrdenByNum(salidaItem.NumeroOrden, $index, salidaItem.Producto.Id)" name="idorden" placeholder="Número Orden" class="form-control" ng-maxlength="20" required numbers-only ng-pattern="/^[0-9]{1,20}$/">
-                        <div class="required-icon" ng-mouseover="showMessage();">
-                            <div class="text">*</div>
-                        </div>
-                        <div class="error-message" ng-messages="ordenForm.idorden.$error" ng-if="interacted(ordenForm.idorden) || salidaForm.$submitted">
-                            <div class="error-message" ng-message="required">Revise Número o Producto de la orden</div>
-                            <div class="error-message" ng-message="maxlength">El número es demasiado largo...</div>
-                            <div class="error-message" ng-message="pattern">El valor debe ser numérico</div>
-                        </div>
+                            <input type="text" ng-model="salidaItem.NumeroOrden" ng-blur="getOrdenByNum(salidaItem.NumeroOrden, $index, salidaItem.Producto.Id)" name="idorden" placeholder="Número Orden" class="form-control" ng-maxlength="20" required numbers-only ng-pattern="/^[0-9]{1,20}$/">
+                            <div class="required-icon" ng-mouseover="showMessage();">
+                                <div class="text">*</div>
+                            </div>
+                            <div class="error-message" ng-messages="ordenForm.idorden.$error" ng-if="interacted(ordenForm.idorden) || salidaForm.$submitted">
+                                <div class="error-message" ng-message="required">Revise Número o Producto de la orden</div>
+                                <div class="error-message" ng-message="maxlength">El número es demasiado largo...</div>
+                                <div class="error-message" ng-message="pattern">El valor debe ser numérico</div>
+                            </div>
                         </ng-form>
                     </div>
                 </div>

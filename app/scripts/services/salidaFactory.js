@@ -34,7 +34,8 @@ angular
                             EquipoObra: null,
                             IdOrden: null,
                             IdSalida: null,
-                            NumeroOrden: null
+                            NumeroOrden: null,
+                            Producto: null
                         };
 
                         this.SalidaItems.push(salidaItem);

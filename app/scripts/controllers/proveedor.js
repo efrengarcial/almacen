@@ -159,11 +159,11 @@ angular.module('almacenApp')
                     proveedorFactory.query($scope.search).then(function(data) {
                         $scope.allData = data;
 
-                        if ($scope.allData[0] === undefined) {
-                            toaster.pop('warning', 'Advertencia', 'No existe proveedor con el parametro de búsqueda.');
-                        } else {
+                        if ($scope.allData.length > 0) {
                             $scope.pagingOptions.currentPage = 1;
                             $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                        } else {
+                            toaster.pop('warning', 'Advertencia', 'No existe proveedor con el parametro de búsqueda.');
                         };
                     });
                 }
