@@ -21,7 +21,7 @@ angular.module('almacenApp')
                 $scope.tituloPantalla = 'Detalles del Producto';
             }
 
-            if (idOrden !== undefined) {
+            if (idOrden !== null) {
                 ordenFactory.getById(idOrden).then(function(orden) {
                     $scope.orden = orden;
                     $scope.truefalse = true;
