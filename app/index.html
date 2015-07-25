@@ -44,24 +44,24 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#/productos">Productos</a></li>
-            <li><a href="#/proveedor">Proveedores</a></li>
+            <li><a ng-if="authenticationData.permissions.indexOf('ADMIN_PRODUCTOS') > -1 "  href="#/productos">Productos</a></li>
+            <li><a ng-if="authenticationData.permissions.indexOf('ADMIN_PROVEEDORES') > -1 "  href="#/proveedor">Proveedores</a></li>
             <li class="dropdown">
-                <a href="" data-toggle="dropdown" class="dropdown-toggle">Ordenes <b class="caret"></b></a>
+                <a href="" data-toggle="dropdown" class="dropdown-toggle">Ordenes<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                   <li><a href="#/ordenCompra">Orden de Compra</a></li>
-                    <li><a href="#/requisicion">Requisición</a></li>
-                    <li><a href="#/ordenServicio">Orden de Servicio</a></li>
-                    <li><a href="#/requisicionServicio">Requisición de Servicio</a></li>
+                   <li><a  ng-if="authenticationData.permissions.indexOf('ORDEN_COMPRA') > -1" href="#/ordenCompra">Orden de Compra</a></li>
+                    <li><a ng-if="authenticationData.permissions.indexOf('REQUISICION') > -1" href="#/requisicion">Requisición</a></li>
+                    <li><a ng-if="authenticationData.permissions.indexOf('ORDEN_SERVICIO') > -1" href="#/ordenServicio">Orden de Servicio</a></li>
+                    <li><a ng-if="authenticationData.permissions.indexOf('REQUISICION_SERVICIO') > -1" href="#/requisicionServicio">Requisición de Servicio</a></li>
                     <li class="divider"></li>                   
                 </ul>
             </li>           
-            <li><a href="#/entradas">Entradas</a></li>
-            <li><a href="#/salida">Salidas</a></li>
-            <li><a href="#/consultarOrden">Consultar Orden</a></li>
-            <li><a href="#/inboxOrden">Mis pendientes</a></li>
+            <li><a ng-if="authenticationData.permissions.indexOf('ENTRADAS') > -1" href="#/entradas">Entradas</a></li>
+            <li><a ng-if="authenticationData.permissions.indexOf('SALIDAS') > -1" href="#/salida">Salidas</a></li>
+            <li><a ng-if="authenticationData.permissions.indexOf('CONSULTAR_ORDENES') > -1" href="#/consultarOrden">Consultar Orden</a></li>
+            <li><a ng-if="authenticationData.permissions.indexOf('REQUISICIONES_POR_PROCESAR') > -1" href="#/inboxOrden">Mis pendientes</a></li>
             <li ng-show="!isUserAuthenticated()"><a href="#/login">Sign in</a></li>
-            <li ng-show="isUserAuthenticated()"><a href="" ng-click="logout()">Logout</a></li>
+            <li ng-show="isUserAuthenticated()"><a href="" ng-click="logout()">Logout - {{authenticationData.userName}}</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -76,7 +76,7 @@
         <div class="container">
           <div class="row">
             <div class="col-lg-6 col-lg-offset-3">
-                <p class="copyright">Copyright &copy; 2014 - Frigorificos BLE</p>
+                <p class="copyright">Copyright &copy; 2015 - Frigorificos BLE</p>
             </div>
           </div>    
         </div>  
@@ -146,6 +146,7 @@
         <script src="scripts/controllers/account.js"></script>
         <script src="scripts/services/accountFactory.js"></script> 
         <script src="scripts/services/authInterceptorFactory.js"></script> 
+        <script src="scripts/services/authorizationFactory.js"></script>
         <script src="scripts/controllers/entrada.js"></script>
         <script src="scripts/controllers/salida.js"></script>
         <!-- endbuild -->

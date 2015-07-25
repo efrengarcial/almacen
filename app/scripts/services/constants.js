@@ -38,10 +38,21 @@ angular
 		URI_ORDEN_BY_NUM: 'orden/getOrdenByNum',
 		URI_TOKEN: 'token'
 	})
-	.constant('menu', {		
-		step1 : 'PASO 1 - COTIZACIÓN',
-		step2 : 'PASO 2 - DATOS ADICIONALES',
-		step3 : 'PASO 3 - PAGAR'
+	.constant('Roles', {		
+		Almacenista : 'Almacenista',
+		Operario : 'Operario'
+	})
+	.constant('Permissions', {		
+		ADMIN_PRODUCTOS : 'ADMIN_PRODUCTOS',
+		ADMIN_PROVEEDORES : 'ADMIN_PROVEEDORES',
+		ENTRADAS : 'ENTRADAS',
+		SALIDAS : 'SALIDAS',
+		REQUISICIONES_POR_PROCESAR : 'REQUISICIONES_POR_PROCESAR',
+		ORDEN_COMPRA : 'ORDEN_COMPRA',
+		REQUISICION : 'REQUISICION',
+		ORDEN_SERVICIO : 'ORDEN_SERVICIO',
+		REQUISICION_SERVICIO : 'REQUISICION_SERVICIO',
+		CONSULTAR_ORDENES : 'CONSULTAR_ORDENES'
 	})
 	.constant('Constants', {
 		formatDate : 'DD/MM/YYYY',

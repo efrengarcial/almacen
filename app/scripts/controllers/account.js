@@ -10,9 +10,9 @@
 
 angular.module('almacenApp')
     .controller('AccountCtrl', ['$scope', '$log', '$rootScope', 'toaster', 'accountFactory',
-        'authorDataKey', '$location', 'jwtHelper',
+        'authorDataKey', '$location', 'jwtHelper', 'authorizationFactory',
         function($scope, $log, $rootScope, toaster, accountFactory, authorDataKey,
-            $location, jwtHelper) {
+            $location, jwtHelper, authorizationFactory) {
             $log.debug('Iniciando Account...');
 
             $scope.hasLoginError = false;
@@ -26,11 +26,9 @@ angular.module('almacenApp')
             }
 
             var successLoginCallback = function(result) {
-                $location.path("/about");
+                $location.path("/");
                 accountFactory.setAuthenticationData(result.access_token, $scope.credentials.login);
                 $scope.hasLoginError = false;
-                var tokenPayload = jwtHelper.decodeToken(result.access_token);
-                $log.debug(tokenPayload);
             }
 
             // Generate Token - Login
@@ -42,7 +40,7 @@ angular.module('almacenApp')
                     username: $scope.credentials.login,
                     password: $scope.credentials.password
                 };
-                $log.debug("username: " + $scope.loginEmail + " password: " + $scope.loginPassword);
+                $log.debug("username: " + loginData.username + " password: " + loginData.password);
 
                 accountFactory.generateAccessToken(loginData)
                     .success(successLoginCallback)
@@ -56,6 +54,7 @@ angular.module('almacenApp')
 
             $scope.logout = function() {
                 accountFactory.logout();
+                $location.path("/");
             }
 
         }

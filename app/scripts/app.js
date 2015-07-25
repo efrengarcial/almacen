@@ -33,13 +33,26 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
+      .when('/unauthorizedAccess', {
+        templateUrl: 'views/unauthorizedAccess.html',
         controller: 'AboutCtrl'
       })
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'AccountCtrl'
+      })    
       .when('/productos', {
         templateUrl: 'views/productos.html',
-        controller: 'ProductosCtrl'
+        controller: 'ProductosCtrl',
+        resolve: { //Here we would use all the hardwork we have done 
+            //above and make call to the authorization Service 
+            //resolve is a great feature in angular, which ensures that a route 
+            //controller (in this case superUserController ) is invoked for a route 
+            //only after the promises mentioned under it are resolved.
+            permission: function(authorizationFactory, $route,Permissions) {
+                return authorizationFactory.permissionCheck([Permissions.ADMIN_PRODUCTOS]);
+            },
+        }
       })
       .when('/ordenCompra', {
         templateUrl: 'views/orden.html',
@@ -85,10 +98,6 @@ angular
         templateUrl: 'views/entrada.html',
         controller: 'EntradaCtrl'
       })
-      .when('/login', {
-        templateUrl: 'views/login.html',
-        controller: 'AccountCtrl'
-      })                    
       .when('/salida', {
         templateUrl: 'views/salida.html',
         controller: 'SalidaCtrl'
