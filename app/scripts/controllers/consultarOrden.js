@@ -277,6 +277,8 @@ angular.module('almacenApp')
             //From here you can go to details orden
             $scope.showDetails = function(row) {
                 params.idOrden = row.entity.Id;
+                $log.debug("params: " + JSON.stringify(params));
+
                 $location.path("/ordenDetails").search(params);
             };
 

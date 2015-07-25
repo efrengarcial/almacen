@@ -120,13 +120,10 @@ angular.module('almacenApp')
                     if ($scope.salida.SalidaItems.length === 0) {
                         toaster.pop('error', 'Operación Fallida', 'Debe ingresar por lo menos un producto.');
                     } else {
+                        //Revisar esta funcion: Actualiza cantidad inventario 
+                        $scope.updateProducts($scope.productos);
                         salidaFactory.save($scope.salida).then(function() {
                             toaster.pop('success', 'Operación Exitosa', 'La orden de Salida fue creada exitosamente.');
-                            $log.debug('save: ' + JSON.stringify($scope.salida));
-
-                            //Revisar esta funcion: Actualiza cantidad inventario 
-                            $scope.updateProducts($scope.productos);
-
                             $scope.clearForm();
                         }, function error(response) {
                             $rootScope.$emit('evento', {
@@ -143,7 +140,7 @@ angular.module('almacenApp')
 
                 for (var i = 0; i < productos.length; i++) {
 
-                    productos[i].CantidadInventario = (productos[i].CantidadInventario - $scope.salida.SalidaItems[i].Cantidad);
+                    productos[i].Cantidad = parseInt($scope.salida.SalidaItems[i].Cantidad);
                     producto = productos[i];
                     productoFactory.save(producto);
                 }
