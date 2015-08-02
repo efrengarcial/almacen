@@ -8,9 +8,10 @@
  * Controller of the almacenApp
  */
 angular.module('almacenApp')
-    .controller('SalidaCtrl', ['$scope', '$log', '$rootScope', 'salidaFactory', 'proveedorFactory', 'productoFactory', 'ordenFactory', 'toaster',
-        '$location', 'Constants', 'accountFactory', '$routeParams', 'moment',
-        function($scope, $log, $rootScope, salidaFactory, proveedorFactory, productoFactory, ordenFactory, toaster, $location, Constants, accountFactory, $routeParams, moment) {
+    .controller('SalidaCtrl', ['$scope', '$log', '$rootScope', 'salidaFactory', 'proveedorFactory', 'productoFactory',
+        'ordenFactory', 'toaster', '$location', 'Constants', 'userFactory', '$routeParams', 'moment',
+        function($scope, $log, $rootScope, salidaFactory, proveedorFactory, productoFactory,
+            ordenFactory, toaster, $location, Constants, userFactory, $routeParams, moment) {
             $log.debug('Iniciando Salida....');
             var esServicio = false;
 
@@ -22,7 +23,7 @@ angular.module('almacenApp')
             $scope.users = [];
 
             function getUsers() {
-                accountFactory.getUsers().then(function(users) {
+                userFactory.getUsers().then(function(users) {
                     $scope.users = users;
                 });
             }

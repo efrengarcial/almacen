@@ -9,14 +9,21 @@
  */
 angular
     .module('almacenApp')
-    .factory('apiFactory', ['appConfig', 'Restangular',
-        function(appConfig, Restangular) {
-            return Restangular.withConfig(function(Restangular) {
-                Restangular.setBaseUrl(appConfig.apiDomain + appConfig.apiPath);
-                Restangular.setDefaultHttpFields({
+    .factory('apiFactory', ['appConfig', 'Restangular', 'accountFactory',
+        function(appConfig, Restangular, accountFactory) {
+            return Restangular.withConfig(function(RestangularConfigurer) {
+                RestangularConfigurer.setBaseUrl(appConfig.apiDomain + appConfig.apiPath);
+                RestangularConfigurer.setDefaultHttpFields({
                     timeout: appConfig.apiTimeout,
                     responseType: 'json'
                 });
+                var token = accountFactory.getAuthenticationData().token;
+                if (!isEmpty(token)) {
+                    RestangularConfigurer.setDefaultHeaders({
+                        Authorization: 'Bearer ' + token
+                    })
+                }
+
             });
         }
     ]);

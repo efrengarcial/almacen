@@ -10,9 +10,9 @@
 
 angular.module('almacenApp')
     .controller('AccountCtrl', ['$scope', '$log', '$rootScope', 'toaster', 'accountFactory',
-        'authorDataKey', '$location', 'jwtHelper', 'authorizationFactory',
+        'authorDataKey', '$location', 'authorizationFactory',
         function($scope, $log, $rootScope, toaster, accountFactory, authorDataKey,
-            $location, jwtHelper, authorizationFactory) {
+            $location,  authorizationFactory) {
             $log.debug('Iniciando Account...');
 
             $scope.hasLoginError = false;

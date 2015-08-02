@@ -15,7 +15,7 @@ angular
                     //$log.debug(authData.token);
                     config.headers.Authorization = 'Bearer ' + authData.token;
                 }
-
+                
                 return config;
             }
 

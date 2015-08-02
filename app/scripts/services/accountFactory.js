@@ -9,15 +9,16 @@
  */
 angular
     .module('almacenApp')
-    .factory('accountFactory', ['Restangular', 'apiFactory', 'WS', 'appConfig', '$http', 'authorDataKey', 
+    .factory('accountFactory', [ 'WS', 'appConfig', '$http', 'authorDataKey', 
         'jwtHelper', '$log','$rootScope',
-        function(Restangular, apiFactory, WS, appConfig, $http, authorDataKey, jwtHelper, $log,$rootScope) {
+        function( WS, appConfig, $http, authorDataKey, jwtHelper, $log,$rootScope) {
 
             var _authenticationData = {
                 isAuth: false,
                 userName: "",
                 permissions: [],
-                roles : []
+                roles : [],
+                token : ""
             };
 
             return {
@@ -41,9 +42,13 @@ angular
                     _authenticationData.isAuth = false;
                     _authenticationData.userName = "";
                     _authenticationData.permissions  = [];
+                    _authenticationData.token ="";
                    $rootScope.authenticationData= _authenticationData;
                 },
                 getAuthenticationData: function() {
+                    return _authenticationData;
+                },
+                getTokenAuth: function() {
                     return _authenticationData;
                 },
                 setAuthenticationData: function(tokenAuth, userNameAuth) {
@@ -54,6 +59,7 @@ angular
                     sessionStorage.setItem(authorDataKey, JSON.stringify(data));
                     _authenticationData.isAuth = true;
                     _authenticationData.userName = userNameAuth;
+                    _authenticationData.token = tokenAuth;
                     //https://github.com/auth0/angular-jwt
                     var tokenPayload = jwtHelper.decodeToken(tokenAuth);
                     tokenPayload.permissions = JSON.parse(tokenPayload.permissions);
@@ -67,17 +73,13 @@ angular
                     if (authData) {
                         _authenticationData.isAuth = true;
                         _authenticationData.userName = authData.userName;
+                        _authenticationData.token = authData.token;
                         var tokenPayload = jwtHelper.decodeToken(authData.token);
                         tokenPayload.permissions = JSON.parse(tokenPayload.permissions);
                         _authenticationData.permissions = tokenPayload.permissions;
                         $log.debug(tokenPayload);
                         $rootScope.authenticationData = _authenticationData;
                     }
-                },
-                getUsers: function() {
-                    return apiFactory.all(WS.URI_USERS).getList().then(function(users) {
-                        return users;
-                    });
                 }
             };
         }

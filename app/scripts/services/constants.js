@@ -36,7 +36,8 @@ angular
 		URI_SAVE_SALIDA: 'salida/save',
 		URI_CENTRO_COSTOS: 'salida/centroCostos',
 		URI_ORDEN_BY_NUM: 'orden/getOrdenByNum',
-		URI_TOKEN: 'token'
+		URI_TOKEN: 'token',
+		URI_SAVE_ENTRADA: 'orden/saveEntrada',
 	})
 	.constant('Roles', {		
 		Almacenista : 'Almacenista',

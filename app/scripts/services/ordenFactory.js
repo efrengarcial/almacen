@@ -82,6 +82,22 @@ angular
                     return consultaOrden;
                 },
 
+                saveEntrada: function(orden) {
+                    var entradaWS = {
+                        IdOrden: orden.Id,
+                        EntadaOrdenItems: []
+                    }
+                    for (var i = 0; i < orden.OrdenItems.length; i += 1) {
+                        var ordenItem = orden.OrdenItems[i];
+                        var ordenItemWS = {
+                            IdOrdenItem: ordenItem.Id,
+                            Aprovisionado: ordenItem.CantidadEntrada                            
+                        };
+                        entradaWS.EntadaOrdenItems.push(ordenItemWS);
+                    }
+                    return apiFactory.all(WS.URI_SAVE_ENTRADA).post(entradaWS);
+                },
+
                 save: function(orden) {
                     var ordenWS = {
                         Id: orden.Id,
@@ -100,8 +116,7 @@ angular
                             Id: ordenItem.Id,
                             IdOrden: orden.Id,
                             IdProducto: ordenItem.Producto.Id,
-                            Cantidad: ordenItem.Cantidad,
-                            Aprovisionado: ordenItem.Aprovisionado + ordenItem.CantidadEntrada,
+                            Cantidad: ordenItem.Cantidad,                           
                             Precio: ordenItem.Producto.Precio,
                             Iva: ordenItem.Producto.Iva
                         };

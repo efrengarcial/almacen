@@ -46,7 +46,9 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a ng-if="authenticationData.permissions.indexOf('ADMIN_PRODUCTOS') > -1 "  href="#/productos">Productos</a></li>
             <li><a ng-if="authenticationData.permissions.indexOf('ADMIN_PROVEEDORES') > -1 "  href="#/proveedor">Proveedores</a></li>
-            <li class="dropdown">
+            <li class="dropdown" ng-if="authenticationData.permissions.indexOf('ORDEN_COMPRA') > -1 ||
+            authenticationData.permissions.indexOf('REQUISICION') > -1 || authenticationData.permissions.indexOf('ORDEN_SERVICIO') > -1 || authenticationData.permissions.indexOf('REQUISICION_SERVICIO') > -1 ">
+            
                 <a href="" data-toggle="dropdown" class="dropdown-toggle">Ordenes<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                    <li><a  ng-if="authenticationData.permissions.indexOf('ORDEN_COMPRA') > -1" href="#/ordenCompra">Orden de Compra</a></li>
@@ -122,6 +124,7 @@
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/angular-moment/angular-moment.js"></script>
     <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -145,10 +148,13 @@
         <script src="scripts/controllers/ordenDetails.js"></script>
         <script src="scripts/controllers/account.js"></script>
         <script src="scripts/services/accountFactory.js"></script> 
+        <!--
         <script src="scripts/services/authInterceptorFactory.js"></script> 
+        -->
         <script src="scripts/services/authorizationFactory.js"></script>
         <script src="scripts/controllers/entrada.js"></script>
         <script src="scripts/controllers/salida.js"></script>
+        <script src="scripts/services/userFactory.js"></script> 
         <!-- endbuild -->
 </body>
 </html>
