@@ -95,6 +95,8 @@ angular
                         };
                         entradaWS.EntadaOrdenItems.push(ordenItemWS);
                     }
+
+                    $log.debug(JSON.stringify(entradaWS));
                     return apiFactory.all(WS.URI_SAVE_ENTRADA).post(entradaWS);
                 },
 

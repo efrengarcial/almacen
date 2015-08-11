@@ -140,7 +140,7 @@ angular.module('almacenApp').directive('ngMax', function() {
                 ctrl.$setViewValue(ctrl.$viewValue);
             });
             var maxValidator = function(value) {
-                var max = scope.$eval(attr.ngMax) || attr.ngMax || Infinity;
+                var max = scope.$eval(attr.ngMax) || attr.ngMax;
                 if (!isEmpty(value) && value > max) {
                     ctrl.$setValidity('ngMax', false);
                     return undefined;

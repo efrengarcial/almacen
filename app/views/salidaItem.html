@@ -40,20 +40,20 @@
                 {{ salidaItem.Producto.Codigo }}
             </td>
             <td>
-                {{ salidaItem.Producto.CantidadInventario - salidaItem.Cantidad }}
+                {{ salidaItem.Producto.CantidadInventario}}
             </td>
             <td>
                 <div class="col-md-13 form-group required-field-block">
                     <div class="col-md-12">
                         <ng-form name="cantidadForm">
-                            <input class="form-control" type="text" name="cantidad" ng-model="salidaItem.Cantidad" placeHolder="Cantidad" ng-maxlength="9" ng-required="true" numbers-only ng-min="{{1}}" ng-max="salidaItem.Producto.CantidadInventario" />
+                            <input class="form-control" type="text" name="cantidad" ng-model="salidaItem.Cantidad" placeHolder="Cantidad" ng-maxlength="9" ng-required="true" numbers-only ng-min="1" ng-max="salidaItem.Producto.CantidadInventario" />
                             <div class="required-icon" ng-mouseover="showMessage();">
                                 <div class="text">*</div>
                             </div>
                             <div class="error-message" ng-messages="cantidadForm.cantidad.$error" ng-if="interacted(cantidadForm.cantidad) || salidaForm.$submitted">
                                 <div class="error-message" ng-message="maxlength">El máximo es demasiado largo...</div>
-                                <div class="error-message" ng-message="required">Debe ingresar un valor</div>
-                                <div class="error-message" ng-message="ngMax">El valor debe ser menor o igual a {{salidaItem.Producto.CantidadInventario}}</div>
+                                <div class="error-message" ng-message="required">Debe ingresar un valor o revisar el inventario</div>
+                                <div class="error-message" ng-message="ngMax">No hay existencias suficientes en inventario {{salidaItem.Producto.CantidadInventario}}</div>
                                 <div class="error-message" ng-message="ngMin">Cantidad debe ser mayor o igual a 1</div>
                             </div>
                         </ng-form>
