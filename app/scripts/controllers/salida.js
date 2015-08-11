@@ -8,9 +8,9 @@
  * Controller of the almacenApp
  */
 angular.module('almacenApp')
-    .controller('SalidaCtrl', ['$scope', '$cookies', '$log', '$rootScope', 'accountFactory', 'salidaFactory', 'proveedorFactory', 'productoFactory',
+    .controller('SalidaCtrl', ['$scope', '$log', '$rootScope', 'accountFactory', 'salidaFactory', 'proveedorFactory', 'productoFactory',
         'ordenFactory', 'toaster', '$location', 'Constants', 'userFactory', '$routeParams', 'moment',
-        function($scope, $cookies, $log, $rootScope, accountFactory, salidaFactory, proveedorFactory, productoFactory,
+        function($scope, $log, $rootScope, accountFactory, salidaFactory, proveedorFactory, productoFactory,
             ordenFactory, toaster, $location, Constants, userFactory, $routeParams, moment) {
             $log.debug('Iniciando Salida....');
             var esServicio = false;
