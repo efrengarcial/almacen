@@ -129,7 +129,7 @@
 							<td>
 								{{ ordenItem.Cantidad - ordenItem.Aprovisionado  }}
 							</td>
-							<td>
+							<td ng-if="(ordenItem.Cantidad - ordenItem.Aprovisionado) > 0">
 								<div class="col-md-8 form-group required-field-block">
 									<ng-form name="cantidadForm">
 									<input class="form-control" type="text" name="cantidad" ng-model="ordenItem.CantidadEntrada"  ng-maxlength="9" ng-required="true" numbers-only    ng-min="0" ng-max="ordenItem.Cantidad - ordenItem.Aprovisionado" />
@@ -143,13 +143,16 @@
 										<div class="error-message" ng-message="ngMin">Cantidad debe ser mayor o igual a 1 </div>
 									</div>
 									</ng-form>
-								</td>
-								<td>
-									{{ ordenItem.Producto.Precio |  currency }}
-								</td>
-								<td>
-									{{ ordenItem.PrecioTotal() | currency }}
-								</td>
+							</td>
+							<td ng-if="(ordenItem.Cantidad - ordenItem.Aprovisionado) == 0">
+							0
+							</td>
+							<td>
+								{{ ordenItem.Producto.Precio |  currency }}
+							</td>
+							<td>
+								{{ ordenItem.PrecioTotal() | currency }}
+							</td>
 							</tr>
 							<tr class="info">
 								<td colspan="8">
