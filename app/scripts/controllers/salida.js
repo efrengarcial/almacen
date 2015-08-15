@@ -8,16 +8,18 @@
  * Controller of the almacenApp
  */
 angular.module('almacenApp')
-    .controller('SalidaCtrl', ['$scope', '$log', '$rootScope', 'salidaFactory', 'proveedorFactory', 'productoFactory',
+    .controller('SalidaCtrl', ['$scope', '$log', '$rootScope', 'accountFactory', 'salidaFactory', 'proveedorFactory', 'productoFactory',
         'ordenFactory', 'toaster', '$location', 'Constants', 'userFactory', '$routeParams', 'moment',
-        function($scope, $log, $rootScope, salidaFactory, proveedorFactory, productoFactory,
+        function($scope, $log, $rootScope, accountFactory, salidaFactory, proveedorFactory, productoFactory,
             ordenFactory, toaster, $location, Constants, userFactory, $routeParams, moment) {
             $log.debug('Iniciando Salida....');
             var esServicio = false;
 
+
             $scope.salida = salidaFactory.getSalidaObject();
             $scope.salida.AddItem();
             $scope.salida.esSolicitador = false;
+            $scope.umbral = false;
 
             /* Cargar información de listas */
             $scope.users = [];
@@ -117,47 +119,19 @@ angular.module('almacenApp')
 
             $scope.save = function(isValid) {
                 if (isValid) {
-                    settingProducts();
                     if ($scope.salida.SalidaItems.length === 0) {
                         toaster.pop('error', 'Operación Fallida', 'Debe ingresar por lo menos un producto.');
                     } else {
-                        //Revisar esta funcion: Actualiza cantidad inventario 
-                        $scope.updateProducts($scope.productos);
                         salidaFactory.save($scope.salida).then(function() {
                             toaster.pop('success', 'Operación Exitosa', 'La orden de Salida fue creada exitosamente.');
                             $scope.clearForm();
                         }, function error(response) {
                             $rootScope.$emit('evento', {
-                                descripcion: response.statusText
+                                descripcion: response.data.Message
                             });
                         });
                     }
                 }
-            };
-
-
-            $scope.updateProducts = function(productos) {
-                var producto = {};
-
-                for (var i = 0; i < productos.length; i++) {
-
-                    productos[i].Cantidad = parseInt($scope.salida.SalidaItems[i].Cantidad);
-                    producto = productos[i];
-                    productoFactory.save(producto);
-                }
-
-                productoFactory.save(producto).then(function() {
-                    if (producto.Id === 0) {
-                        toaster.pop('success', 'mensaje', 'El producto fue creado exitosamente.');
-                    } else {
-                        toaster.pop('success', 'mensaje', 'El producto fue actualizado exitosamente.');
-                    }
-                }, function error(response) {
-                    // An error has occurred
-                    $rootScope.$emit('evento', {
-                        descripcion: response.statusText
-                    });
-                });
             };
 
 
@@ -202,14 +176,6 @@ angular.module('almacenApp')
                     }
                 }
                 return false;
-            }
-
-            function settingProducts() {
-                $scope.productos = [];
-                var salidaItems = $scope.salida.SalidaItems;
-                for (var i = 0; i < salidaItems.length; i++) {
-                    $scope.productos.push(salidaItems[i].Producto);
-                };
             }
 
         }
