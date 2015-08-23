@@ -34,7 +34,7 @@ angular
 		URI_ORDENES_ORDENES_ABIERTAS: 'orden/getOrdenesCompraAbiertas',
 		URI_USERS: 'account/users',
 		URI_SAVE_SALIDA: 'salida/save',
-		URI_CENTRO_COSTOS: 'salida/centroCostos',
+		URI_CENTRO_COSTOS: 'producto/centroCostos',
 		URI_ORDEN_BY_NUM: 'orden/getOrdenByNum',
 		URI_TOKEN: 'token',
 		URI_SAVE_ENTRADA: 'orden/saveEntrada',

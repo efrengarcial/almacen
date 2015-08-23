@@ -44,7 +44,7 @@ angular.module('almacenApp')
             }
 
             function getCentroCostos() {
-                salidaFactory.getCentroCostos().then(function(centroCostos) {
+                productoFactory.getCentroCostos().then(function(centroCostos) {
                     $scope.centroCostos = centroCostos;
                 });
             }

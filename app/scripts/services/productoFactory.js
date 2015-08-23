@@ -33,6 +33,11 @@ angular
                 },
                 queryProdAndSer: function(search,esServicio) {
                     return apiFactory.all(WS.URI_QUERY_PRODUCTO).one(search).one(esServicio).getList();
+                },
+                getCentroCostos: function() {
+                    return apiFactory.all(WS.URI_CENTRO_COSTOS).getList().then(function(centroCostos) {
+                        return centroCostos;
+                    });
                 }
             };
         }

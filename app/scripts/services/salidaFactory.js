@@ -72,12 +72,8 @@ angular
                         };
                         salidaWS.SalidaItems.push(salidaItemWS);
                     }
+                    $log.debug(JSON.stringify(salidaWS));
                     return apiFactory.all(WS.URI_SAVE_SALIDA).post(salidaWS);
-                },
-                getCentroCostos: function() {
-                    return apiFactory.all(WS.URI_CENTRO_COSTOS).getList().then(function(centroCostos) {
-                        return centroCostos;
-                    });
                 }
             }
         }

@@ -8,18 +8,17 @@
  * Controller of the almacenApp
  */
 angular.module('almacenApp')
-    .controller('SalidaCtrl', ['$scope', '$log', '$rootScope', 'accountFactory', 'salidaFactory', 'proveedorFactory', 'productoFactory',
+    .controller('SalidaCtrl', ['$scope', '$filter', '$log', '$rootScope', 'accountFactory', 'salidaFactory', 'proveedorFactory', 'productoFactory',
         'ordenFactory', 'toaster', '$location', 'Constants', 'userFactory', '$routeParams', 'moment',
-        function($scope, $log, $rootScope, accountFactory, salidaFactory, proveedorFactory, productoFactory,
+        function($scope, $filter, $log, $rootScope, accountFactory, salidaFactory, proveedorFactory, productoFactory,
             ordenFactory, toaster, $location, Constants, userFactory, $routeParams, moment) {
             $log.debug('Iniciando Salida....');
             var esServicio = false;
 
-
             $scope.salida = salidaFactory.getSalidaObject();
             $scope.salida.AddItem();
             $scope.salida.esSolicitador = false;
-            $scope.umbral = false;
+            $scope.truefalse = true;
 
             /* Cargar información de listas */
             $scope.users = [];
@@ -31,7 +30,7 @@ angular.module('almacenApp')
             }
 
             function getCentroCostos() {
-                salidaFactory.getCentroCostos().then(function(centroCostos) {
+                productoFactory.getCentroCostos().then(function(centroCostos) {
                     $scope.centroCostos = centroCostos;
                 });
             }
@@ -81,10 +80,13 @@ angular.module('almacenApp')
                 for (var i = 0; i < salidaItems.length; i++) {
 
                     if ((salidaItems[i].Producto !== null) && (containsElement(items, salidaItems[i].Producto.Id) === true)) {
+                    //if ((salidaItems[i].Producto !== null) && $filter('filter')(items, salidaItems[i].Producto.Id)[0]) {
+                        console.log('filter: ' + $filter('filter')(items, salidaItems[i].Producto.Id));
                         salidaItems[i].Producto = null;
                     }
 
                     if ((salidaItems[i].Producto !== null) && (containsElement(items, salidaItems[i].Producto.Id) === false)) {
+                    //if ((salidaItems[i].Producto !== null) && (!$filter('filter')(items, salidaItems[i].Producto.Id)[0])) {
                         items.push(salidaItems[i].Producto.Id);
                     }
 
@@ -126,9 +128,16 @@ angular.module('almacenApp')
                             toaster.pop('success', 'Operación Exitosa', 'La orden de Salida fue creada exitosamente.');
                             $scope.clearForm();
                         }, function error(response) {
-                            $rootScope.$emit('evento', {
-                                descripcion: response.data.Message
-                            });
+
+                            if (response.status === 404) {  
+                                $rootScope.$emit('evento', {
+                                    descripcion: response.data.Message
+                                });
+                            } else {
+                                $rootScope.$emit('evento', {
+                                    descripcion: response.statusText
+                                });
+                            }
                         });
                     }
                 }
@@ -147,13 +156,19 @@ angular.module('almacenApp')
                                 $scope.salida.SalidaItems[index].IdOrden = orden[0].Id;
                             } else {
                                 $scope.salida.SalidaItems[index].NumeroOrden = null;
+                                $scope.salida.SalidaItems[index].IdOrden = null;
+                                $scope.truefalse = false;
                             }
                         } else {
                             $scope.salida.SalidaItems[index].NumeroOrden = null;
+                            $scope.salida.SalidaItems[index].IdOrden = null;
+                            $scope.truefalse = false;
                         }
                     });
                 } else {
                     $scope.salida.SalidaItems[index].NumeroOrden = null;
+                    $scope.salida.SalidaItems[index].IdOrden = null;
+                    $scope.truefalse = false;
                 }
             };
 
