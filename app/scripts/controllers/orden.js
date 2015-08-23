@@ -149,8 +149,8 @@ angular.module('almacenApp')
                     if ($scope.orden.OrdenItems.length === 0) {
                         toaster.pop('error', 'Operación Fallida', 'Debe ingresar por lo menos un producto/servicio.');
                     } else {
-                        ordenFactory.save($scope.orden).then(function() {
-                            toaster.pop('success', 'Operación Exitosa', 'La Orden de Compra fue creada exitosamente.');
+                        ordenFactory.save($scope.orden).then(function(response) {
+                            toaster.pop('success', 'Operación Exitosa', 'La Orden de Compra fue creada exitosamente con Número: ' +response);
                             $scope.clearForm();
                         }, function error(response) {
                             // An error has occurred

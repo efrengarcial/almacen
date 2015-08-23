@@ -138,6 +138,7 @@ angular
                         orden.NombreProveedor = (ordenWS.Proveedor !== null ? ordenWS.Proveedor.Nombre : null);
                         orden.FechaOrden = moment(ordenWS.FechaCreacion).format(Constants.formatDate);
                         orden.CentroCostos = ordenWS.CentroCostos;
+                        orden.UserName = ordenWS.UserName;
 
                         for (var i = 0; i < ordenWS.OrdenItems.length; i += 1) {
                             var ordenItemWS = ordenWS.OrdenItems[i];
