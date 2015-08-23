@@ -47,7 +47,8 @@
             <li><a ng-if="authenticationData.permissions.indexOf('ADMIN_PRODUCTOS') > -1 "  href="#/productos">Productos</a></li>
             <li><a ng-if="authenticationData.permissions.indexOf('ADMIN_PROVEEDORES') > -1 "  href="#/proveedor">Proveedores</a></li>
             <li class="dropdown" ng-if="authenticationData.permissions.indexOf('ORDEN_COMPRA') > -1 ||
-            authenticationData.permissions.indexOf('REQUISICION') > -1 || authenticationData.permissions.indexOf('ORDEN_SERVICIO') > -1 || authenticationData.permissions.indexOf('REQUISICION_SERVICIO') > -1 ">
+            authenticationData.permissions.indexOf('REQUISICION') > -1 || authenticationData.permissions.indexOf('ORDEN_SERVICIO') > -1 || authenticationData.permissions.indexOf('REQUISICION_SERVICIO') > -1 ||
+            authenticationData.permissions.indexOf('CONSULTAR_ORDENES') > -1">
             
                 <a href="" data-toggle="dropdown" class="dropdown-toggle">Ordenes<b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -55,12 +56,20 @@
                     <li><a ng-if="authenticationData.permissions.indexOf('REQUISICION') > -1" href="#/requisicion">Requisición</a></li>
                     <li><a ng-if="authenticationData.permissions.indexOf('ORDEN_SERVICIO') > -1" href="#/ordenServicio">Orden de Servicio</a></li>
                     <li><a ng-if="authenticationData.permissions.indexOf('REQUISICION_SERVICIO') > -1" href="#/requisicionServicio">Requisición de Servicio</a></li>
-                    <li class="divider"></li>                   
+                    <li class="divider"></li>
+                      <li><a ng-if="authenticationData.permissions.indexOf('CONSULTAR_ORDENES') > -1" href="#/consultarOrden">Consultar Orden</a></li>
                 </ul>
-            </li>           
-            <li><a ng-if="authenticationData.permissions.indexOf('ENTRADAS') > -1" href="#/entradas">Entradas</a></li>
-            <li><a ng-if="authenticationData.permissions.indexOf('SALIDAS') > -1" href="#/salida">Salidas</a></li>
-            <li><a ng-if="authenticationData.permissions.indexOf('CONSULTAR_ORDENES') > -1" href="#/consultarOrden">Consultar Orden</a></li>
+            </li> 
+            <li class="dropdown" ng-if="authenticationData.permissions.indexOf('ENTRADAS') > -1 ||
+            authenticationData.permissions.indexOf('SALIDAS') > -1 ">
+                <a href="" data-toggle="dropdown" class="dropdown-toggle">Movimientos<b class="caret"></b></a>
+                <ul class="dropdown-menu">                
+                    <li><a ng-if="authenticationData.permissions.indexOf('ENTRADAS') > -1" href="#/entradas">Entradas</a></li>
+                    <li><a ng-if="authenticationData.permissions.indexOf('SALIDAS') > -1" href="#/salida">Salidas</a></li>
+                </ul>
+            </li>          
+            
+          
             <li><a ng-if="authenticationData.permissions.indexOf('REQUISICIONES_POR_PROCESAR') > -1" href="#/inboxOrden">Mis pendientes</a></li>
             <li ng-show="!isUserAuthenticated()"><a href="#/login">Sign in</a></li>
             <li ng-show="isUserAuthenticated()"><a href="" ng-click="logout()">Logout - {{authenticationData.userName}}</a></li>

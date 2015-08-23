@@ -71,7 +71,7 @@ angular.module('almacenApp')
                     cellTemplate: '<span class="glyphicon glyphicon-open glyphicon-center" ng-click="openOrden(row)"></span>'
                 }, {
                     field: '',
-                    displayName: 'Descartar',
+                    displayName: 'Anular',
                     width: 100,
                     cellTemplate: '<span class="glyphicon glyphicon-trash glyphicon-center" ng-click="deleteRow(row)"></span>'
                 }],
@@ -179,12 +179,12 @@ angular.module('almacenApp')
 
             // Broadcast an event when an element in the grid is deleted. No real deletion is perfomed at this point.
             $scope.deleteRow = function(row) {
-                var title = 'Inhabilitar \'' + row.entity.Numero + '\'';
-                var msg = "Seguro que deseas desactivar este elemento?";
+                var title = 'Anular Orden: \'' + row.entity.Numero + '\'';
+                var msg = "Seguro que deseas anular esta Ordem?";
                 var confirmCallback = function() {
                     ordenFactory.inactivate($scope.orden.Id).then(function() {
                         $log.debug("Id orden: " + $scope.orden.Id);
-                        toaster.pop('success', 'mensaje', 'La orden ha sido Inhabilitada exitosamente.');
+                        toaster.pop('success', 'mensaje', 'La Orden ha sido Anulada exitosamente.');
                         //$scope.clearForm();
                          showOrdenesEntradas();
                     }, function error(response) {

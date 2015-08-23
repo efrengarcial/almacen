@@ -18,7 +18,7 @@ angular.module('almacenApp')
                 idOrden = $routeParams.idOrden;
 
             if ($location.path() === '/ordenDetails') {
-                $scope.tituloPantalla = 'Detalles del Producto';
+                $scope.tituloPantalla = 'Detalles de la Orden';
             }
 
             if (idOrden !== null) {
