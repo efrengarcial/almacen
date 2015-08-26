@@ -16,8 +16,10 @@ angular
                     var orden = {
                         Id: '00000000',
                         Tipo: null,
+                        Estado: null,
                         Numero: null,
                         IdProveedor: null,
+                        UserName: null,
                         Proveedor: null,
                         FechaOrden: moment().format(Constants.formatDate),
                         Solicitante: null,
@@ -133,6 +135,7 @@ angular
                         orden.Id = ordenWS.Id;
                         orden.Numero = ordenWS.Numero;
                         orden.Tipo = ordenWS.Tipo;
+                        orden.Estado = ordenWS.Estado;
                         orden.UserId = ordenWS.UserId;
                         orden.Proveedor = ordenWS.Proveedor;
                         orden.NombreProveedor = (ordenWS.Proveedor !== null ? ordenWS.Proveedor.Nombre : null);

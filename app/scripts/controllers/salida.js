@@ -89,7 +89,6 @@ angular.module('almacenApp')
                     //if ((salidaItems[i].Producto !== null) && (!$filter('filter')(items, salidaItems[i].Producto.Id)[0])) {
                         items.push(salidaItems[i].Producto.Id);
                     }
-
                 }
             };
 

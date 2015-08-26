@@ -100,7 +100,8 @@ angular.module('almacenApp')
             $scope.clearForm = function() {
                 $scope.producto = null;
                 $scope.producto = {
-                    Id: 0
+                    Id: 0,
+                    CantidadInvetario: "000000"
                 };
                 $scope.allData = null;
                 $scope.gridOptions.ngGrid.config.sortInfo = {
@@ -119,7 +120,8 @@ angular.module('almacenApp')
             $scope.settingProducto = function() {
                 $scope.producto = null;
                 $scope.producto = {
-                    Id: 0
+                    Id: 0,
+                    CantidadInvetario: "000000"
                 };
             };
 
@@ -182,6 +184,7 @@ angular.module('almacenApp')
                         $scope.allData = data;
 
                         if ($scope.allData.length > 0) {
+                            $log.debug(JSON.stringify(data));
                             $scope.pagingOptions.currentPage = 1;
                             $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
                         } else {

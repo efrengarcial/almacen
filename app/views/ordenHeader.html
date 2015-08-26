@@ -1,94 +1,105 @@
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-3">
-			<h1 class="header">{{tituloPantalla}}</h1>
-		</div>
-	</div>
-	<hr/>
-	<form name="ordenForm" ng-submit="save(ordenForm.$valid)" class="form-horizontal" role="form" novalidate>
-		<fieldset>
-			<div class="row">
-				<div class="col-md-4 form-group">
-					<label class="col-md-5 control-label" for="orden">Orden de Compra</label>
-					<div class="col-md-7">
-						<input id="orden" ng-model="orden.Id" type="text" name="orden"  readonly class="form-control" >
-					</div>
-				</div>
-				<div class="col-md-4 form-group">
-					<label class="col-md-5 control-label" for="fecha">Fecha</label>
-					<div class="col-md-7">
-						<input type="text" name="fecha"  ng-model="orden.FechaOrden" readonly class="form-control">
-					</div>
-				</div>
-				<div class="col-md-4 form-group required-field-block">
-					<label class="col-md-5 control-label" for="proveedor">Proveedor</label>
-					<div class="col-md-7">
-						<input id="nit" type="text"  name="nit" ng-model="orden.Proveedor.Nombre" readonly class="form-control">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4 form-group">
-					<label class="col-md-5 control-label" for="nit">NIT</label>
-					<div class="col-md-7">
-						<input id="nit" type="text"  name="nit" ng-model="orden.Proveedor.Nit" readonly class="form-control">
-					</div>
-				</div>
-				<div class="col-md-4 form-group">
-					<label class="col-md-5 control-label" for="nit">Teléfono</label>
-					<div class="col-md-7">
-						<input id="telefono" type="text" name="telefono" ng-model="orden.Proveedor.Telefono" readonly class="form-control">
-					</div>
-				</div>
-				<div class="col-md-4 form-group">
-					<label class="col-md-5 control-label" for="nit">Dirección</label>
-					<div class="col-md-7">
-						<input id="direc" type="text" name="direc" ng-model="orden.Proveedor.Direccion"  readonly class="form-control">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4 form-group">
-					<label class="col-md-5 control-label" for="plazo">Plazo entrega</label>
-					<div class="col-md-7">
-						<input id="plazo" type="text" name="plazo" ng-model="orden.Proveedor.Plazo" readonly class="form-control">
-					</div>
-				</div>
-				<div class="col-md-4 form-group required-field-block">
-					<label class="col-md-5 control-label" for="">Centro Costos</label>
-					<div class="col-md-7">
-						<input id="plazo" type="text" name="plazo" ng-model="orden.CentroCostos" readonly class="form-control">
-					</div>
-				</div>
-				<div class="col-md-4  form-group">
-					<label class="col-md-5 control-label" for="nit">Fecha entrega</label>
-					<div class="col-md-7">
-						<input id="entrega" type="text" name="entrega" ng-model="orden.FechaEntrega" readonly class="form-control">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4 form-group">
-					<label class="col-md-5 control-label" for="plazo">Solicita</label>
-					<div class="col-md-7">
-						<input id="plazo" type="text" name="plazo" ng-model="orden.UserName" readonly class="form-control">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-8 form-group">
-					<div class="col-md-offset-8"> 
-					<button type="button" class="btn btn-success btn-sm" ng-click="backBuscarOrden()"> 
-					<i class="glyphicon glyphicon-arrow-left"></i>  
-					  Regresar </button>
-					</div>
-				</div>				
-			</div>
-		</fieldset>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="panel panel-primary"></div>
-			</div>
-		</div>
-	</form>
+    <div class="row">
+        <div class="col-md-3">
+            <h1 class="header">{{tituloPantalla}}</h1>
+        </div>
+    </div>
+    <hr/>
+    <form name="ordenForm" ng-submit="save(ordenForm.$valid)" class="form-horizontal" role="form" novalidate>
+        <fieldset>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-5 control-label" for="orden">Orden de Compra</label>
+                    <div class="col-md-7">
+                        <input id="orden" ng-model="orden.Id" type="text" name="orden" readonly class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-5 control-label" for="fecha">Fecha</label>
+                    <div class="col-md-7">
+                        <input type="text" name="fecha" ng-model="orden.FechaOrden" readonly class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group required-field-block">
+                    <label class="col-md-5 control-label" for="proveedor">Proveedor</label>
+                    <div class="col-md-7">
+                        <input id="nit" type="text" name="nit" ng-model="orden.Proveedor.Nombre" readonly class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-5 control-label" for="nit">NIT</label>
+                    <div class="col-md-7">
+                        <input id="nit" type="text" name="nit" ng-model="orden.Proveedor.Nit" readonly class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-5 control-label" for="nit">Teléfono</label>
+                    <div class="col-md-7">
+                        <input id="telefono" type="text" name="telefono" ng-model="orden.Proveedor.Telefono" readonly class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-5 control-label" for="nit">Dirección</label>
+                    <div class="col-md-7">
+                        <input id="direc" type="text" name="direc" ng-model="orden.Proveedor.Direccion" readonly class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-5 control-label" for="plazo">Plazo entrega</label>
+                    <div class="col-md-7">
+                        <input id="plazo" type="text" name="plazo" ng-model="orden.Proveedor.Plazo" readonly class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group required-field-block">
+                    <label class="col-md-5 control-label" for="">Centro Costos</label>
+                    <div class="col-md-7">
+                        <input id="plazo" type="text" name="plazo" ng-model="orden.CentroCostos" readonly class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4  form-group">
+                    <label class="col-md-5 control-label" for="nit">Fecha entrega</label>
+                    <div class="col-md-7">
+                        <input id="entrega" type="text" name="entrega" ng-model="orden.FechaEntrega" readonly class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="col-md-5 control-label" for="plazo">Solicita</label>
+                    <div class="col-md-7">
+                        <input id="plazo" type="text" name="plazo" ng-model="orden.UserName" readonly class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-5 control-label" for="tipo">Estado</label>
+                    <div class="col-md-7">
+                        <input type="text" name="estado" ng-model="orden.Estado" readonly class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="col-md-5 control-label" for="tipo">Tipo</label>
+                    <div class="col-md-7">
+                        <input type="text" name="tipo" ng-model="orden.Tipo" readonly class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 form-group">
+                    <div class="col-md-offset-8">
+                        <button type="button" class="btn btn-success btn-sm" ng-click="backBuscarOrden()">
+                            <i class="glyphicon glyphicon-arrow-left"></i> Regresar </button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary"></div>
+            </div>
+        </div>
+    </form>
 </div>

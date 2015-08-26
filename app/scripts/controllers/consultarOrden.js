@@ -10,49 +10,66 @@
 
 angular.module('almacenApp')
     .controller('ConsultarOrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter',
-        'modalWindowFactory', 'moment', 'Constants', '$location', '$routeParams',
-        function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants, $location, $routeParams) {
+        'modalWindowFactory', 'moment', 'Constants', 'accountFactory', '$location', '$routeParams',
+        function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants, accountFactory, $location, $routeParams) {
             $log.debug('Iniciando consultar orden');
 
             var params = $routeParams;
-            
-            //Check wether params object is empty when it is coming back from ordenes
-            if (isEmptyObject(params) === false) {
-                ordenFactory.query(params).then(function(data) {
-                    $scope.allData = data;
-                    $scope.pagingOptions.currentPage = 1;
-                    $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
-                });
-            }
-
-            //Setting starting Date
-            $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
+            $scope.proveedores = [];
 
             $scope.toggleMin = function() {
                 $scope.minDate = moment(Constants.minDate).format(Constants.formatDate);
             };
-            $scope.toggleMin();
 
-            $scope.open = function($event, fecha) {
-                $event.preventDefault();
-                $event.stopPropagation();
-                if ('openedStartDate' === fecha) {
-                    $scope.openedStartDate = true;
+            //Check wether params object is empty when it is coming back from ordenes
+            if (!isEmptyObject(params)) {
+                $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
+                if (params.SearchType == 1) {
+                    $scope.truefalse = true;
+                    $scope.consultaOrden.Numero = params.Numero;
                 } else {
-                    $scope.openedEndDate = true;
-                }
+                    $scope.consultaOrden.StartDate = moment(params.StartDate, Constants.formatDate).toDate().getTime();
+                    $scope.consultaOrden.EndDate = moment(params.EndDate, Constants.formatDate).toDate().getTime();
+                    $scope.consultaOrden.Proveedor = params.Proveedor;
+                };
 
-            };
+                $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
 
-            $scope.dateOptions = {
-                formatYear: 'yyyy',
-                startingDay: 1
-            };
+                $scope.toggleMin();
+                $scope.dateOptions = {
+                    formatYear: 'yyyy',
+                    startingDay: 1
+                };
+                $scope.format = Constants.datepickerFormatDate;
+                cargarProveedores();
+                $scope.saveProveedor = saveProveedor;
 
+                ordenFactory.query(params).then(function(data) {
+                    $scope.allData = data;
+                    if ($scope.allData.length > 0) {
+                        $scope.pagingOptions.currentPage = 1;
+                        $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                    } else {
+                        toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el parámetro de búsqueda.');
+                    }
 
-            $scope.format = Constants.datepickerFormatDate;
+                });
+            } else {
+                //Setting user data for default
+                $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
+                $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
 
-            $scope.proveedores = [];
+                $scope.toggleMin();
+                $scope.dateOptions = {
+                    formatYear: 'yyyy',
+                    startingDay: 1
+                };
+
+                $scope.format = Constants.datepickerFormatDate;
+                cargarProveedores();
+                $scope.saveProveedor = saveProveedor;
+
+            }
 
             /* Cargar información de listas */
             function cargarProveedores() {
@@ -68,16 +85,47 @@ angular.module('almacenApp')
                 $scope.consultaOrden.Proveedor = proveedorObj.Nombre;
             }
 
-            //Check whether a object is empty
-            function isEmptyObject(obj) {
-               for(var p in obj){
-                  return false;
-               }
-               return true;
-            }            
+            //Interacted and show message about required
+            $scope.interacted = function(field) {
+                return $scope.submitted || field.$dirty;
+            };
 
-            $scope.saveProveedor = saveProveedor;
-            cargarProveedores();
+            $scope.open = function($event, fecha) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                if ('openedStartDate' === fecha) {
+                    $scope.openedStartDate = true;
+                } else {
+                    $scope.openedEndDate = true;
+                }
+
+            };
+
+            $scope.showMessage = function() {
+                $('.required-icon, .required-combo-icon').tooltip({
+                    placement: 'left',
+                    title: 'Campo requerido'
+                });
+            };
+
+            $scope.clearForm = function() {
+                $log.debug("clearForm");
+                $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
+                $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
+
+                $scope.allData = null;
+                $scope.gridOptions.ngGrid.config.sortInfo = {
+                    fields: ['Numero'],
+                    directions: ['asc'],
+                    columns: []
+                };
+
+                // Resets the form validation state.
+                $scope.consultarOrdenForm.$setPristine();
+                // Broadcast the event to also clear the grid selection.
+                //$rootScope.$broadcast('clear');
+                $scope.truefalse = false;
+            };
 
             $scope.sortInfo = {
                 fields: ['Numero'],
@@ -132,116 +180,13 @@ angular.module('almacenApp')
                 }
             };
 
-
-            //Interacted and show message about required
-            $scope.interacted = function(field) {
-                return $scope.submitted || field.$dirty;
-            };
-
-            $scope.showMessage = function() {
-                $('.required-icon, .required-combo-icon').tooltip({
-                    placement: 'left',
-                    title: 'Campo requerido'
-                });
-            };
-
-            $scope.clearForm = function() {
-                $log.debug("clearForm");
-                $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
-
-                $scope.allData = null;
-                $scope.gridOptions.ngGrid.config.sortInfo = {
-                    fields: ['Numero'],
-                    directions: ['asc'],
-                    columns: []
-                };
-
-                // Resets the form validation state.
-                $scope.consultarOrdenForm.$setPristine();
-                // Broadcast the event to also clear the grid selection.
-                //$rootScope.$broadcast('clear');
-                $scope.truefalse = false;
-            };
-
-            $scope.setPagingData = function(data, page, pageSize) {
-                if (!data) {
-                    return;
+            //Check whether a object is empty
+            function isEmptyObject(obj) {
+                for (var p in obj) {
+                    return false;
                 }
-                var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
-                $scope.dataGrid = pagedData;
-                $scope.pagingOptions.totalServerItems = data.length;
-                if (!$scope.$$phase) {
-                    $scope.$apply();
-                }
-            };
-
-            // sort over all data
-            function sortData(field, direction) {
-                if (!$scope.allData) {
-                    return;
-                }
-                $scope.allData.sort(function(a, b) {
-                    if (direction === 'asc') {
-                        return a[field] > b[field] ? 1 : -1;
-                    } else {
-                        return a[field] > b[field] ? -1 : 1;
-                    }
-                })
+                return true;
             }
-
-            $scope.changeFields = function() {
-
-                if ($scope.consultaOrden.Numero !== undefined) {
-                    $scope.truefalse = true;
-                    $scope.consultaOrden.StartDate = new Date().getTime();
-                    $scope.consultaOrden.EndDate = new Date().getTime();
-
-                } else {
-                    $scope.truefalse = false;
-                    //$scope.consultaOrden.Numero = null;
-                }
-
-            };
-
-            $scope.buscar = function() {
-
-                //$log.debug("Orden: " + $scope.consultaOrden.Numero);
-                if ($scope.consultaOrden.Numero !== null && $scope.consultaOrden.Numero !== undefined) {
-                    params = {
-                        Numero: $scope.consultaOrden.Numero
-                    };
-
-                    ordenFactory.query(params).then(function(data) {
-                        $scope.allData = data;
-
-                        if ($scope.allData.length > 0) {
-                            $scope.pagingOptions.currentPage = 1;
-                            $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
-                        } else {
-                            toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el parámetro de búsqueda.');
-                        };
-                    });
-                } else {
-
-                    params = {
-                        StartDate: moment($scope.consultaOrden.StartDate).format(Constants.formatDate),
-                        EndDate: moment($scope.consultaOrden.EndDate).format(Constants.formatDate),
-                        IdProveedor: $scope.consultaOrden.IdProveedor
-                    };
-
-                    ordenFactory.query(params).then(function(data) {
-                        $scope.allData = data;
-
-                        if ($scope.allData.length > 0) {
-                            $scope.pagingOptions.currentPage = 1;
-                            $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
-                        } else {
-                            toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el rango de fecha  o el proveedor descrito.');
-                        };
-                    });
-                }
-            };
-
 
             $scope.$watch('pagingOptions', function(newVal, oldVal) {
                 if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
@@ -273,6 +218,10 @@ angular.module('almacenApp')
                 $scope.orden = orden;
             });
 
+            // Picks the event broadcasted when the form is cleared to also clear the grid selection.
+            $scope.$on('clear', function() {
+                $scope.gridOptions.selectAll(false);
+            });
 
             //From here you can go to details orden
             $scope.showDetails = function(row) {
@@ -282,11 +231,87 @@ angular.module('almacenApp')
                 $location.path("/ordenDetails").search(params);
             };
 
+            $scope.setPagingData = function(data, page, pageSize) {
+                if (!data) {
+                    return;
+                }
+                var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
+                $scope.dataGrid = pagedData;
+                $scope.pagingOptions.totalServerItems = data.length;
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+            };
 
-            // Picks the event broadcasted when the form is cleared to also clear the grid selection.
-            $scope.$on('clear', function() {
-                $scope.gridOptions.selectAll(false);
-            });
+            $scope.changeFields = function() {
+
+                if ($scope.consultaOrden.Numero !== undefined) {
+                    $scope.truefalse = true;
+                    $scope.consultaOrden.StartDate = new Date().getTime();
+                    $scope.consultaOrden.EndDate = new Date().getTime();
+                    $scope.consultaOrden.Proveedor = null;
+
+                } else {
+                    $scope.truefalse = false;
+                    //$scope.consultaOrden.Numero = null;
+                }
+
+            };
+
+            $scope.buscar = function() {
+                //$log.debug("Orden: " + $scope.consultaOrden.Numero);
+                if ($scope.consultaOrden.Numero !== null && $scope.consultaOrden.Numero !== undefined) {
+                    params = {
+                        Numero: $scope.consultaOrden.Numero,
+                        SearchType: 1
+                    };
+
+                    ordenFactory.query(params).then(function(data) {
+                        $scope.allData = data;
+
+                        if ($scope.allData.length > 0) {
+                            $scope.pagingOptions.currentPage = 1;
+                            $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                        } else {
+                            toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el parámetro de búsqueda.');
+                        };
+                    });
+                } else {
+
+                    params = {
+                        StartDate: moment($scope.consultaOrden.StartDate).format(Constants.formatDate),
+                        EndDate: moment($scope.consultaOrden.EndDate).format(Constants.formatDate),
+                        IdProveedor: $scope.consultaOrden.IdProveedor,
+                        Proveedor: $scope.consultaOrden.Proveedor,
+                        SearchType: 2
+                    };
+
+                    ordenFactory.query(params).then(function(data) {
+                        $scope.allData = data;
+
+                        if ($scope.allData.length > 0) {
+                            $scope.pagingOptions.currentPage = 1;
+                            $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                        } else {
+                            toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el rango de fecha  o el proveedor descrito.');
+                        };
+                    });
+                }
+            };
+
+            // sort over all data
+            function sortData(field, direction) {
+                if (!$scope.allData) {
+                    return;
+                }
+                $scope.allData.sort(function(a, b) {
+                    if (direction === 'asc') {
+                        return a[field] > b[field] ? 1 : -1;
+                    } else {
+                        return a[field] > b[field] ? -1 : 1;
+                    }
+                })
+            }
 
         }
     ]);
