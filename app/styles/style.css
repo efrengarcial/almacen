@@ -410,7 +410,9 @@ white-space: nowrap;
 
 .estadoFactura {
   background-color: #00ff00;
-  width: 174px;  
+  width: 174px;
+  left: 8px;  
+  border-radius: 3px;
 }
 
 .input-group{

@@ -9,13 +9,14 @@
  */
 
 angular.module('almacenApp')
-    .controller('ConsultarOrdenCtrl', ['$scope', '$log', '$rootScope', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter',
+    .controller('ConsultarOrdenCtrl', ['$scope', '$log', '$rootScope', 'userFactory', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter',
         'modalWindowFactory', 'moment', 'Constants', 'accountFactory', '$location', '$routeParams',
-        function($scope, $log, $rootScope, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants, accountFactory, $location, $routeParams) {
+        function($scope, $log, $rootScope, userFactory, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants, accountFactory, $location, $routeParams) {
             $log.debug('Iniciando consultar orden');
 
             var params = $routeParams;
             $scope.proveedores = [];
+            $scope.users = [];
 
             $scope.toggleMin = function() {
                 $scope.minDate = moment(Constants.minDate).format(Constants.formatDate);
@@ -24,6 +25,7 @@ angular.module('almacenApp')
             //Check wether params object is empty when it is coming back from ordenes
             if (!isEmptyObject(params)) {
                 $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
+                $log.debug("back: " + JSON.stringify(params));
                 if (params.SearchType == 1) {
                     $scope.truefalse = true;
                     $scope.consultaOrden.Numero = params.Numero;
@@ -31,9 +33,10 @@ angular.module('almacenApp')
                     $scope.consultaOrden.StartDate = moment(params.StartDate, Constants.formatDate).toDate().getTime();
                     $scope.consultaOrden.EndDate = moment(params.EndDate, Constants.formatDate).toDate().getTime();
                     $scope.consultaOrden.Proveedor = params.Proveedor;
+                    $scope.consultaOrden.IdProveedor = params.IdProveedor;
+                    $scope.consultaOrden.UserName = params.UserName;
+                    $scope.consultaOrden.UserId = params.UserId;
                 };
-
-                $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
 
                 $scope.toggleMin();
                 $scope.dateOptions = {
@@ -42,7 +45,10 @@ angular.module('almacenApp')
                 };
                 $scope.format = Constants.datepickerFormatDate;
                 cargarProveedores();
+                getUsers();
+
                 $scope.saveProveedor = saveProveedor;
+                $scope.saveUser = saveUser;
 
                 ordenFactory.query(params).then(function(data) {
                     $scope.allData = data;
@@ -57,7 +63,6 @@ angular.module('almacenApp')
             } else {
                 //Setting user data for default
                 $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
-                $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
 
                 $scope.toggleMin();
                 $scope.dateOptions = {
@@ -67,7 +72,10 @@ angular.module('almacenApp')
 
                 $scope.format = Constants.datepickerFormatDate;
                 cargarProveedores();
+                getUsers();
+
                 $scope.saveProveedor = saveProveedor;
+                $scope.saveUser = saveUser;
 
             }
 
@@ -78,11 +86,22 @@ angular.module('almacenApp')
                 });
             }
 
+            function getUsers() {
+                userFactory.getUsers().then(function(users) {
+                    $scope.users = users;
+                });
+            }
+
             function saveProveedor(proveedorObj, model, label) {
-                $log.debug('label ' + label);
-                $log.debug('model ' + JSON.stringify(model));
                 $scope.consultaOrden.IdProveedor = proveedorObj.Id;
+                $log.debug('IdProveedor ' + $scope.consultaOrden.IdProveedor);
                 $scope.consultaOrden.Proveedor = proveedorObj.Nombre;
+            }
+
+            function saveUser(usersObj, model, label) {
+                $scope.consultaOrden.UserName = usersObj.FullName;
+                $scope.consultaOrden.UserId = usersObj.Id;
+                $log.debug(usersObj);
             }
 
             //Interacted and show message about required
@@ -111,7 +130,6 @@ angular.module('almacenApp')
             $scope.clearForm = function() {
                 $log.debug("clearForm");
                 $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
-                $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
 
                 $scope.allData = null;
                 $scope.gridOptions.ngGrid.config.sortInfo = {
@@ -160,6 +178,9 @@ angular.module('almacenApp')
                 }, {
                     field: 'Proveedor.Nombre',
                     displayName: 'Proveedor'
+                }, {
+                    field: 'UserName',
+                    displayName: 'Usuario'
                 }, {
                     field: 'FechaCreacion',
                     displayName: 'Fecha Creacion',
@@ -226,7 +247,7 @@ angular.module('almacenApp')
             //From here you can go to details orden
             $scope.showDetails = function(row) {
                 params.idOrden = row.entity.Id;
-                $log.debug("params: " + JSON.stringify(params));
+                //$log.debug("goTo: " + JSON.stringify(params));
 
                 $location.path("/ordenDetails").search(params);
             };
@@ -249,7 +270,8 @@ angular.module('almacenApp')
                     $scope.truefalse = true;
                     $scope.consultaOrden.StartDate = new Date().getTime();
                     $scope.consultaOrden.EndDate = new Date().getTime();
-                    $scope.consultaOrden.Proveedor = null;
+                    //$scope.consultaOrden.Proveedor = null;
+                    //$scope.consultaorden.UserName = null;
 
                 } else {
                     $scope.truefalse = false;
@@ -259,7 +281,6 @@ angular.module('almacenApp')
             };
 
             $scope.buscar = function() {
-                //$log.debug("Orden: " + $scope.consultaOrden.Numero);
                 if ($scope.consultaOrden.Numero !== null && $scope.consultaOrden.Numero !== undefined) {
                     params = {
                         Numero: $scope.consultaOrden.Numero,
@@ -283,17 +304,20 @@ angular.module('almacenApp')
                         EndDate: moment($scope.consultaOrden.EndDate).format(Constants.formatDate),
                         IdProveedor: $scope.consultaOrden.IdProveedor,
                         Proveedor: $scope.consultaOrden.Proveedor,
+                        UserName: $scope.consultaOrden.UserName,
+                        UserId: $scope.consultaOrden.UserId,
                         SearchType: 2
                     };
 
                     ordenFactory.query(params).then(function(data) {
+                        $log.debug(JSON.stringify(params));
                         $scope.allData = data;
 
                         if ($scope.allData.length > 0) {
                             $scope.pagingOptions.currentPage = 1;
                             $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
                         } else {
-                            toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el rango de fecha  o el proveedor descrito.');
+                            toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el rango de fecha, proveedor o usuario descrito.');
                         };
                     });
                 }

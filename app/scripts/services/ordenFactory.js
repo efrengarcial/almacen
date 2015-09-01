@@ -21,6 +21,7 @@ angular
                         IdProveedor: null,
                         UserName: null,
                         Proveedor: null,
+
                         FechaOrden: moment().format(Constants.formatDate),
                         Solicitante: null,
                         CentroCostos: null,
@@ -78,7 +79,8 @@ angular
                         EndDate: new Date().getTime(),
                         Proveedor: null,
                         IdProveedor: null,
-                        IdUsuario: null
+                        UserName: null,
+                        UserId: null
                     };
 
                     return consultaOrden;
