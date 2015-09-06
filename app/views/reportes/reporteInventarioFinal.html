@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <h1 class="header">Reporte Inventario</h1>
+        </div>
+    </div>
+    <hr>
+    <form name="reporteInventarioFinalForm" ng-submit="submitForm(reporteInventarioFinalForm.$valid)" role="form" novalidate>
+        <div class="row">
+            <div class="col-md-4 form-group required-field-block">
+                <label class="col-md-4 control-label">Fecha inicial</label>
+                <div class="col-md-7 input-group">
+                    <input type="text" ng-model="reporteInventarioFinal.StartDate" name="startDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="openedStartDate" min-date="minDate" max-date="'22/06/2015'" datepicker-options="dateOptions" ng-required="true" date-lower-than="{{reporteInventarioFinal.EndDate | date:'short'}}" close-text="Close" ng-readonly="truefalse" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-disabled="truefalse" ng-click="open($event, 'openedStartDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+                <div class="error-message" ng-messages="reporteInventarioFinalForm.startDate.$error" gn-if="interacted(reporteInventarioFinalForm.startDate || !reporteInventarioFinalForm.startDate.$pristine)">
+                    <div class="error-message" ng-message="required">Campo inválido o vacío</div>
+                    <div class="error-message" ng-message="dateLowerThan">La fecha inicial debe ser menor que la final</div>
+                </div>
+            </div>
+            <div class="col-md-4 form-group required-field-block">
+                <label class="col-md-4 control-label">Fecha final</label>
+                <div class="col-md-7 input-group">
+                    <input type="text" ng-model="reporteInventarioFinal.EndDate" name="endDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="openedEndDate" min-date="minDate" max-date="'22/06/2015'" datepicker-options="dateOptions" ng-required="true" date-greater-than="{{reporteInventarioFinal.StartDate | date:'short'}}" close-text="Close" ng-readonly="truefalse" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-disabled="truefalse" ng-click="open($event,'openedEndDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+                <div class="error-message" ng-messages="reporteInventarioFinalForm.endDate.$error" gn-if="interacted(reporteInventarioFinalForm.endDate || !reporteInventarioFinalForm.endDate.$pristine)">
+                    <div class="error-message" ng-message="required">Campo inválido o vacío</div>
+                    <div class="error-message" ng-message="dateGreaterThan">La fecha final debe ser mayor que la inicial</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <button type="button" class="btn btn-danger" ng-click="clearForm()">
+                    <i class="glyphicon glyphicon-remove"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-success" ng-click="buscar()">
+                    <span class="glyphicon glyphicon-search" style="vertical-align:middle"></span> Buscar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

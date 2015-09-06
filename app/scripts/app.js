@@ -100,6 +100,14 @@ config(function($routeProvider, $logProvider, $locationProvider, $httpProvider, 
                     return authorizationFactory.permissionCheck([Permissions.CONSULTAR_ORDENES]);
                 },
             }
+        }).when('/reporteInventarioFinal', {
+            templateUrl: 'views/reportes/reporteInventarioFinal.html',
+            controller: 'ReporteInventarioFinalCtrl',
+            resolve: { 
+                permission: function(authorizationFactory, $route, Permissions) {
+                    return authorizationFactory.permissionCheck([Permissions.CONSULTAR_ORDENES]);
+                },
+            }
         })
         /*
         .when('/ordenItem', {

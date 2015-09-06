@@ -67,11 +67,15 @@
                     <li><a ng-if="authenticationData.permissions.indexOf('ENTRADAS') > -1" href="#/entradas">Entradas</a></li>
                     <li><a ng-if="authenticationData.permissions.indexOf('SALIDAS') > -1" href="#/salida">Salidas</a></li>
                 </ul>
-            </li>          
-            
-          
+            </li>
             <li><a ng-if="authenticationData.permissions.indexOf('REQUISICIONES_POR_PROCESAR') > -1" href="#/inboxOrden">Mis pendientes</a></li>
             <li ng-show="!isUserAuthenticated()"><a href="#/login">Sign in</a></li>
+            <li class="dropdown">
+                <a href="" data-toggle="dropdown" class="dropdown-toggle">Reportes <b class="caret"></b></a>
+                <ul class="dropdown-menu">                
+                    <li><a  href="#/reporteInventarioFinal">Reporte Inventario Final</a></li>
+                </ul>
+            </li>            
             <li ng-show="isUserAuthenticated()"><a href="" ng-click="logout()">Logout - {{authenticationData.userName}}</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -152,11 +156,14 @@
         <script src="scripts/controllers/proveedor.js"></script>
         <script src="scripts/services/ordenFactory.js"></script>
         <script src="scripts/services/salidaFactory.js"></script>
+        <script src="scripts/services/reportesFactory.js"></script>
         <script src="scripts/controllers/consultarOrden.js"></script>
         <script src="scripts/controllers/inboxOrden.js"></script>
         <script src="scripts/controllers/ordenDetails.js"></script>
         <script src="scripts/controllers/account.js"></script>
-        <script src="scripts/services/accountFactory.js"></script> 
+        <script src="scripts/controllers/reportes/reporteInventarioFinal.js"></script>
+        <script src="scripts/services/accountFactory.js"></script>
+
         <!--
         <script src="scripts/services/authInterceptorFactory.js"></script> 
         -->
