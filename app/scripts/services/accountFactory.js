@@ -15,6 +15,7 @@ angular
 
             var _authenticationData = {
                 isAuth: false,
+                userId: null,
                 userName: "",
                 permissions: [],
                 roles : [],
@@ -77,6 +78,8 @@ angular
                         var tokenPayload = jwtHelper.decodeToken(authData.token);
                         tokenPayload.permissions = JSON.parse(tokenPayload.permissions);
                         _authenticationData.permissions = tokenPayload.permissions;
+                        _authenticationData.roles = tokenPayload.role;
+                        _authenticationData.userId = tokenPayload.nameid;
                         $log.debug(tokenPayload);
                         $rootScope.authenticationData = _authenticationData;
                     }

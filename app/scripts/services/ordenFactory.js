@@ -20,8 +20,8 @@ angular
                         Numero: null,
                         IdProveedor: null,
                         UserName: null,
+                        UserId: null,
                         Proveedor: null,
-
                         FechaOrden: moment().format(Constants.formatDate),
                         Solicitante: null,
                         CentroCostos: null,
@@ -80,7 +80,8 @@ angular
                         Proveedor: null,
                         IdProveedor: null,
                         UserName: null,
-                        UserId: null
+                        UserId: null,
+                        SearchNotPermission: false
                     };
 
                     return consultaOrden;
