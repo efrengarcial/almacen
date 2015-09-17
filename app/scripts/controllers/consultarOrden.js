@@ -16,7 +16,6 @@ angular.module('almacenApp')
 
             var params = $routeParams,
                 path = $location;
-            $log.debug(path);
             $scope.proveedores = [];
             $scope.users = [];
             $scope.roles = [];
@@ -30,14 +29,14 @@ angular.module('almacenApp')
                 $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
                 //$log.debug("back: " + JSON.stringify(params));
                 if (params.SearchType == 1) {
-                    $scope.roles.push(accountFactory.getAuthenticationData().roles);
+                    $scope.roles = accountFactory.getAuthenticationData().roles;
                     $scope.truefalse = true;
                     $scope.consultaOrden.Numero = params.Numero;
                     $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
                     $scope.consultaOrden.SearchUserPermission = params.SearchUserPermission;
                 } else {
                     $scope.consultaOrden = params;
-                    $scope.roles.push(accountFactory.getAuthenticationData().roles);
+                    $scope.roles = accountFactory.getAuthenticationData().roles;
                 };
 
                 $scope.toggleMin();
@@ -80,7 +79,7 @@ angular.module('almacenApp')
                 $scope.saveUser = saveUser;
 
                 //Check if user has role
-                $scope.roles.push(accountFactory.getAuthenticationData().roles);
+                $scope.roles = accountFactory.getAuthenticationData().roles;
                 setSearchPermissions();
 
             }
@@ -160,7 +159,6 @@ angular.module('almacenApp')
                 //$rootScope.$broadcast('clear');
                 $scope.truefalse = false;
                 setSearchPermissions();
-                $log.debug($location.path());
             };
 
             $scope.sortInfo = {
