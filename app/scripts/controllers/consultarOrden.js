@@ -81,7 +81,6 @@ angular.module('almacenApp')
 
                 //Check if user has role
                 $scope.roles.push(accountFactory.getAuthenticationData().roles);
-                $scope.roles.push("Operario");
                 setSearchPermissions();
 
             }
@@ -301,7 +300,6 @@ angular.module('almacenApp')
                         Numero: $scope.consultaOrden.Numero,
                         SearchUserPermission: $scope.consultaOrden.SearchUserPermission,
                         SearchType: 1
-
                     };
 
                     ordenFactory.query(params).then(function(data) {
