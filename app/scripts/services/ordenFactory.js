@@ -81,7 +81,7 @@ angular
                         IdProveedor: null,
                         UserName: null,
                         UserId: null,
-                        SearchNotPermission: false
+                        NotSearchPermission: true
                     };
 
                     return consultaOrden;

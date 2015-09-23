@@ -33,7 +33,7 @@ angular.module('almacenApp')
                     $scope.truefalse = true;
                     $scope.consultaOrden.Numero = params.Numero;
                     $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
-                    $scope.consultaOrden.SearchUserPermission = params.SearchUserPermission;
+                    $scope.consultaOrden.NotSearchPermission = params.NotSearchPermission;
                 } else {
                     $scope.consultaOrden = params;
                     $scope.roles = accountFactory.getAuthenticationData().roles;
@@ -111,11 +111,11 @@ angular.module('almacenApp')
 
             function setSearchPermissions() {
                 if ($scope.roles.indexOf("Almacenista") > -1) {
-                    $scope.consultaOrden.SearchUserPermission = false;
+                    $scope.consultaOrden.NotSearchPermission = false;
                 } else {
                     $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
                     $scope.consultaOrden.UserId = accountFactory.getAuthenticationData().userId;
-                    $scope.consultaOrden.SearchUserPermission = true;
+                    $scope.consultaOrden.NotSearchPermission = true;
                 }
                 $log.debug("roles: " + $scope.roles);
             }
@@ -296,7 +296,7 @@ angular.module('almacenApp')
                 if ($scope.consultaOrden.Numero !== null && $scope.consultaOrden.Numero !== undefined) {
                     params = {
                         Numero: $scope.consultaOrden.Numero,
-                        SearchUserPermission: $scope.consultaOrden.SearchUserPermission,
+                        NotSearchPermission: $scope.consultaOrden.NotSearchPermission,
                         SearchType: 1
                     };
 
@@ -319,7 +319,7 @@ angular.module('almacenApp')
                         Proveedor: $scope.consultaOrden.Proveedor,
                         UserName: $scope.consultaOrden.UserName,
                         UserId: $scope.consultaOrden.UserId,
-                        SearchUserPermission: $scope.consultaOrden.SearchUserPermission,
+                        NotSearchPermission: $scope.consultaOrden.NotSearchPermission,
                         SearchType: 2
                     };
 
