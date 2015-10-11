@@ -26,8 +26,7 @@
                         <div class="required-icon" ng-mouseover="showMessage();">
                             <div class="text">*</div>
                         </div>
-                        <span  ng-show="loadingLocations" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-                          <div class="error-message" ng-messages="productoForm.producto.$error" ng-if="interacted(productoForm.producto) || ordenForm.$submitted">
+                        <div class="error-message" ng-messages="productoForm.producto.$error" ng-if="interacted(productoForm.producto) || ordenForm.$submitted">
                             <div class="error-message" ng-message="required">Debe ingresar un producto</div>     
                         </div>  
 

@@ -32,7 +32,7 @@ angular.module('almacenApp')
             }
 
             // Generate Token - Login
-            $scope.login = function() {
+            $scope.login = function() {  
                 $scope.result = '';
 
                 var loginData = {

@@ -38,6 +38,7 @@ angular
 		URI_ORDEN_BY_NUM: 'orden/getOrdenByNum',
 		URI_TOKEN: 'token',
 		URI_SAVE_ENTRADA: 'orden/saveEntrada',
+		URI_REPORTES: 'SSRSReporting/saveReport'	
 	})
 	.constant('Roles', {		
 		Almacenista : 'Almacenista',

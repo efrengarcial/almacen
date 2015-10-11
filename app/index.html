@@ -32,6 +32,7 @@
     <!-- Add your site or application content here -->
      <!-- Fixed navbar -->
         <!-- Fixed navbar -->
+    <span us-spinner spinner-key="spinner-1"></span>
     <div class="navbar navbar-default1 navbar-fixed-top">
       <div  ng-controller="AccountCtrl" class="container">
         <div class="navbar-header">
@@ -69,13 +70,13 @@
                 </ul>
             </li>
             <li><a ng-if="authenticationData.permissions.indexOf('REQUISICIONES_POR_PROCESAR') > -1" href="#/inboxOrden">Mis pendientes</a></li>
-            <li ng-show="!isUserAuthenticated()"><a href="#/login">Sign in</a></li>
-            <li class="dropdown">
+             <li class="dropdown">
                 <a href="" data-toggle="dropdown" class="dropdown-toggle">Reportes <b class="caret"></b></a>
                 <ul class="dropdown-menu">                
                     <li><a  href="#/reporteInventarioFinal">Reporte Inventario Final</a></li>
                 </ul>
-            </li>            
+            </li>        
+            <li ng-show="!isUserAuthenticated()"><a href="#/login">Sign in</a></li>
             <li ng-show="isUserAuthenticated()"><a href="" ng-click="logout()">Logout - {{authenticationData.userName}}</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -138,6 +139,8 @@
     <script src="bower_components/angular-moment/angular-moment.js"></script>
     <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/spin.js/spin.js"></script>
+    <script src="bower_components/angular-spinner/angular-spinner.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

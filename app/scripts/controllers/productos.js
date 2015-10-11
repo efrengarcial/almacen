@@ -10,15 +10,24 @@
 
 angular.module('almacenApp')
     .controller('ProductosCtrl', ['$scope', '$log', '$rootScope', 'productoFactory', 'toaster', '$filter',
-        'modalWindowFactory', 'Constants',
+        'modalWindowFactory', 'Constants','usSpinnerService',
         function($scope, $log, $rootScope, productoFactory, toaster, $filter,
-            modalWindowFactory, Constants) {
+            modalWindowFactory, Constants, usSpinnerService) {
             $log.debug('Iniciando Productos...');
+
+            $scope.startSpin = function() {
+                usSpinnerService.spin('spinner-1');
+            }
+            $scope.stopSpin = function() {
+                usSpinnerService.stop('spinner-1');
+            }
 
             /* Cargar información de listas */
             function cargarLineas() {
+                $scope.startSpin();
                 productoFactory.getLineas().then(function(lineas) {
                     $scope.lineas = lineas;
+                    $scope.stopSpin();
                 });
             }
 
