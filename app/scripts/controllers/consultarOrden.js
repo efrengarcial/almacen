@@ -35,7 +35,14 @@ angular.module('almacenApp')
                     $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
                     $scope.consultaOrden.NotSearchPermission = params.NotSearchPermission;
                 } else {
-                    $scope.consultaOrden = params;
+                    //$scope.consultaOrden = params;
+                    $scope.consultaOrden.StartDate = moment(params.StartDate, Constants.formatDate).toDate().getTime();
+                    $scope.consultaOrden.EndDate = moment(params.EndDate, Constants.formatDate).toDate().getTime();
+                    $scope.consultaOrden.Proveedor = params.Proveedor;
+                    $scope.consultaOrden.IdProveedor = params.IdProveedor;
+                    $scope.consultaOrden.UserName = params.UserName;
+                    $scope.consultaOrden.UserId = params.UserId;
+                    $scope.consultaOrden.SearchUserPermission = params.NotSearchPermission;
                     $scope.roles = accountFactory.getAuthenticationData().roles;
                 };
 
@@ -293,6 +300,36 @@ angular.module('almacenApp')
             };
 
             $scope.buscar = function() {
+
+                if ($scope.roles.indexOf("Almacenista") > -1) {
+                    $log.debug("Almacenista: " + $scope.roles);
+
+                } else {
+                    $log.debug("Operario: " + $scope.roles);
+                    if ($scope.consultaOrden.Numero !== null && $scope.consultaOrden.Numero !== undefined) {
+                        params = {
+                            Numero: $scope.consultaOrden.Numero,
+                            NotSearchPermission: $scope.consultaOrden.NotSearchPermission,
+                            UserId: $scope.consultaOrden.UserId,
+                            SearchType: 1
+
+                        };
+
+                        ordenFactory.query(params).then(function(data) {
+                            $scope.allData = data;
+
+                            if ($scope.allData.length > 0) {
+                                $scope.pagingOptions.currentPage = 1;
+                                $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                            } else {
+                                toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el parámetro de búsqueda.');
+                            };
+                        });
+                    }
+                }
+
+                //Old search version
+
                 if ($scope.consultaOrden.Numero !== null && $scope.consultaOrden.Numero !== undefined) {
                     params = {
                         Numero: $scope.consultaOrden.Numero,

@@ -9,9 +9,9 @@
  */
 angular.module('almacenApp')
     .controller('SalidaCtrl', ['$scope', '$filter', '$log', '$rootScope', 'accountFactory', 'salidaFactory', 'proveedorFactory', 'productoFactory',
-        'ordenFactory', 'toaster', '$location', 'Constants', 'userFactory', '$routeParams', 'moment',
+        'ordenFactory', 'toaster', '$location', 'Constants', 'userFactory', '$routeParams', 'moment', 'usSpinnerService',
         function($scope, $filter, $log, $rootScope, accountFactory, salidaFactory, proveedorFactory, productoFactory,
-            ordenFactory, toaster, $location, Constants, userFactory, $routeParams, moment) {
+            ordenFactory, toaster, $location, Constants, userFactory, $routeParams, moment, usSpinnerService) {
             $log.debug('Iniciando Salida....');
             var esServicio = false;
 
@@ -22,6 +22,13 @@ angular.module('almacenApp')
 
             /* Cargar información de listas */
             $scope.users = [];
+
+            $scope.startSpin = function() {
+                usSpinnerService.spin('spinner-1');
+            }
+            $scope.stopSpin = function() {
+                usSpinnerService.stop('spinner-1');
+            }
 
             function getUsers() {
                 userFactory.getUsers().then(function(users) {
@@ -63,7 +70,9 @@ angular.module('almacenApp')
             $scope.saveProducto = saveProducto;
 
             $scope.getProductos = function(search) {
+                $scope.startSpin();
                 return productoFactory.queryProdAndSer(search, esServicio).then(function(productos) {
+                    $scope.stopSpin();
                     return productos;
                 });
             };
@@ -80,13 +89,13 @@ angular.module('almacenApp')
                 for (var i = 0; i < salidaItems.length; i++) {
 
                     if ((salidaItems[i].Producto !== null) && (containsElement(items, salidaItems[i].Producto.Id) === true)) {
-                    //if ((salidaItems[i].Producto !== null) && $filter('filter')(items, salidaItems[i].Producto.Id)[0]) {
-                        console.log('filter: ' + $filter('filter')(items, salidaItems[i].Producto.Id));
+                        //if ((salidaItems[i].Producto !== null) && $filter('filter')(items, salidaItems[i].Producto.Id)[0]) {
+                        $log.debug('filter: ' + $filter('filter')(items, salidaItems[i].Producto.Id));
                         salidaItems[i].Producto = null;
                     }
 
                     if ((salidaItems[i].Producto !== null) && (containsElement(items, salidaItems[i].Producto.Id) === false)) {
-                    //if ((salidaItems[i].Producto !== null) && (!$filter('filter')(items, salidaItems[i].Producto.Id)[0])) {
+                        //if ((salidaItems[i].Producto !== null) && (!$filter('filter')(items, salidaItems[i].Producto.Id)[0])) {
                         items.push(salidaItems[i].Producto.Id);
                     }
                 }
@@ -128,7 +137,7 @@ angular.module('almacenApp')
                             $scope.clearForm();
                         }, function error(response) {
 
-                            if (response.status === 404) {  
+                            if (response.status === 404) {
                                 $rootScope.$emit('evento', {
                                     descripcion: response.data.Message
                                 });

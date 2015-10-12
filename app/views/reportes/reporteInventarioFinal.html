@@ -10,10 +10,10 @@
             <div class="col-md-4 form-group required-field-block">
                 <label class="col-md-4 control-label">Fecha inicial</label>
                 <div class="col-md-7 input-group">
-                    <input type="text" ng-model="reporteInventarioFinal.StartDate" name="startDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="openedStartDate" min-date="minDate" max-date="'22/06/2015'" datepicker-options="dateOptions" ng-required="true" date-lower-than="{{reporteInventarioFinal.EndDate | date:'short'}}" close-text="Close" ng-readonly="truefalse" />
+                    <input type="text" ng-model="reporte.StartDate" name="startDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="openedStartDate" min-date="minDate" max-date="'22/06/2015'" datepicker-options="dateOptions" ng-required="true" date-lower-than="{{reporteInventarioFinal.EndDate | date:'short'}}" close-text="Close" ng-readonly="truefalse" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-disabled="truefalse" ng-click="open($event, 'openedStartDate')"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
+                    </span> 
                 </div>
                 <div class="error-message" ng-messages="reporteInventarioFinalForm.startDate.$error" gn-if="interacted(reporteInventarioFinalForm.startDate || !reporteInventarioFinalForm.startDate.$pristine)">
                     <div class="error-message" ng-message="required">Campo inválido o vacío</div>
@@ -23,7 +23,7 @@
             <div class="col-md-4 form-group required-field-block">
                 <label class="col-md-4 control-label">Fecha final</label>
                 <div class="col-md-7 input-group">
-                    <input type="text" ng-model="reporteInventarioFinal.EndDate" name="endDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="openedEndDate" min-date="minDate" max-date="'22/06/2015'" datepicker-options="dateOptions" ng-required="true" date-greater-than="{{reporteInventarioFinal.StartDate | date:'short'}}" close-text="Close" ng-readonly="truefalse" />
+                    <input type="text" ng-model="reporte.EndDate" name="endDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="openedEndDate" min-date="minDate" max-date="'22/06/2015'" datepicker-options="dateOptions" ng-required="true" date-greater-than="{{reporteInventarioFinal.StartDate | date:'short'}}" close-text="Close" ng-readonly="truefalse" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-disabled="truefalse" ng-click="open($event,'openedEndDate')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -43,6 +43,10 @@
                     <span class="glyphicon glyphicon-search" style="vertical-align:middle"></span> Buscar
                 </button>
             </div>
+        </div>
+        <div class="row">
+            <br/>
+            <object   data="{{content}}" type="application/pdf" style="width: 100%; height: 400px;"></object>
         </div>
     </form>
 </div>

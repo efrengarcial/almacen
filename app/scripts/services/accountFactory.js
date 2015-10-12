@@ -65,6 +65,7 @@ angular
                     var tokenPayload = jwtHelper.decodeToken(tokenAuth);
                     tokenPayload.permissions = JSON.parse(tokenPayload.permissions);
                     _authenticationData.permissions = tokenPayload.permissions;
+                    _authenticationData.roles = tokenPayload.role;
                     $log.debug(tokenPayload);
                     $rootScope.authenticationData = _authenticationData;
                 },

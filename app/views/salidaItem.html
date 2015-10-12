@@ -27,8 +27,7 @@
                             <input class="form-control" name="producto" type="text" ng-model="salidaItem.Producto.Nombre" placeHolder="Producto" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label, salidaItem)" typeahead-editable="true" ng-blur="noRepeatProduct()" ng-required="true" />
                             <div class="required-icon" ng-mouseover="showMessage();">
                                 <div class="text">*</div>
-                            </div>
-                            <span ng-show="loadingLocations" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                            </div>                           
                             <div class="error-message" ng-messages="productoForm.producto.$error" ng-if="interacted(productoForm.producto) || salidaForm.$submitted">
                                 <div class="error-message" ng-message="required">Debe ingresar un producto o eligir uno diferente</div>
                             </div>

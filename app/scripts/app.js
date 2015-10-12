@@ -21,13 +21,35 @@ angular
         'ngGrid',
         'ui.bootstrap',
         'angularMoment',
-        'angular-jwt'        
+        'angular-jwt',
+        'angularSpinner'
     ]).
-config(function($routeProvider, $logProvider, $locationProvider, $httpProvider, RestangularProvider) {
+config(function($routeProvider, $logProvider, $locationProvider, $httpProvider,
+    RestangularProvider, usSpinnerConfigProvider) {
     $logProvider.debugEnabled(true);
     //$locationProvider.html5Mode(true);
     //$httpProvider.interceptors.push('authInterceptorFactory');
     //$httpProvider.interceptors.push('httpErrorHandler');
+
+    usSpinnerConfigProvider.setDefaults({
+        lines: 13, // The number of lines to draw
+        length: 5, // The length of each line
+        width: 4, // The line thickness
+        radius: 8, // The radius of the inner circle
+        corners: 1, // Corner roundness (0..1)   
+        rotate: 0, // The rotation offset
+        direction: 1, // 1: clockwise, -1: counterclockwise
+        color: '#333', // #rgb or #rrggbb or array of colors
+        speed: 1, // Rounds per second
+        trail: 80, // Afterglow percentage
+        shadow: false, // Whether to render a shadow
+        hwaccel: false, // Whether to use hardware acceleration
+        className: 'spinner', // The CSS class to assign to the spinner
+        zIndex: 2e9, // The z-index (defaults to 2000000000)
+        top: '50%', // Top position relative to parent
+        left: '50%' // Left position relative to parent
+    });
+
 
     $routeProvider
         .when('/', {
@@ -58,7 +80,7 @@ config(function($routeProvider, $logProvider, $locationProvider, $httpProvider, 
         .when('/ordenCompra', {
             templateUrl: 'views/orden.html',
             controller: 'OrdenCtrl',
-            resolve: { 
+            resolve: {
                 permission: function(authorizationFactory, $route, Permissions) {
                     return authorizationFactory.permissionCheck([Permissions.ORDEN_COMPRA]);
                 },
@@ -68,7 +90,7 @@ config(function($routeProvider, $logProvider, $locationProvider, $httpProvider, 
         .when('/requisicion', {
             templateUrl: 'views/orden.html',
             controller: 'OrdenCtrl',
-            resolve: { 
+            resolve: {
                 permission: function(authorizationFactory, $route, Permissions) {
                     return authorizationFactory.permissionCheck([Permissions.REQUISICION]);
                 },
@@ -77,7 +99,7 @@ config(function($routeProvider, $logProvider, $locationProvider, $httpProvider, 
         .when('/ordenServicio', {
             templateUrl: 'views/orden.html',
             controller: 'OrdenCtrl',
-            resolve: { 
+            resolve: {
                 permission: function(authorizationFactory, $route, Permissions) {
                     return authorizationFactory.permissionCheck([Permissions.ORDEN_SERVICIO]);
                 },
@@ -86,7 +108,7 @@ config(function($routeProvider, $logProvider, $locationProvider, $httpProvider, 
         .when('/requisicionServicio', {
             templateUrl: 'views/orden.html',
             controller: 'OrdenCtrl',
-            resolve: { 
+            resolve: {
                 permission: function(authorizationFactory, $route, Permissions) {
                     return authorizationFactory.permissionCheck([Permissions.REQUISICION_SERVICIO]);
                 },
@@ -95,7 +117,7 @@ config(function($routeProvider, $logProvider, $locationProvider, $httpProvider, 
         .when('/consultarOrden', {
             templateUrl: 'views/consultarOrden.html',
             controller: 'ConsultarOrdenCtrl',
-            resolve: { 
+            resolve: {
                 permission: function(authorizationFactory, $route, Permissions) {
                     return authorizationFactory.permissionCheck([Permissions.CONSULTAR_ORDENES]);
                 },
@@ -103,30 +125,30 @@ config(function($routeProvider, $logProvider, $locationProvider, $httpProvider, 
         }).when('/reporteInventarioFinal', {
             templateUrl: 'views/reportes/reporteInventarioFinal.html',
             controller: 'ReporteInventarioFinalCtrl',
-            resolve: { 
+            resolve: {
                 permission: function(authorizationFactory, $route, Permissions) {
                     return authorizationFactory.permissionCheck([Permissions.CONSULTAR_ORDENES]);
                 },
             }
         })
-        /*
+    /*
         .when('/ordenItem', {
             templateUrl: 'views/ordenItem.html',
             controller: 'OrdenCtrl'
         }) */
-        .when('/proveedor', {
-            templateUrl: 'views/proveedor.html',
-            controller: 'ProveedorCtrl',
-            resolve: { 
-                permission: function(authorizationFactory, $route, Permissions) {
-                    return authorizationFactory.permissionCheck([Permissions.ADMIN_PRODUCTOS]);
-                },
-            }
-        })
+    .when('/proveedor', {
+        templateUrl: 'views/proveedor.html',
+        controller: 'ProveedorCtrl',
+        resolve: {
+            permission: function(authorizationFactory, $route, Permissions) {
+                return authorizationFactory.permissionCheck([Permissions.ADMIN_PRODUCTOS]);
+            },
+        }
+    })
         .when('/inboxOrden', {
             templateUrl: 'views/inboxOrden.html',
             controller: 'InboxOrdenCtrl',
-            resolve: { 
+            resolve: {
                 permission: function(authorizationFactory, $route, Permissions) {
                     return authorizationFactory.permissionCheck([Permissions.REQUISICIONES_POR_PROCESAR]);
                 },
@@ -135,7 +157,7 @@ config(function($routeProvider, $logProvider, $locationProvider, $httpProvider, 
         .when('/ordenDetails', {
             templateUrl: 'views/ordenDetails.html',
             controller: 'OrdenDetailsCtrl',
-            resolve: { 
+            resolve: {
                 permission: function(authorizationFactory, $route, Permissions) {
                     return authorizationFactory.permissionCheck([Permissions.CONSULTAR_ORDENES]);
                 },
@@ -144,7 +166,7 @@ config(function($routeProvider, $logProvider, $locationProvider, $httpProvider, 
         .when('/entradas', {
             templateUrl: 'views/inboxOrden.html',
             controller: 'InboxOrdenCtrl',
-            resolve: { 
+            resolve: {
                 permission: function(authorizationFactory, $route, Permissions) {
                     return authorizationFactory.permissionCheck([Permissions.ENTRADAS]);
                 },
@@ -153,7 +175,7 @@ config(function($routeProvider, $logProvider, $locationProvider, $httpProvider, 
         .when('/entrada', {
             templateUrl: 'views/entrada.html',
             controller: 'EntradaCtrl',
-            resolve: { 
+            resolve: {
                 permission: function(authorizationFactory, $route, Permissions) {
                     return authorizationFactory.permissionCheck([Permissions.ENTRADAS]);
                 },
@@ -162,7 +184,7 @@ config(function($routeProvider, $logProvider, $locationProvider, $httpProvider, 
         .when('/salida', {
             templateUrl: 'views/salida.html',
             controller: 'SalidaCtrl',
-            resolve: { 
+            resolve: {
                 permission: function(authorizationFactory, $route, Permissions) {
                     return authorizationFactory.permissionCheck([Permissions.SALIDAS]);
                 },

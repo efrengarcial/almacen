@@ -11,16 +11,24 @@
 angular.module('almacenApp').factory('reportesFactory', ['Restangular', 'apiFactory', 'WS', '$log',
     function(Restangular, apiFactory, WS, $log) {
         return {
-            save: function(proveedor) {
-                $log.debug('Hail ' + proveedor + '!');
+            getReporteInventarioFinal: function(reporte) {
+                return apiFactory.all(WS.URI_REPORTES).withHttpConfig({responseType: 'blob'}).post(reporte);
             },
             getReporteInventarioFinalObject: function() {
-                var reporteInventarioFinal = {
-                    StartDate: new Date().getTime(),
-                    EndDate: new Date().getTime(),
+                var report = {
+                    ResourcePath: 'InventarioFinal',
+                    Parameters: [{
+                        Name: 'StartDate',
+                        Data: null
+                    }, {
+                        Name: 'EndDate',
+                        Data: null
+                    }],
+                    ReportDataSourceName : '',
+                    DataSources: []
                 };
 
-                return reporteInventarioFinal;
+                return report;
             }
         };
     }
