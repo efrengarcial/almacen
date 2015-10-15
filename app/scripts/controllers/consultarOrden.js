@@ -18,7 +18,8 @@ angular.module('almacenApp')
                 path = $location;
             $scope.proveedores = [];
             $scope.users = [];
-            $scope.roles = [];
+            $scope.permissions = [];
+            $scope.userId = null;
 
             $scope.toggleMin = function() {
                 $scope.minDate = moment(Constants.minDate).format(Constants.formatDate);
@@ -27,13 +28,14 @@ angular.module('almacenApp')
             //Check wether params object is empty when it is coming back from ordenes
             if (!isEmptyObject(params)) {
                 $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
-                //$log.debug("back: " + JSON.stringify(params));
+                $log.debug("back: " + JSON.stringify(params));
+
                 if (params.SearchType == 1) {
-                    $scope.roles = accountFactory.getAuthenticationData().roles;
                     $scope.truefalse = true;
                     $scope.consultaOrden.Numero = params.Numero;
                     $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
                     $scope.consultaOrden.NotSearchPermission = params.NotSearchPermission;
+                    $scope.permissions = accountFactory.getAuthenticationData().permissions;
                 } else {
                     //$scope.consultaOrden = params;
                     $scope.consultaOrden.StartDate = moment(params.StartDate, Constants.formatDate).toDate().getTime();
@@ -42,9 +44,10 @@ angular.module('almacenApp')
                     $scope.consultaOrden.IdProveedor = params.IdProveedor;
                     $scope.consultaOrden.UserName = params.UserName;
                     $scope.consultaOrden.UserId = params.UserId;
-                    $scope.consultaOrden.SearchUserPermission = params.NotSearchPermission;
-                    $scope.roles = accountFactory.getAuthenticationData().roles;
-                };
+                    $scope.consultaOrden.NotSearchPermission = params.NotSearchPermission;
+                    $scope.permissions = accountFactory.getAuthenticationData().permissions;
+                }
+
 
                 $scope.toggleMin();
                 $scope.dateOptions = {
@@ -57,6 +60,12 @@ angular.module('almacenApp')
 
                 $scope.saveProveedor = saveProveedor;
                 $scope.saveUser = saveUser;
+
+                //Asigna permisos a usuario
+                $scope.permissions = accountFactory.getAuthenticationData().permissions;
+                $scope.userId = accountFactory.getAuthenticationData().userId;
+                $log.debug("userId: " + $scope.userId);
+                setSearchPermissions();
 
                 ordenFactory.query(params).then(function(data) {
                     $scope.allData = data;
@@ -85,8 +94,10 @@ angular.module('almacenApp')
                 $scope.saveProveedor = saveProveedor;
                 $scope.saveUser = saveUser;
 
-                //Check if user has role
-                $scope.roles = accountFactory.getAuthenticationData().roles;
+                //Asigna permisos a usuario
+                $scope.permissions = accountFactory.getAuthenticationData().permissions;
+                $scope.userId = accountFactory.getAuthenticationData().userId;
+                $log.debug("userId: " + $scope.userId);
                 setSearchPermissions();
 
             }
@@ -117,14 +128,28 @@ angular.module('almacenApp')
 
 
             function setSearchPermissions() {
-                if ($scope.roles.indexOf("Almacenista") > -1) {
+                var permission = checkIfUserHasQueryPermission();
+                if (permission === true) {
                     $scope.consultaOrden.NotSearchPermission = false;
                 } else {
                     $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
                     $scope.consultaOrden.UserId = accountFactory.getAuthenticationData().userId;
                     $scope.consultaOrden.NotSearchPermission = true;
                 }
-                $log.debug("roles: " + $scope.roles);
+                $log.debug("permissions: " + $scope.permissions);
+            }
+
+            //Cheque si usurario tiene permiso para consultar orden
+            function checkIfUserHasQueryPermission() {
+
+                var permission = "CONSULTAR_TODAS_LAS_ORDENES",
+                    index = $scope.permissions.indexOf(permission),
+                    answer = false;
+                if (index > -1) {
+                    answer = true;
+
+                }
+                return answer;
             }
 
             //Interacted and show message about required
@@ -301,78 +326,69 @@ angular.module('almacenApp')
 
             $scope.buscar = function() {
 
-                if ($scope.roles.indexOf("Almacenista") > -1) {
-                    $log.debug("Almacenista: " + $scope.roles);
+                var permission = checkIfUserHasQueryPermission();
 
-                } else {
-                    $log.debug("Operario: " + $scope.roles);
+                if (permission === true) {
                     if ($scope.consultaOrden.Numero !== null && $scope.consultaOrden.Numero !== undefined) {
                         params = {
                             Numero: $scope.consultaOrden.Numero,
                             NotSearchPermission: $scope.consultaOrden.NotSearchPermission,
-                            UserId: $scope.consultaOrden.UserId,
                             SearchType: 1
+                        }
+                        getOrdenByParams(params);
 
+                    } else {
+                        params = setQueryParams();
+                        getOrdenByParams(params);
+                    }
+
+                } else {
+                    if ($scope.consultaOrden.Numero !== null && $scope.consultaOrden.Numero !== undefined) {
+                        params = {
+                            Numero: $scope.consultaOrden.Numero,
+                            NotSearchPermission: $scope.consultaOrden.NotSearchPermission,
+                            UserId: $scope.userId,
+                            SearchType: 1
                         };
+                        getOrdenByParams(params);
 
-                        ordenFactory.query(params).then(function(data) {
-                            $scope.allData = data;
-
-                            if ($scope.allData.length > 0) {
-                                $scope.pagingOptions.currentPage = 1;
-                                $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
-                            } else {
-                                toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el parámetro de búsqueda.');
-                            };
-                        });
+                    } else {
+                        params = setQueryParams();
+                        getOrdenByParams(params);
                     }
                 }
+            };
 
-                //Old search version
-
-                if ($scope.consultaOrden.Numero !== null && $scope.consultaOrden.Numero !== undefined) {
-                    params = {
-                        Numero: $scope.consultaOrden.Numero,
-                        NotSearchPermission: $scope.consultaOrden.NotSearchPermission,
-                        SearchType: 1
-                    };
-
-                    ordenFactory.query(params).then(function(data) {
-                        $scope.allData = data;
-
-                        if ($scope.allData.length > 0) {
-                            $scope.pagingOptions.currentPage = 1;
-                            $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
-                        } else {
+            function getOrdenByParams(params) {
+                ordenFactory.query(params).then(function(data) {
+                    $log.debug(JSON.stringify(params));
+                    $scope.allData = data;
+                    if ($scope.allData.length > 0) {
+                        $scope.pagingOptions.currentPage = 1;
+                        $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
+                    } else {
+                        if (params.SearchType === 1) {
                             toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el parámetro de búsqueda.');
-                        };
-                    });
-                } else {
-
-                    params = {
-                        StartDate: moment($scope.consultaOrden.StartDate).format(Constants.formatDate),
-                        EndDate: moment($scope.consultaOrden.EndDate).format(Constants.formatDate),
-                        IdProveedor: $scope.consultaOrden.IdProveedor,
-                        Proveedor: $scope.consultaOrden.Proveedor,
-                        UserName: $scope.consultaOrden.UserName,
-                        UserId: $scope.consultaOrden.UserId,
-                        NotSearchPermission: $scope.consultaOrden.NotSearchPermission,
-                        SearchType: 2
-                    };
-
-                    ordenFactory.query(params).then(function(data) {
-                        $log.debug(JSON.stringify(params));
-                        $scope.allData = data;
-
-                        if ($scope.allData.length > 0) {
-                            $scope.pagingOptions.currentPage = 1;
-                            $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
                         } else {
                             toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el rango de fecha, proveedor o usuario descrito.');
-                        };
-                    });
-                }
-            };
+                        }
+                    };
+                });
+            }
+
+            function setQueryParams() {
+                var params = {
+                    StartDate: moment($scope.consultaOrden.StartDate).format(Constants.formatDate),
+                    EndDate: moment($scope.consultaOrden.EndDate).format(Constants.formatDate),
+                    IdProveedor: $scope.consultaOrden.IdProveedor,
+                    Proveedor: $scope.consultaOrden.Proveedor,
+                    UserName: $scope.consultaOrden.UserName,
+                    UserId: $scope.consultaOrden.UserId,
+                    NotSearchPermission: $scope.consultaOrden.NotSearchPermission,
+                    SearchType: 2
+                };
+                return params;
+            }
 
             // sort over all data
             function sortData(field, direction) {
