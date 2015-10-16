@@ -14,8 +14,7 @@ angular.module('almacenApp')
         function($scope, $log, $rootScope, userFactory, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants, accountFactory, $location, $routeParams) {
             $log.debug('Iniciando consultar orden');
 
-            var params = $routeParams,
-                path = $location;
+            var params = $routeParams;
             $scope.proveedores = [];
             $scope.users = [];
             $scope.permissions = [];
@@ -48,7 +47,6 @@ angular.module('almacenApp')
                     $scope.permissions = accountFactory.getAuthenticationData().permissions;
                 }
 
-
                 $scope.toggleMin();
                 $scope.dateOptions = {
                     formatYear: 'yyyy',
@@ -64,19 +62,10 @@ angular.module('almacenApp')
                 //Asigna permisos a usuario
                 $scope.permissions = accountFactory.getAuthenticationData().permissions;
                 $scope.userId = accountFactory.getAuthenticationData().userId;
-                $log.debug("userId: " + $scope.userId);
                 setSearchPermissions();
 
-                ordenFactory.query(params).then(function(data) {
-                    $scope.allData = data;
-                    if ($scope.allData.length > 0) {
-                        $scope.pagingOptions.currentPage = 1;
-                        $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
-                    } else {
-                        toaster.pop('warning', 'Advertencia', 'No existen Ordenes con el parámetro de búsqueda.');
-                    }
-
-                });
+                //Realiza la consulta regresando de detalles ordenes.
+                getOrdenByParams(params);
             } else {
                 //Setting user data for default
                 $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
@@ -117,7 +106,7 @@ angular.module('almacenApp')
 
             function saveProveedor(proveedorObj, model, label) {
                 $scope.consultaOrden.IdProveedor = proveedorObj.Id;
-                $log.debug('IdProveedor ' + $scope.consultaOrden.IdProveedor);
+                //$log.debug('IdProveedor ' + $scope.consultaOrden.IdProveedor);
                 $scope.consultaOrden.Proveedor = proveedorObj.Nombre;
             }
 
@@ -136,7 +125,7 @@ angular.module('almacenApp')
                     $scope.consultaOrden.UserId = accountFactory.getAuthenticationData().userId;
                     $scope.consultaOrden.NotSearchPermission = true;
                 }
-                $log.debug("permissions: " + $scope.permissions);
+                //$log.debug("permissions: " + $scope.permissions);
             }
 
             //Cheque si usurario tiene permiso para consultar orden
@@ -147,7 +136,6 @@ angular.module('almacenApp')
                     answer = false;
                 if (index > -1) {
                     answer = true;
-
                 }
                 return answer;
             }
@@ -295,7 +283,6 @@ angular.module('almacenApp')
             //From here you can go to details orden
             $scope.showDetails = function(row) {
                 params.idOrden = row.entity.Id;
-                //$log.debug("goTo: " + JSON.stringify(params));
                 $location.path("/ordenDetails").search(params);
             };
 
