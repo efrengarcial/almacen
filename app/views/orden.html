@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <h1 class="header">{{tituloPantalla}}</h1>
         </div>
         <form class="col-md-8 form-group col-md-offset-4" role="form">
@@ -20,16 +20,26 @@
         </form>
     </div>
     <div class="row">
-        <div class="col-md-2 estadoFactura">En Elaboración</div>
+        <div class="col-md-4 form-group">
+            <label class="col-md-5 estadoFactura control-label" for="estado">{{estadoFactura}}</label>
+            <div class="col-md-7">
+                <input type="text" name="estado" ng-model="orden.Estado" readonly class="form-control" ng-show="orden.showTextBox">
+            </div>
+        </div>
         <div class="col-md-4 form-group" ng-show="isRequisicion">
-            <label class="col-md-3 control-label" for="orden">Solicitante</label>
+            <label class="col-md-4 control-label" for="orden">Solicitante</label>
             <div class="col-md-7">
                 <input id="orden" ng-model="orden.Solicitante" type="text" name="orden" readonly class="form-control">
             </div>
         </div>
-        <div class="col-md-2 col-md-offset-4 required-text" ng-show="isRequisicion">* Campos requeridos</div>
-        <div class="col-md-2 col-md-offset-8 required-text" ng-show="!isRequisicion">* Campos requeridos</div>
+        <div class="col-md-2 col-md-offset-0 required-text" ng-show="isRequisicion">* Campos requeridos</div>
+        <div class="col-md-2 col-md-offset-4 required-text" ng-show="!isRequisicion">* Campos requeridos</div>
     </div>
+    <!-- <div class="row">
+        <div class="col-md-4 form-group">
+            <label class="col-md-5 estadoFactura control-label" for="estado">Estado</label>
+        </div>
+    </div> -->
     <hr/>
     <form name="ordenForm" ng-submit="save(ordenForm.$valid)" class="form-horizontal" role="form" novalidate>
         <fieldset>
@@ -104,14 +114,6 @@
                     <label class="col-md-5 control-label" for="nit">Fecha entrega</label>
                     <div class="col-md-7">
                         <input id="entrega" type="text" name="entrega" ng-model="orden.FechaEntrega" readonly class="form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 form-group">
-                    <label class="col-md-5 estadoFactura control-label" for="estado">Estado</label>
-                    <div class="col-md-7">
-                        <input type="text" name="estado" ng-model="orden.Estado" readonly class="form-control">
                     </div>
                 </div>
             </div>

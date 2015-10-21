@@ -10,8 +10,8 @@
 angular
     .module('almacenApp')
     .factory('accountFactory', [ 'WS', 'appConfig', '$http', 'authorDataKey', 
-        'jwtHelper', '$log','$rootScope', "$cacheFactory",
-        function( WS, appConfig, $http, authorDataKey, jwtHelper, $log, $rootScope, $cacheFactory) {
+        'jwtHelper', '$log','$rootScope', "$window",
+        function( WS, appConfig, $http, authorDataKey, jwtHelper, $log, $rootScope, $window) {
 
             var _authenticationData = {
                 isAuth: false,
@@ -45,7 +45,7 @@ angular
                     _authenticationData.permissions  = [];
                     _authenticationData.token ="";
                    $rootScope.authenticationData= _authenticationData;
-                   location.reload(true);
+                   $window.location.reload();
                 },
                 getAuthenticationData: function() {
                     return _authenticationData;

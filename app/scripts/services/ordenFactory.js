@@ -28,7 +28,8 @@ angular
                         Notas: '',
                         IdOrdenBase: null,
                         NombreProveedor: '',
-                        OrdenItems: []
+                        OrdenItems: [],
+                        showTextBox: true
                     };
                     orden.PrecioTotal = function() {
                         var total = 0;

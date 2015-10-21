@@ -68,6 +68,8 @@ angular
         REQUISICION_SERVICIO: 'REQUISICION_SERVICIO',
         MIS_PENDIENTES: 'MIS_PENDIENTES',
         ENTRADAS: 'ENTRADAS',
+        EN_ELABORACION: 'En Elaboración',
+        ESTADO: 'Estado',
         plazoMin: 1,
         plazoMax: 90
     });

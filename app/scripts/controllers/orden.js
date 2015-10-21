@@ -14,8 +14,17 @@ angular.module('almacenApp')
             toaster, $location, Constants, accountFactory, $routeParams, moment) {
 
             $log.debug('Iniciando orden: ' + $location.$$url);
-            var tipoOrden, esServicio = false,
+            var tipoOrden,
+                esServicio = false,
+                idOrden = null,
+                params = $routeParams;
+
+            if (!isEmptyObject(params)) {
                 idOrden = $routeParams.idOrden;
+            }
+
+
+            $log.debug("IdOrden: " + idOrden);
 
             if ($location.path() === '/ordenCompra') {
                 $scope.tituloPantalla = 'Orden de Compra';
@@ -57,9 +66,11 @@ angular.module('almacenApp')
             $scope.selectCentroCostos = selectCentroCostos;
             cargarProveedores();
 
-            if (idOrden !== undefined) {
+            if (idOrden !== null) {
+                $scope.estadoFactura = Constants.ESTADO;
                 ordenFactory.getById(idOrden).then(function(orden) {
                     $scope.orden = orden;
+                    $scope.orden.showTextBox = true;
                     $scope.orden.Tipo = tipoOrden;
                     $scope.orden.IdOrdenBase = orden.Id;
                     $scope.orden.Id = 0;
@@ -73,11 +84,12 @@ angular.module('almacenApp')
 
                 });
             } else {
+                $scope.estadoFactura = Constants.EN_ELABORACION;
                 $scope.orden = ordenFactory.getOrdenObject();
+                $scope.orden.showTextBox = false;
                 $scope.orden.AddItem();
                 $scope.orden.Tipo = tipoOrden;
                 $scope.orden.Solicitante = accountFactory.getAuthenticationData().userName;
-
             }
 
             function setFechaEntrega() {
@@ -92,7 +104,7 @@ angular.module('almacenApp')
                 $scope.orden.IdProveedor = proveedorObj.Id;
                 $scope.orden.Proveedor = proveedorObj;
                 setFechaEntrega();
-                
+
             }
 
             function saveProducto(productoObj, model, label, ordenItemObj) {
@@ -150,7 +162,7 @@ angular.module('almacenApp')
                         toaster.pop('error', 'Operación Fallida', 'Debe ingresar por lo menos un producto/servicio.');
                     } else {
                         ordenFactory.save($scope.orden).then(function(response) {
-                            toaster.pop('success', 'Operación Exitosa', 'La Orden de Compra fue creada exitosamente con Número: ' +response);
+                            toaster.pop('success', 'Operación Exitosa', 'La Orden de Compra fue creada exitosamente con Número: ' + response);
                             $scope.clearForm();
                         }, function error(response) {
                             // An error has occurred
@@ -162,5 +174,12 @@ angular.module('almacenApp')
 
                 }
             };
+
+            function isEmptyObject(obj) {
+                for (var p in obj) {
+                    return false;
+                }
+                return true;
+            }
         }
     ]);
