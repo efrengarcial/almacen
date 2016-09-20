@@ -11,7 +11,7 @@ angular
 	.module('almacenApp')
 	.constant('appConfig', {		
 		version : 0.1,
-		apiDomain : 'http://localhost/FrigorificosBle.Almacen.SPA/', //document.location,
+		apiDomain : 'http://localhost:2225/', //document.location,
 		apiPath : 'api',
 		apiTimeout : 500000
 	})
