@@ -59,7 +59,8 @@
                 <div class="col-md-4 form-group required-field-block">
                     <label class="col-md-5 control-label" for="proveedor">Proveedor</label>
                     <div class="col-md-7">
-                        <input type="text" id="proveedor" name="proveedor" ng-model="orden.NombreProveedor" placeholder="Proveedor" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" ng-required="!isRequisicion" ng-focus typeahead-loading="Cargando" />
+                        <input type="text" id="proveedor" name="proveedor" ng-model="orden.NombreProveedor" placeholder="Proveedor" uib-typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" ng-required="!isRequisicion" 
+                        ng-focus typeahead-loading="Cargando" />
                         <div class="required-icon" ng-mouseover="showMessage();" ng-hide="isRequisicion">
                             <div class="text">*</div>
                         </div>
@@ -130,8 +131,11 @@
                     <button type="button" class="btn btn-success" ng-click="addProducto()">
                         <i class="glyphicon glyphicon-plus"></i> Adicionar Producto
                     </button>
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" ng-click="saveAndCloseClick=false">
                         <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Guardar
+                    </button>
+                     <button type="submit" class="btn btn-primary" ng-click="saveAndCloseClick=true">
+                        <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span>Cerrar Requisición
                     </button>
                 </div>
             </div>

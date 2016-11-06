@@ -25,7 +25,7 @@
 				<div class="col-md-4 form-group required-field-block">
 					<label class="col-md-4 control-label">Solicitador</label>
 					<div class="col-md-6">
-						<input type="text" ng-model="salida.Solicitador" ng-change="salida.esSolicitador=true" name="solicitador" placeholder="Solicita" typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control"/>
+						<input type="text" ng-model="salida.Solicitador" ng-change="salida.esSolicitador=true" name="solicitador" placeholder="Solicita" uib-typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control"/>
 						<div class="required-icon" ng-mouseover="showMessage();">
 							<div class="text">*</div>
 						</div>
@@ -37,7 +37,7 @@
 				<div class="col-md-4 form-group required-field-block">
 					<label class="col-md-4 control-label">Recibidor</label>
 					<div class="col-md-6">
-						<input type="text" ng-model="salida.Recibidor" ng-change="salida.esSolicitador=false" name="recibidor" placeholder="Recibe" typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control"/>
+						<input type="text" ng-model="salida.Recibidor" ng-change="salida.esSolicitador=false" name="recibidor" placeholder="Recibe" uib-typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control"/>
 						<div class="required-icon" ng-mouseover="showMessage();">
 							<div class="text">*</div>
 						</div>

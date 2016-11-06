@@ -2,28 +2,28 @@
   "name": "almacen",
   "version": "0.0.1",
   "dependencies": {
-    "angular": "1.3.7",
+    "angular": "1.4.8",
     "json3": "~3.3.1",
     "es5-shim": "~3.1.0",
     "bootstrap": "~3.2.0",
-    "angular-resource": "1.3.7",
-    "angular-cookies": "1.3.7",
-    "angular-sanitize": "1.3.7",
-    "angular-route": "1.3.7",
-    "angular-messages": "1.3.7",
+    "angular-resource": "1.4.8",
+    "angular-cookies": "1.4.8",
+    "angular-sanitize": "1.4.8",
+    "angular-route": "1.4.8",
+    "angular-messages": "1.4.8",
     "angular-fcsa-number": "1.5.3",
     "restangular": "1.4.0",
     "AngularJS-Toaster": "~0.4.8",
     "ng-grid": "~2.0.14",
-    "angular-bootstrap": "~0.12.0",
+    "angular-bootstrap": "~1.0.0",
     "angular-moment": "~0.9.0",
     "angular-jwt": "~0.0.9",
     "underscore": "1.8.3",   
     "angular-spinner": "~0.7.0"
   },
   "devDependencies": {
-    "angular-mocks": "1.3.7",
-    "angular-scenario": "1.3.7"
+    "angular-mocks": "1.4.8",
+    "angular-scenario": "1.4.8"
   },
   "appPath": "app"
 }

@@ -22,7 +22,7 @@
             <div class="col-md-4 form-group required-field-block">
                 <label class="col-md-4 control-label">Fecha inicial</label>
                 <div class="col-md-7 input-group">
-                    <input type="text" ng-model="consultaOrden.StartDate" name="startDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="openedStartDate" min-date="minDate" max-date="'22/06/2016'" datepicker-options="dateOptions" ng-required="true" date-lower-than="{{consultaOrden.EndDate | date:'short'}}" close-text="Close" ng-readonly="truefalse" />
+                    <input type="text" ng-model="consultaOrden.StartDate" name="startDate" class="form-control date-field" uib-datepicker-popup="{{format}}" is-open="openedStartDate" min-date="minDate" max-date="'22/06/2016'" datepicker-options="dateOptions" ng-required="true" date-lower-than="{{consultaOrden.EndDate | date:'short'}}" close-text="Close" ng-readonly="truefalse" />
                     <span class="input-group-btn">
 						<button type="button" class="btn btn-default" ng-disabled="truefalse" ng-click="open($event, 'openedStartDate')"><i class="glyphicon glyphicon-calendar"></i></button>
 					</span>
@@ -35,7 +35,7 @@
             <div class="col-md-4 form-group required-field-block">
                 <label class="col-md-4 control-label">Fecha final</label>
                 <div class="col-md-7 input-group">
-                    <input type="text" ng-model="consultaOrden.EndDate" name="endDate" class="form-control date-field" datepicker-popup="{{format}}" is-open="openedEndDate" min-date="minDate" max-date="'22/06/2016'" datepicker-options="dateOptions" ng-required="true" date-greater-than="{{consultaOrden.StartDate | date:'short'}}" close-text="Close" ng-readonly="truefalse" />
+                    <input type="text" ng-model="consultaOrden.EndDate" name="endDate" class="form-control date-field" uib-datepicker-popup="{{format}}" is-open="openedEndDate" min-date="minDate" max-date="'22/06/2016'" datepicker-options="dateOptions" ng-required="true" date-greater-than="{{consultaOrden.StartDate | date:'short'}}" close-text="Close" ng-readonly="truefalse" />
                     <span class="input-group-btn">
 						<button type="button" class="btn btn-default" ng-disabled="truefalse" ng-click="open($event,'openedEndDate')"><i class="glyphicon glyphicon-calendar"></i></button>
 					</span>
@@ -50,7 +50,7 @@
             <div class="col-md-4 form-group required-field-block">
                 <label class="col-md-4 control-label">Proveedor</label>
                 <div class="col-md-8">
-                    <input type="text" ng-model="consultaOrden.Proveedor" name="proveedor" placeholder="Proveedor" typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" ng-readonly="truefalse" />
+                    <input type="text" ng-model="consultaOrden.Proveedor" name="proveedor" placeholder="Proveedor" uib-typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" ng-readonly="truefalse" />
                     <div class="error-message" ng-messages="consultarOrdenForm.proveedor.$error" ng-if="interacted(consultarOrdenForm.proveedor) || consultarOrdenForm.$submitted">
                     </div>
                 </div>

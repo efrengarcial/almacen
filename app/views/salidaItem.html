@@ -24,7 +24,7 @@
                 <div class="col-md-13 form-group required-field-block">
                     <div class="col-md-12">
                         <ng-form name="productoForm">
-                            <input class="form-control" name="producto" type="text" ng-model="salidaItem.Producto.Nombre" placeHolder="Producto" typeahead="producto.Nombre for producto in getProductos($viewValue) | filter:$viewValue  | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label, salidaItem)" typeahead-editable="true" ng-blur="noRepeatProduct()" ng-required="true" />
+                            <input class="form-control" name="producto" type="text" ng-model="salidaItem.Producto.Nombre" placeHolder="Producto" uib-typeahead="producto.Nombre for producto in getProductos($viewValue) | limitTo:10" typeahead-loading="loadingLocations" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label, salidaItem)" typeahead-editable="true" ng-blur="noRepeatProduct()" ng-required="true" />
                             <div class="required-icon" ng-mouseover="showMessage();">
                                 <div class="text">*</div>
                             </div>                           

@@ -37,6 +37,12 @@ angular.module('almacenApp')
                 });
             }
 
+            function cargarMonedas() {
+                productoFactory.getMonedas().then(function(monedas) {
+                    $scope.monedas = monedas;
+                });
+            }
+
             function seleccionarLinea(idLinea) {
                 $scope.producto.IdSubLinea = '';
                 buscarSubLineas(idLinea);
@@ -56,6 +62,7 @@ angular.module('almacenApp')
 
             cargarLineas();
             cargarMedidas();
+            cargarMonedas();
             $scope.seleccionarLinea = seleccionarLinea;
 
             $scope.search = '';

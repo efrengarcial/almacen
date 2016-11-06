@@ -14,6 +14,7 @@ angular.module('almacenApp')
             toaster, $location, Constants, accountFactory, $routeParams, moment) {
 
             $log.debug('Iniciando orden: ' + $location.$$url);
+            $scope.saveAndCloseClick =false;
             var tipoOrden,
                 esServicio = false,
                 idOrden = null,
@@ -157,6 +158,7 @@ angular.module('almacenApp')
             };
 
             $scope.save = function(isValid) {
+                var saveAndCloseClick= $scope.saveAndCloseClick;
                 if (isValid) {
                     if ($scope.orden.OrdenItems.length === 0) {
                         toaster.pop('error', 'Operación Fallida', 'Debe ingresar por lo menos un producto/servicio.');

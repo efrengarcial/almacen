@@ -152,6 +152,20 @@
         </div>
         <div class="row">
             <div class="col-md-4 form-group required-field-block">
+                <label class="col-md-3 control-label" for="moneda">Moneda</label>
+                <div class="col-md-9">
+                    <select id="moneda" ng-model="producto.IdMoneda" name="moneda" class="form-control" ng-required="true" ng-options="moneda.Id as moneda.Nombre for moneda in monedas">
+                        <option style="display:none" value="">Seleccione una Moneda</option>
+                    </select>
+                    <div class="required-icon" ng-mouseover="showMessage();">
+                        <div class="text">*</div>
+                    </div>
+                    <div class="error-message" ng-messages="productoForm.moneda.$error" ng-if="interacted(productoForm.moneda) || productoForm.$submitted">
+                        <div class="error-message" ng-message="required">Debe ingresar un valor para Moneda</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 form-group required-field-block">
                 <label class="col-md-3 control-label" for="referencia">Precio</label>
                 <div class="col-md-9">
                     <input id="precio" fcsa-number="{ preventInvalidInput: true}" ng-model="producto.Precio" name="precio" type="text" placeholder="$" class="form-control" maxlength="13" ng-required="true" ng-pattern="/^[0-9]{1,11}(\.[0-9]{1,2})?$/">
@@ -179,6 +193,9 @@
                     </div>
                 </div>
             </div>
+          
+        </div>
+        <div class="row">
             <div class="col-md-4 form-group required-field-block">
                 <label class="col-md-3 control-label" for="ubicacion">Ubicación</label>
                 <div class="col-md-9">
@@ -192,20 +209,19 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
+             <div class="col-md-4 form-group">
+                <label class="col-md-3 control-label" for="cantidad inventario">Inventario</label>
+                <div class="col-md-9">
+                    <input ng-model="producto.CantidadInventario" type="text" name="inventario" value="" placeholder="Cantidad Inventario" class="form-control" readonly>
+                </div>
+            </div>
             <div class="col-md-4 form-group">
                 <label class="col-md-3 control-label" for="descripcion">Descripción</label>
                 <div class="col-md-9">
                     <textarea rows="2" ng-model="producto.Descripcion" class="form-control" placeholder="Descripción"></textarea>
                 </div>
             </div>
-            <div class="col-md-4 form-group">
-                <label class="col-md-3 control-label" for="cantidad inventario">Inventario</label>
-                <div class="col-md-9">
-                    <input ng-model="producto.CantidadInventario" type="text" name="inventario" value="" placeholder="Cantidad Inventario" class="form-control" readonly>
-                </div>
-            </div>
+           
         </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-5">

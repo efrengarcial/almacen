@@ -22,6 +22,11 @@ angular
                         return medidas;
                     });
                 },
+                getMonedas: function() {
+                    return apiFactory.all(WS.URI_MONEDAS).getList().then(function(nonedas) {
+                        return nonedas;
+                    });
+                },
                 save: function(producto) {
                     return apiFactory.all(WS.URI_SAVE_PRODUCTO).post(producto);
                 },

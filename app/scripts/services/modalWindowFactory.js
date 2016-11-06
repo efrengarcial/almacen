@@ -8,7 +8,7 @@
  * Factory in the almacenApp.
  */
 angular
-  .module('almacenApp').factory('modalWindowFactory', function ($modal) {
+  .module('almacenApp').factory('modalWindowFactory', function ($uibModal) {
  
     var modalWindowController = _modalWindowController;
  
@@ -18,7 +18,7 @@ angular
         show: function (title, msg, confirmCallback, cancelCallback) {
  
             // Show window
-            var modalInstance = $modal.open({
+            var modalInstance = $uibModal.open({
                 templateUrl: 'views/modalWindow.html',
                 controller: modalWindowController,
                 size: 'sm',
@@ -51,7 +51,7 @@ angular
  
  
     // Internal controller used by the modal window
-    function _modalWindowController($scope, $modalInstance, title, body) {
+    function _modalWindowController($scope, $uibModalInstance, title, body) {
         $scope.title = "";
         $scope.body = "";
  
@@ -64,11 +64,11 @@ angular
         }
  
         $scope.confirm = function () {
-            $modalInstance.close();
+            $uibModalInstance.close();
         };
  
         $scope.cancel = function () {
-            $modalInstance.dismiss();
+            $uibModalInstance.dismiss();
         };
     };
  

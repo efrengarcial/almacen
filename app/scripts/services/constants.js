@@ -19,6 +19,7 @@ angular
 	.constant('WS', {
 		URI_LINEAS : 'producto/lineas',
 		URI_MEDIDAS: 'producto/medidas',
+		URI_MONEDAS: 'producto/monedas',
 		URI_SAVE_PRODUCTO: 'producto/save',
 		URI_INACTIVATE_PRODUCTO: 'producto/inactivate',
 		URI_QUERY_PRODUCTO: 'producto/query',
