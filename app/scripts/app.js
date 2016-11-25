@@ -22,7 +22,8 @@ angular
         'ui.bootstrap',
         'angularMoment',
         'angular-jwt',
-        'angularSpinner'
+        'angularSpinner',
+        'ui.checkbox'
     ]).
 config(function($routeProvider, $logProvider, $locationProvider, $httpProvider,
     RestangularProvider, usSpinnerConfigProvider) {

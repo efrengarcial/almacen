@@ -9,10 +9,9 @@
  */
 
 angular.module('almacenApp')
-    .controller('ReporteInventarioFinalCtrl', ['$scope', '$log', '$rootScope', 'reportesFactory', 'toaster', '$filter',
-        'modalWindowFactory', 'moment', 'Constants', 'accountFactory', '$location', '$routeParams', '$sce', 'usSpinnerService',
-        function($scope, $log, $rootScope, reportesFactory, toaster, $filter, modalWindowFactory, moment,
-            Constants, accountFactory, $location, $routeParams, $sce, usSpinnerService) {
+    .controller('ReporteInventarioFinalCtrl', ['$scope', '$log', '$rootScope', 'reportesFactory', 'toaster', '$filter', 'modalWindowFactory', 'moment', 'Constants', 'accountFactory', '$location', '$routeParams', '$sce', 'usSpinnerService', 
+        function($scope, $log, $rootScope, reportesFactory, toaster, $filter, modalWindowFactory, moment, Constants, accountFactory, $location, $routeParams, $sce, usSpinnerService) {
+            
             $log.debug('Iniciando reporteInventario');
 
             $scope.reporte = {

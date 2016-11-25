@@ -14,17 +14,17 @@ angular.module('almacenApp')
             $log.debug('Iniciando Entrada....' + $location.$$url);
 
             var idOrden = $routeParams.idOrden;
-            ordenFactory.getById(idOrden).then(function(orden) {
-                $scope.orden = orden;
-                //Set Fecha Entrega
-                setFechaEntrega();
 
-            });
-
-            function setFechaEntrega() {
-                var date = moment($scope.orden.FechaOrden, Constants.formatDate);
-                date.add($scope.orden.Proveedor.Plazo, 'days');
-                $scope.orden.FechaEntrega = moment(date).format(Constants.formatDate);
+            $scope.getFechaEntrega = function() {
+                var fecha = moment($scope.orden.FechaOrden, Constants.formatDate).format(Constants.formatDate2);
+                var plazo = $scope.orden.Proveedor.Plazo;
+                return ordenFactory.getFechaEntrega(plazo, fecha).then(function(data) {
+                    if (data.length > 0) {
+                        $scope.orden.FechaEntrega = moment(data[0].Fecha).format(Constants.formatDate);
+                    } else {
+                        toaster.pop('warning', 'NO HAY FECHA DE ENTREGA', 'No existe calendario para la fecha descrita');
+                    }
+                });
             }
 
             $scope.interacted = function(field) {
@@ -55,5 +55,13 @@ angular.module('almacenApp')
             $scope.backOrdenesEntradas = function() {
                 $location.path("/entradas");
             };
+
+            if (idOrden) {
+                ordenFactory.getById(idOrden).then(function(orden) {
+                    $scope.orden = orden;
+                    //Get Fecha Entrega
+                     $scope.getFechaEntrega();
+                });
+            }
         }
     ]);

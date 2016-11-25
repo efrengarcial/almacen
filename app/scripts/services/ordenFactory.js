@@ -92,7 +92,7 @@ angular
                     var entradaWS = {
                         IdOrden: orden.Id,
                         EntadaOrdenItems: []
-                    }
+                    };
                     for (var i = 0; i < orden.OrdenItems.length; i += 1) {
                         var ordenItem = orden.OrdenItems[i];
                         var ordenItemWS = {
@@ -124,7 +124,7 @@ angular
                             Id: ordenItem.Id,
                             IdOrden: orden.Id,
                             IdProducto: ordenItem.Producto.Id,
-                            Cantidad: ordenItem.Cantidad,                           
+                            Cantidad: ordenItem.Cantidad,
                             Precio: ordenItem.Producto.Precio,
                             Iva: ordenItem.Producto.Iva
                         };
@@ -180,6 +180,9 @@ angular
                 },
                 getOrdenByNum: function(ordenNum) {
                     return apiFactory.all(WS.URI_ORDEN_BY_NUM).get(ordenNum);
+                },
+                getFechaEntrega: function(plazo, fecha) {
+                    return apiFactory.one(WS.URI_GET_FECHA_ENTREGA).one('plazo', plazo).one('fecha', fecha).get();
                 }
             }
         }

@@ -64,8 +64,8 @@ angular.module('almacenApp').directive('dateLowerThan', ['$filter',
             require: 'ngModel',
             link: function(scope, elm, attrs, ctrl) {
                 var validateDateRange = function(inputValue) {
-                    var fromDate = $filter('date')(inputValue, 'short');
-                    var toDate = $filter('date')(attrs.dateLowerThan, 'short');
+                    var fromDate = $filter('date')(inputValue, 'yyyy-MM-dd');
+                    var toDate = $filter('date')(attrs.dateLowerThan, 'yyyy-MM-dd');
                     var isValid = isValidDateRange(fromDate, toDate);
                     ctrl.$setValidity('dateLowerThan', isValid);
                     return inputValue;
@@ -81,15 +81,14 @@ angular.module('almacenApp').directive('dateLowerThan', ['$filter',
     }
 ]);
 
-
 angular.module('almacenApp').directive('dateGreaterThan', ['$filter',
     function($filter) {
         return {
             require: 'ngModel',
             link: function(scope, elm, attrs, ctrl) {
                 var validateDateRange = function(inputValue) {
-                    var fromDate = $filter('date')(attrs.dateGreaterThan, 'short');
-                    var toDate = $filter('date')(inputValue, 'short');
+                    var fromDate = $filter('date')(attrs.dateGreaterThan, 'yyyy-MM-dd');
+                    var toDate = $filter('date')(inputValue, 'yyyy-MM-dd');
                     var isValid = isValidDateRange(fromDate, toDate);
                     ctrl.$setValidity('dateGreaterThan', isValid);
                     return inputValue;

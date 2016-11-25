@@ -9,8 +9,7 @@
  */
 
 angular.module('almacenApp')
-    .controller('ConsultarOrdenCtrl', ['$scope', '$log', '$rootScope', 'userFactory', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter',
-        'modalWindowFactory', 'moment', 'Constants', 'accountFactory', '$location', '$routeParams',
+    .controller('ConsultarOrdenCtrl', ['$scope', '$log', '$rootScope', 'userFactory', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter', 'modalWindowFactory', 'moment', 'Constants', 'accountFactory', '$location', '$routeParams',
         function($scope, $log, $rootScope, userFactory, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants, accountFactory, $location, $routeParams) {
             $log.debug('Iniciando consultar orden');
 
@@ -24,13 +23,12 @@ angular.module('almacenApp')
                 $scope.minDate = moment(Constants.minDate).format(Constants.formatDate);
             };
 
-            //Check wether params object is empty when it is coming back from ordenes
-            if (!isEmptyObject(params)) {
+            if (params.idOrden) {
                 $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
                 $log.debug("back: " + JSON.stringify(params));
 
                 if (params.SearchType == 1) {
-                    $scope.truefalse = true;
+                    $scope.consultaOrden.ReadOnly = true;
                     $scope.consultaOrden.Numero = params.Numero;
                     $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
                     $scope.consultaOrden.NotSearchPermission = params.NotSearchPermission;
@@ -50,6 +48,8 @@ angular.module('almacenApp')
                 $scope.toggleMin();
                 $scope.dateOptions = {
                     formatYear: 'yyyy',
+                    formatMonth: 'MM',
+                    formatDay: 'dd',
                     startingDay: 1
                 };
                 $scope.format = Constants.datepickerFormatDate;
@@ -73,9 +73,10 @@ angular.module('almacenApp')
                 $scope.toggleMin();
                 $scope.dateOptions = {
                     formatYear: 'yyyy',
+                    formatMonth: 'MM',
+                    formatDay: 'dd',
                     startingDay: 1
                 };
-
                 $scope.format = Constants.datepickerFormatDate;
                 cargarProveedores();
                 getUsers();
@@ -86,9 +87,7 @@ angular.module('almacenApp')
                 //Asigna permisos a usuario
                 $scope.permissions = accountFactory.getAuthenticationData().permissions;
                 $scope.userId = accountFactory.getAuthenticationData().userId;
-                $log.debug("userId: " + $scope.userId);
                 setSearchPermissions();
-
             }
 
             /* Cargar información de listas */
@@ -106,7 +105,6 @@ angular.module('almacenApp')
 
             function saveProveedor(proveedorObj, model, label) {
                 $scope.consultaOrden.IdProveedor = proveedorObj.Id;
-                //$log.debug('IdProveedor ' + $scope.consultaOrden.IdProveedor);
                 $scope.consultaOrden.Proveedor = proveedorObj.Nombre;
             }
 
@@ -115,29 +113,26 @@ angular.module('almacenApp')
                 $scope.consultaOrden.UserId = usersObj.Id;
             }
 
-
             function setSearchPermissions() {
                 var permission = checkIfUserHasQueryPermission();
-                if (permission === true) {
+                if (permission) {
                     $scope.consultaOrden.NotSearchPermission = false;
                 } else {
                     $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
                     $scope.consultaOrden.UserId = accountFactory.getAuthenticationData().userId;
                     $scope.consultaOrden.NotSearchPermission = true;
                 }
-                //$log.debug("permissions: " + $scope.permissions);
             }
 
             //Cheque si usurario tiene permiso para consultar orden
             function checkIfUserHasQueryPermission() {
-
-                var permission = "CONSULTAR_TODAS_LAS_ORDENES",
-                    index = $scope.permissions.indexOf(permission),
-                    answer = false;
+                var permission = "CONSULTAR_TODAS_LAS_ORDENES";
+                var index = $scope.permissions.indexOf(permission);
                 if (index > -1) {
-                    answer = true;
+                    return true;
+                } else {
+                    return false;
                 }
-                return answer;
             }
 
             //Interacted and show message about required
@@ -163,7 +158,6 @@ angular.module('almacenApp')
             };
 
             $scope.clearForm = function() {
-                $log.debug("clearForm");
                 $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
 
                 $scope.allData = null;
@@ -175,9 +169,8 @@ angular.module('almacenApp')
 
                 // Resets the form validation state.
                 $scope.consultarOrdenForm.$setPristine();
-                // Broadcast the event to also clear the grid selection.
                 //$rootScope.$broadcast('clear');
-                $scope.truefalse = false;
+                $scope.consultaOrden.ReadOnly = false;
                 setSearchPermissions();
             };
 
@@ -197,9 +190,9 @@ angular.module('almacenApp')
                 data: 'dataGrid',
                 useExternalSorting: true,
                 sortInfo: $scope.sortInfo,
-                //enablePaging : true,
-                //showFooter : true,    
-                //totalServerItems:'totalServerItems',               
+                enablePaging : true,
+                showFooter : true,
+                totalServerItems:'totalServerItems',
                 pagingOptions: $scope.pagingOptions,
 
                 columnDefs: [{
@@ -237,23 +230,12 @@ angular.module('almacenApp')
                 }
             };
 
-            //Check whether a object is empty
-            function isEmptyObject(obj) {
-                for (var p in obj) {
-                    return false;
-                }
-                return true;
-            }
-
             $scope.$watch('pagingOptions', function(newVal, oldVal) {
                 if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
                     $scope.setPagingData($scope.allData, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
                 }
             }, true);
 
-            // Watch the sortInfo variable. If changes are detected than we need to refresh the grid.
-            // This also works for the first page access, since we assign the initial sorting in the initialize section.
-            // sort over all data, not only the data on current page
             $scope.$watch('sortInfo', function(newVal, oldVal) {
                 sortData(newVal.fields[0], newVal.directions[0]);
                 $scope.pagingOptions.currentPage = 1;
@@ -261,16 +243,11 @@ angular.module('almacenApp')
             }, true);
 
 
-            // Do something when the grid is sorted.
-            // The grid throws the ngGridEventSorted that gets picked up here and assigns the sortInfo to the scope.
-            // This will allow to watch the sortInfo in the scope for changed and refresh the grid.
             $scope.$on('ngGridEventSorted', function(event, sortInfo) {
                 $scope.sortInfo = sortInfo;
             });
 
 
-            // Picks up the event broadcasted when the person is selected from the grid and perform 
-            // the proveedor load by calling the appropiate rest service.
             $scope.$on('ordenSelected', function(event, orden) {
                 $scope.orden = orden;
             });
@@ -299,48 +276,41 @@ angular.module('almacenApp')
             };
 
             $scope.changeFields = function() {
-
-                if ($scope.consultaOrden.Numero !== undefined) {
-                    $scope.truefalse = true;
+                if ($scope.consultaOrden.Numero) {
+                    $scope.consultaOrden.ReadOnly = true;
                     $scope.consultaOrden.StartDate = new Date().getTime();
                     $scope.consultaOrden.EndDate = new Date().getTime();
 
                 } else {
-                    $scope.truefalse = false;
+                    $scope.consultaOrden.ReadOnly = false;
                 }
-
             };
 
-            $scope.buscar = function() {
-
-                var permission = checkIfUserHasQueryPermission();
-
-                if (permission === true) {
-                    if ($scope.consultaOrden.Numero !== null && $scope.consultaOrden.Numero !== undefined) {
-                        params = {
-                            Numero: $scope.consultaOrden.Numero,
-                            NotSearchPermission: $scope.consultaOrden.NotSearchPermission,
-                            SearchType: 1
+            $scope.buscarOrden = function(isValid) {
+                if (isValid) {
+                    var permission = checkIfUserHasQueryPermission();
+                    if (permission) {
+                        if ($scope.consultaOrden.Numero) {
+                            params = {
+                                Numero: $scope.consultaOrden.Numero,
+                                NotSearchPermission: $scope.consultaOrden.NotSearchPermission,
+                                SearchType: 1
+                            }
+                        } else {
+                            params = setQueryParams();
                         }
                         getOrdenByParams(params);
-
                     } else {
-                        params = setQueryParams();
-                        getOrdenByParams(params);
-                    }
-
-                } else {
-                    if ($scope.consultaOrden.Numero !== null && $scope.consultaOrden.Numero !== undefined) {
-                        params = {
-                            Numero: $scope.consultaOrden.Numero,
-                            NotSearchPermission: $scope.consultaOrden.NotSearchPermission,
-                            UserId: $scope.userId,
-                            SearchType: 1
-                        };
-                        getOrdenByParams(params);
-
-                    } else {
-                        params = setQueryParams();
+                        if ($scope.consultaOrden.Numero) {
+                            params = {
+                                Numero: $scope.consultaOrden.Numero,
+                                NotSearchPermission: $scope.consultaOrden.NotSearchPermission,
+                                UserId: $scope.userId,
+                                SearchType: 1
+                            };
+                        } else {
+                            params = setQueryParams();
+                        }
                         getOrdenByParams(params);
                     }
                 }
@@ -348,7 +318,6 @@ angular.module('almacenApp')
 
             function getOrdenByParams(params) {
                 ordenFactory.query(params).then(function(data) {
-                    $log.debug(JSON.stringify(params));
                     $scope.allData = data;
                     if ($scope.allData.length > 0) {
                         $scope.pagingOptions.currentPage = 1;

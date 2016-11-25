@@ -14,29 +14,38 @@ angular.module('almacenApp')
             toaster, $location, Constants, accountFactory, $routeParams, moment) {
 
             $log.debug('Iniciando ordenDetails...');
-            var tipoPantalla = null,
-                idOrden = $routeParams.idOrden;
+            var tipoPantalla = null, idOrden = $routeParams.idOrden;
 
             if ($location.path() === '/ordenDetails') {
                 $scope.tituloPantalla = 'Detalles de la Orden';
             }
 
-            if (idOrden !== null) {
-                ordenFactory.getById(idOrden).then(function(orden) {
-                    $scope.orden = orden;
-                    $scope.truefalse = true;
-                    $scope.orden.params = $routeParams;
+            //Get FechaEntrega
+            $scope.getFechaEntrega = function() {
+                var fecha = moment($scope.orden.FechaOrden, Constants.formatDate).format(Constants.formatDate2);;
+                var plazo = $scope.orden.Proveedor.Plazo;
 
-                    //Set FechaEntrega
-                    var date = moment($scope.orden.FechaOrden, Constants.formatDate);
-                    date.add($scope.orden.Proveedor.Plazo, 'days');
-                    $scope.orden.FechaEntrega = moment(date).format(Constants.formatDate);
+                return ordenFactory.getFechaEntrega(plazo, fecha).then(function(data) {
+                    if (data.length > 0) {
+                        $scope.orden.FechaEntrega = moment(data[0].Fecha).format(Constants.formatDate);
+                    } else {
+                        toaster.pop('warning', 'NO HAY FECHA DE ENTREGA', 'No existe calendario para la fecha descrita');
+                    }
                 });
-            }
+            };
 
             //From here you can back to consultaOrden
             $scope.backBuscarOrden = function() {
                 $location.path("/consultarOrden").search($scope.orden.params);
+            };
+
+            if (idOrden) {
+                ordenFactory.getById(idOrden).then(function(orden) {
+                    $scope.orden = orden;
+                    $scope.consultaOrden.ReadOnly = true;
+                    $scope.orden.params = $routeParams;
+                    $scope.getFechaEntrega();
+                });
             }
         }
     ]);

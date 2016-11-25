@@ -9,10 +9,8 @@
  */
 
 angular.module('almacenApp')
-    .controller('ProductosCtrl', ['$scope', '$log', '$rootScope', 'productoFactory', 'toaster', '$filter',
-        'modalWindowFactory', 'Constants','usSpinnerService',
-        function($scope, $log, $rootScope, productoFactory, toaster, $filter,
-            modalWindowFactory, Constants, usSpinnerService) {
+    .controller('ProductosCtrl', ['$scope', '$log', '$rootScope', 'productoFactory', 'toaster', '$filter', 'modalWindowFactory', 'Constants', 'usSpinnerService',
+        function($scope, $log, $rootScope, productoFactory, toaster, $filter, modalWindowFactory, Constants, usSpinnerService) {
             $log.debug('Iniciando Productos...');
 
             $scope.startSpin = function() {
@@ -49,11 +47,8 @@ angular.module('almacenApp')
             }
 
             function buscarSubLineas(idLinea) {
-                var found = $filter('filter')($scope.lineas, {
-                    Id: idLinea
-                }, true);
+                var found = $filter('filter')($scope.lineas, { Id: idLinea }, true);
                 if (found.length) {
-
                     $scope.grupos = found[0].SubLineas;
                 } else {
                     $scope.grupos = [];
@@ -82,7 +77,7 @@ angular.module('almacenApp')
                 useExternalSorting: true,
                 sortInfo: $scope.sortInfo,
                 //enablePaging : true,
-                //showFooter : true,	
+                //showFooter : true,
                 //totalServerItems:'totalServerItems',
                 pagingOptions: $scope.pagingOptions,
 
@@ -104,14 +99,12 @@ angular.module('almacenApp')
 
                 multiSelect: false,
                 selectedItems: [],
-                // Broadcasts an event when a row is selected, to signal the form that it needs to load the row data.
                 afterSelectionChange: function(rowItem) {
                     if (rowItem.selected) {
                         $rootScope.$broadcast('productoSelected', $scope.gridOptions.selectedItems[0]);
                     }
                 }
             };
-
 
             $scope.clearForm = function() {
                 $scope.producto = null;
@@ -125,9 +118,6 @@ angular.module('almacenApp')
                     directions: ['asc'],
                     columns: []
                 };
-                // Resets the form validation state.
-                //https://github.com/angular/angular.js/issues/10006
-                //https://docs.angularjs.org/api/ng/type/form.FormController
                 $scope.productoForm.$setPristine();
                 // Broadcast the event to also clear the grid selection.
                 //$rootScope.$broadcast('clear');
@@ -146,7 +136,6 @@ angular.module('almacenApp')
             $scope.submitForm = function(isValid) {
                 if (isValid) {
                     productoFactory.save($scope.producto).then(function() {
-                        $log.debug($scope.producto.Id);
                         if ($scope.producto.Id === 0) {
                             toaster.pop('success', 'mensaje', 'El producto fue creado exitosamente.');
                         } else {
@@ -190,24 +179,20 @@ angular.module('almacenApp')
             }
 
             $scope.buscar = function() {
-                $log.debug('Buscando productos......');
                 $scope.clearForm();
-
-                if ($scope.search === "") {
-                    toaster.pop('warning', 'mensaje', 'Debe ingresar un Código o Nombre de Producto.');
-                } else {
+                if ($scope.search) {
                     productoFactory.query($scope.search).then(function(data) {
                         $scope.allData = data;
-
                         if ($scope.allData.length > 0) {
-                            $log.debug(JSON.stringify(data));
                             $scope.pagingOptions.currentPage = 1;
                             $scope.setPagingData(data, $scope.pagingOptions.currentPage, $scope.pagingOptions.pageSize);
                         } else {
                             toaster.pop('warning', 'Advertencia', 'No existe un producto con el parametro de búsqueda.');
                         };
                     });
-                };
+                } else {
+                    toaster.pop('warning', 'mensaje', 'Debe ingresar un Código o Nombre de Producto.');
+                }
             };
 
             $scope.$watch('pagingOptions', function(newVal, oldVal) {
@@ -217,9 +202,6 @@ angular.module('almacenApp')
                 }
             }, true);
 
-            // Watch the sortInfo variable. If changes are detected than we need to refresh the grid.
-            // This also works for the first page access, since we assign the initial sorting in the initialize section.
-            // sort over all data, not only the data on current page
             $scope.$watch('sortInfo', function(newVal, oldVal) {
                 sortData(newVal.fields[0], newVal.directions[0]);
                 $scope.pagingOptions.currentPage = 1;
@@ -227,21 +209,15 @@ angular.module('almacenApp')
                     $scope.pagingOptions.pageSize);
             }, true);
 
-            // Do something when the grid is sorted.
-            // The grid throws the ngGridEventSorted that gets picked up here and assigns the sortInfo to the scope.
-            // This will allow to watch the sortInfo in the scope for changed and refresh the grid.
             $scope.$on('ngGridEventSorted', function(event, sortInfo) {
                 $scope.sortInfo = sortInfo;
             });
 
-            // Picks up the event broadcasted when the person is selected from the grid and perform 
-            // the producto load by calling the appropiate rest service.
             $scope.$on('productoSelected', function(event, producto) {
                 buscarSubLineas(producto.IdLinea);
                 $scope.producto = producto;
             });
 
-            // Broadcast an event when an element in the grid is deleted. No real deletion is perfomed at this point.
             $scope.deleteRow = function(row) {
                 var title = 'Inhabilitar \'' + row.entity.Nombre + '\'';
                 var msg = 'Seguro que deseas des activar este elemento?';
@@ -272,7 +248,6 @@ angular.module('almacenApp')
                 });
             };
 
-            // Picks the event broadcasted when the form is cleared to also clear the grid selection.
             $scope.$on('clear', function() {
                 $scope.gridOptions.selectAll(false);
             });

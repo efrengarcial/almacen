@@ -74,7 +74,7 @@
             <div class="col-md-4 form-group required-field-block">
                 <label class="col-md-3 control-label" for="linea">Servicio</label>
                 <div class="col-md-9">
-                    <input type="checkbox" name="servicio" id="servicio" ng-model="producto.EsServicio">
+                    <checkbox class="btn-info" name="servicio" id="servicio" ng-model="producto.EsServicio"></checkbox>
                 </div>
             </div>
             <div class="col-md-4 form-group required-field-block">
@@ -193,7 +193,6 @@
                     </div>
                 </div>
             </div>
-          
         </div>
         <div class="row">
             <div class="col-md-4 form-group required-field-block">
@@ -209,7 +208,7 @@
                     </div>
                 </div>
             </div>
-             <div class="col-md-4 form-group">
+            <div class="col-md-4 form-group">
                 <label class="col-md-3 control-label" for="cantidad inventario">Inventario</label>
                 <div class="col-md-9">
                     <input ng-model="producto.CantidadInventario" type="text" name="inventario" value="" placeholder="Cantidad Inventario" class="form-control" readonly>
@@ -221,7 +220,6 @@
                     <textarea rows="2" ng-model="producto.Descripcion" class="form-control" placeholder="Descripción"></textarea>
                 </div>
             </div>
-           
         </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-5">

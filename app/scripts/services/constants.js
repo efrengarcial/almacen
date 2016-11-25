@@ -39,7 +39,8 @@ angular
 		URI_ORDEN_BY_NUM: 'orden/getOrdenByNum',
 		URI_TOKEN: 'token',
 		URI_SAVE_ENTRADA: 'orden/saveEntrada',
-		URI_REPORTES: 'SSRSReporting/saveReport'	
+		URI_REPORTES: 'SSRSReporting/saveReport',
+		URI_GET_FECHA_ENTREGA: 'orden/getFechaEntrega'	
 	})
 	.constant('Roles', {		
 		Almacenista : 'Almacenista',
@@ -59,8 +60,9 @@ angular
 	})
 	.constant('Constants', {
 		formatDate : 'DD/MM/YYYY',
+		formatDate2 : 'YYYY-MM-DD',
 		minDate : 1420149727,
-		datepickerFormatDate : 'dd/MM/yyyy',
+		datepickerFormatDate : 'yyyy-MM-dd',
 		pageSizes: [5, 10, 15],
         pageSize: 10,
         ORDEN_COMPRA: 'ORDEN_COMPRA',

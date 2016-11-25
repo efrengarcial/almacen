@@ -59,8 +59,7 @@
                 <div class="col-md-4 form-group required-field-block">
                     <label class="col-md-5 control-label" for="proveedor">Proveedor</label>
                     <div class="col-md-7">
-                        <input type="text" id="proveedor" name="proveedor" ng-model="orden.NombreProveedor" placeholder="Proveedor" uib-typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" ng-required="!isRequisicion" 
-                        ng-focus typeahead-loading="Cargando" />
+                        <input type="text" id="proveedor" name="proveedor" ng-model="orden.NombreProveedor" placeholder="Proveedor" uib-typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" ng-required="!isRequisicion" ng-focus typeahead-loading="Cargando" />
                         <div class="required-icon" ng-mouseover="showMessage();" ng-hide="isRequisicion">
                             <div class="text">*</div>
                         </div>
@@ -94,7 +93,7 @@
                 <div class="col-md-4 form-group">
                     <label class="col-md-5 control-label" for="plazo">Plazo entrega</label>
                     <div class="col-md-7">
-                        <input id="plazo" type="text" name="plazo" ng-model="orden.Proveedor.Plazo" readonly class="form-control">
+                        <input id="plazo" type="text" name="plazo" ng-model="orden.Proveedor.Plazo" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-4 form-group required-field-block">
@@ -127,7 +126,7 @@
         <!-- Table to show data -->
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-4 col-md-offset-4">
+                <div class="col-md-8 col-md-offset-4">
                     <button type="button" class="btn btn-success" ng-click="addProducto()">
                         <i class="glyphicon glyphicon-plus"></i> Adicionar Producto
                     </button>

@@ -14,36 +14,37 @@ angular.module('almacenApp')
             toaster, $location, Constants, accountFactory, $routeParams, moment) {
 
             $log.debug('Iniciando orden: ' + $location.$$url);
-            $scope.saveAndCloseClick =false;
-            var tipoOrden,
-                esServicio = false,
-                idOrden = null,
-                params = $routeParams;
+            $scope.saveAndCloseClick = false;
+            var tipoOrden, esServicio = false, ordenId = null;
 
-            if (!isEmptyObject(params)) {
-                idOrden = $routeParams.idOrden;
+            if ($routeParams.idOrden) {
+                ordenId = $routeParams.idOrden;
             }
-
-
-            $log.debug("IdOrden: " + idOrden);
 
             if ($location.path() === '/ordenCompra') {
                 $scope.tituloPantalla = 'Orden de Compra';
                 tipoOrden = Constants.ORDEN_COMPRA;
-            } else if ($location.path() === '/requisicion') {
+            }
+
+            if ($location.path() === '/requisicion') {
                 $scope.tituloPantalla = 'Requisición';
                 $scope.isRequisicion = true;
                 tipoOrden = Constants.REQUISICION;
-            } else if ($location.path() === '/requisicionServicio') {
+            }
+
+            if ($location.path() === '/requisicionServicio') {
                 $scope.tituloPantalla = 'Requisición de Servicio';
                 $scope.isRequisicion = true;
                 esServicio = true;
                 tipoOrden = Constants.REQUISICION_SERVICIO;
-            } else {
+            }
+
+            if ($location.path() === '/ordenServicio') {
                 $scope.tituloPantalla = 'Orden de Servicio';
                 tipoOrden = Constants.ORDEN_SERVICIO;
                 esServicio = true;
             }
+
             $scope.proveedores = [];
 
             /* Cargar información de listas */
@@ -67,17 +68,17 @@ angular.module('almacenApp')
             $scope.selectCentroCostos = selectCentroCostos;
             cargarProveedores();
 
-            if (idOrden !== null) {
+            if (ordenId) {
                 $scope.estadoFactura = Constants.ESTADO;
-                ordenFactory.getById(idOrden).then(function(orden) {
+                ordenFactory.getById(ordenId).then(function(orden) {
                     $scope.orden = orden;
                     $scope.orden.showTextBox = true;
                     $scope.orden.Tipo = tipoOrden;
                     $scope.orden.IdOrdenBase = orden.Id;
                     $scope.orden.Id = 0;
 
-                    //Set Fecha Entrega
-                    setFechaEntrega();
+                    //Get Fecha Entrega
+                    getFechaEntrega();
 
                     for (var i = 0; i < orden.OrdenItems.length; i += 1) {
                         orden.OrdenItems[i].Id = 0;
@@ -93,31 +94,30 @@ angular.module('almacenApp')
                 $scope.orden.Solicitante = accountFactory.getAuthenticationData().userName;
             }
 
-            function setFechaEntrega() {
-                var date = moment($scope.orden.FechaOrden, Constants.formatDate);
-                date.add($scope.orden.Proveedor.Plazo, 'days');
-                $scope.orden.FechaEntrega = moment(date).format(Constants.formatDate);
+            function getFechaEntrega() {
+                var fecha = moment($scope.orden.FechaOrden, Constants.formatDate).format(Constants.formatDate2);
+                var plazo = $scope.orden.Proveedor.Plazo;
+                return ordenFactory.getFechaEntrega(plazo, fecha).then(function(data) {
+                    if (data.length > 0) {
+                        $scope.orden.FechaEntrega = moment(data[0].Fecha).format(Constants.formatDate);
+                    } else {
+                        toaster.pop('warning', 'NO HAY FECHA DE ENTREGA', 'No existe calendario para la fecha descrita');
+                    }
+                });
             }
 
             function saveProveedor(proveedorObj, model, label) {
-                $log.debug('label ' + label);
-                $log.debug('model ' + JSON.stringify(model));
                 $scope.orden.IdProveedor = proveedorObj.Id;
                 $scope.orden.Proveedor = proveedorObj;
-                setFechaEntrega();
-
+                getFechaEntrega();
             }
 
             function saveProducto(productoObj, model, label, ordenItemObj) {
-                $log.debug('label ' + label);
-                $log.debug('model ' + JSON.stringify(model));
                 ordenItemObj.Producto = productoObj;
             }
 
             $scope.saveProveedor = saveProveedor;
             $scope.saveProducto = saveProducto;
-
-
 
             $scope.getProductos = function(search) {
                 $log.debug('Buscando productos......');
@@ -158,7 +158,7 @@ angular.module('almacenApp')
             };
 
             $scope.save = function(isValid) {
-                var saveAndCloseClick= $scope.saveAndCloseClick;
+                var saveAndCloseClick = $scope.saveAndCloseClick;
                 if (isValid) {
                     if ($scope.orden.OrdenItems.length === 0) {
                         toaster.pop('error', 'Operación Fallida', 'Debe ingresar por lo menos un producto/servicio.');
@@ -176,12 +176,5 @@ angular.module('almacenApp')
 
                 }
             };
-
-            function isEmptyObject(obj) {
-                for (var p in obj) {
-                    return false;
-                }
-                return true;
-            }
         }
     ]);
