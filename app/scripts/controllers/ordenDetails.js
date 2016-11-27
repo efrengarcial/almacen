@@ -42,7 +42,7 @@ angular.module('almacenApp')
             if (idOrden) {
                 ordenFactory.getById(idOrden).then(function(orden) {
                     $scope.orden = orden;
-                    $scope.consultaOrden.ReadOnly = true;
+                    $scope.orden.ReadOnly = true;
                     $scope.orden.params = $routeParams;
                     $scope.getFechaEntrega();
                 });
