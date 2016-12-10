@@ -62,8 +62,6 @@ angular.module('almacenApp')
 
             function saveProducto(productoObj, model, label, salidaItemObj) {
                 salidaItemObj.Producto = productoObj;
-                //salidaItemObj.SalidaItems = productoObj;
-
             }
 
             $scope.saveUsers = saveUsers;
