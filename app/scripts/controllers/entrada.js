@@ -17,7 +17,7 @@ angular.module('almacenApp')
 
             $scope.getFechaEntrega = function() {
                 var fecha = moment($scope.orden.FechaOrden, Constants.formatDate).format(Constants.formatDate2);
-                var plazo = $scope.orden.Proveedor.Plazo;
+                var plazo = $scope.orden.Plazo;
                 return ordenFactory.getFechaEntrega(plazo, fecha).then(function(data) {
                     if (data.length > 0) {
                         $scope.orden.FechaEntrega = moment(data[0].Fecha).format(Constants.formatDate);

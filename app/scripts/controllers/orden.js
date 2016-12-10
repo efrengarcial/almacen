@@ -16,6 +16,7 @@ angular.module('almacenApp')
             $log.debug('Iniciando orden: ' + $location.$$url);
             $scope.saveAndCloseClick = false;
             var tipoOrden, esServicio = false, ordenId = null;
+            $scope.max = Constants.plazoMax, $scope.min = Constants.plazoMin;
 
             if ($routeParams.idOrden) {
                 ordenId = $routeParams.idOrden;
@@ -78,7 +79,7 @@ angular.module('almacenApp')
                     $scope.orden.Id = 0;
 
                     //Get Fecha Entrega
-                    getFechaEntrega();
+                    $scope.getFechaEntrega();
 
                     for (var i = 0; i < orden.OrdenItems.length; i += 1) {
                         orden.OrdenItems[i].Id = 0;
@@ -94,22 +95,11 @@ angular.module('almacenApp')
                 $scope.orden.Solicitante = accountFactory.getAuthenticationData().userName;
             }
 
-            function getFechaEntrega() {
-                var fecha = moment($scope.orden.FechaOrden, Constants.formatDate).format(Constants.formatDate2);
-                var plazo = $scope.orden.Proveedor.Plazo;
-                return ordenFactory.getFechaEntrega(plazo, fecha).then(function(data) {
-                    if (data.length > 0) {
-                        $scope.orden.FechaEntrega = moment(data[0].Fecha).format(Constants.formatDate);
-                    } else {
-                        toaster.pop('warning', 'NO HAY FECHA DE ENTREGA', 'No existe calendario para la fecha descrita');
-                    }
-                });
-            }
-
             function saveProveedor(proveedorObj, model, label) {
                 $scope.orden.IdProveedor = proveedorObj.Id;
                 $scope.orden.Proveedor = proveedorObj;
-                getFechaEntrega();
+                $scope.orden.Plazo = $scope.orden.Proveedor.Plazo;
+                $scope.getFechaEntrega();
             }
 
             function saveProducto(productoObj, model, label, ordenItemObj) {
@@ -119,8 +109,26 @@ angular.module('almacenApp')
             $scope.saveProveedor = saveProveedor;
             $scope.saveProducto = saveProducto;
 
+            $scope.getFechaEntrega = function() {
+                var fecha = moment($scope.orden.FechaOrden, Constants.formatDate).format(Constants.formatDate2);
+                var plazo = $scope.orden.Plazo;
+                return ordenFactory.getFechaEntrega(plazo, fecha).then(function(data) {
+                    if (data.length > 0) {
+                        $scope.orden.FechaEntrega = moment(data[0].Fecha).format(Constants.formatDate);
+                    } else {
+                        toaster.pop('warning', 'NO HAY FECHA DE ENTREGA', 'No existe calendario para la fecha descrita');
+                    }
+                });
+            };
+
+            $scope.hasChangedPlazoField = function() {
+                $scope.orden.Plazo = Math.abs($scope.orden.Plazo);
+                if ($scope.orden.Plazo && $scope.orden.Plazo > 0) {
+                    $scope.getFechaEntrega();
+                }
+            };
+
             $scope.getProductos = function(search) {
-                $log.debug('Buscando productos......');
                 return productoFactory.queryProdAndSer(search, esServicio).then(function(data) {
                     return data;
                 });
@@ -164,7 +172,7 @@ angular.module('almacenApp')
                         toaster.pop('error', 'Operación Fallida', 'Debe ingresar por lo menos un producto/servicio.');
                     } else {
                         ordenFactory.save($scope.orden).then(function(response) {
-                            toaster.pop('success', 'Operación Exitosa', 'La Orden de Compra fue creada exitosamente con Número: ' + response);
+                            toaster.pop('success', 'Operación Exitosa', 'La ' + tipoOrden + ' fue creada exitosamente con Número: ' + response);
                             $scope.clearForm();
                         }, function error(response) {
                             // An error has occurred

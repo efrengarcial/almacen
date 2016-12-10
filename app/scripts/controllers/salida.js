@@ -89,13 +89,10 @@ angular.module('almacenApp')
                 for (var i = 0; i < salidaItems.length; i++) {
 
                     if ((salidaItems[i].Producto !== null) && (containsElement(items, salidaItems[i].Producto.Id) === true)) {
-                        //if ((salidaItems[i].Producto !== null) && $filter('filter')(items, salidaItems[i].Producto.Id)[0]) {
-                        $log.debug('filter: ' + $filter('filter')(items, salidaItems[i].Producto.Id));
                         salidaItems[i].Producto = null;
                     }
 
                     if ((salidaItems[i].Producto !== null) && (containsElement(items, salidaItems[i].Producto.Id) === false)) {
-                        //if ((salidaItems[i].Producto !== null) && (!$filter('filter')(items, salidaItems[i].Producto.Id)[0])) {
                         items.push(salidaItems[i].Producto.Id);
                     }
                 }

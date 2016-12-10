@@ -40,9 +40,9 @@ angular.module('almacenApp')
                 data: 'dataGrid',
                 useExternalSorting: true,
                 sortInfo: $scope.sortInfo,
-                //enablePaging : true,
-                //showFooter : true,    
-                //totalServerItems:'totalServerItems',               
+                enablePaging : true,
+                showFooter : true,
+                totalServerItems: 'totalServerItems',
                 pagingOptions: $scope.pagingOptions,
 
                 columnDefs: [{
@@ -174,8 +174,6 @@ angular.module('almacenApp')
             } else {
                 showMisPendientes();
             }
-
-
 
             // Broadcast an event when an element in the grid is deleted. No real deletion is perfomed at this point.
             $scope.deleteRow = function(row) {

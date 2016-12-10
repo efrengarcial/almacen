@@ -25,9 +25,9 @@ angular.module('almacenApp')
 
             if (params.idOrden) {
                 $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
-                $log.debug("back: " + JSON.stringify(params));
+                $log.debug('back: ' + JSON.stringify(params));
 
-                if (params.SearchType == 1) {
+                if (params.SearchType === 1) {
                     $scope.consultaOrden.ReadOnly = true;
                     $scope.consultaOrden.Numero = params.Numero;
                     $scope.consultaOrden.UserName = accountFactory.getAuthenticationData().userName;
@@ -126,7 +126,7 @@ angular.module('almacenApp')
 
             //Cheque si usurario tiene permiso para consultar orden
             function checkIfUserHasQueryPermission() {
-                var permission = "CONSULTAR_TODAS_LAS_ORDENES";
+                var permission = 'CONSULTAR_TODAS_LAS_ORDENES';
                 var index = $scope.permissions.indexOf(permission);
                 if (index > -1) {
                     return true;
@@ -190,9 +190,9 @@ angular.module('almacenApp')
                 data: 'dataGrid',
                 useExternalSorting: true,
                 sortInfo: $scope.sortInfo,
-                enablePaging : true,
-                showFooter : true,
-                totalServerItems:'totalServerItems',
+                enablePaging: true,
+                showFooter: true,
+                totalServerItems: 'totalServerItems',
                 pagingOptions: $scope.pagingOptions,
 
                 columnDefs: [{
@@ -217,7 +217,7 @@ angular.module('almacenApp')
                 }, {
                     field: '',
                     displayName: 'Detalles Orden',
-                    cellTemplate: '<span class="glyphicon glyphicon-open glyphicon-center" ng-click="showDetails(row)"></span>'
+                    cellTemplate: '<span class=\'glyphicon glyphicon-open glyphicon-center\' ng-click=\'showDetails(row)\'></span>'
                 }],
 
                 multiSelect: false,
@@ -260,7 +260,7 @@ angular.module('almacenApp')
             //From here you can go to details orden
             $scope.showDetails = function(row) {
                 params.idOrden = row.entity.Id;
-                $location.path("/ordenDetails").search(params);
+                $location.path('/ordenDetails').search(params);
             };
 
             $scope.setPagingData = function(data, page, pageSize) {
@@ -295,7 +295,7 @@ angular.module('almacenApp')
                                 Numero: $scope.consultaOrden.Numero,
                                 NotSearchPermission: $scope.consultaOrden.NotSearchPermission,
                                 SearchType: 1
-                            }
+                            };
                         } else {
                             params = setQueryParams();
                         }

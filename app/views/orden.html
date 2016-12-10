@@ -90,10 +90,18 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 form-group">
+                <div class="col-md-4 form-group required-field-block">
                     <label class="col-md-5 control-label" for="plazo">Plazo entrega</label>
                     <div class="col-md-7">
-                        <input id="plazo" type="text" name="plazo" ng-model="orden.Proveedor.Plazo" class="form-control">
+                        <input id="plazo" min="{{min}}" max="{{max}}" type="text" name="plazo" ng-model="orden.Plazo" ng-change="hasChangedPlazoField()" class="form-control" ng-maxlength="2" numbers-only ng-required="true" ng-pattern="/^([1-9]|[1-8][0-9]|90)$/">
+                        <div class="required-icon" ng-mouseover="showMessage();">
+                            <div class="text">*</div>
+                        </div>
+                        <div class="error-message" ng-messages="ordenForm.plazo.$error" ng-if="interacted(ordenForm.plazo) || ordenForm.$submitted">
+                            <div class="error-message" ng-message="required">Debe ingresar un valor</div>
+                            <div class="error-message" ng-message="maxlength">El valor es muy largo...</div>
+                            <div class="error-message" ng-message="pattern">Plazo entre (1) y (90) días</div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4 form-group required-field-block">
@@ -133,7 +141,7 @@
                     <button type="submit" class="btn btn-primary" ng-click="saveAndCloseClick=false">
                         <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span> Guardar
                     </button>
-                     <button type="submit" class="btn btn-primary" ng-click="saveAndCloseClick=true">
+                    <button type="submit" class="btn btn-primary" ng-click="saveAndCloseClick=true">
                         <span class="glyphicon glyphicon-floppy-disk" style="vertical-align:middle"></span>Cerrar Requisición
                     </button>
                 </div>

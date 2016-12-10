@@ -102,7 +102,6 @@ angular
                         entradaWS.EntadaOrdenItems.push(ordenItemWS);
                     }
 
-                    $log.debug(JSON.stringify(entradaWS));
                     return apiFactory.all(WS.URI_SAVE_ENTRADA).post(entradaWS);
                 },
 
@@ -113,6 +112,7 @@ angular
                         UserId: orden.UserId,
                         Tipo: orden.Tipo,
                         IdProveedor: (orden.Proveedor !== null ? orden.Proveedor.Id : null),
+                        Plazo: orden.Plazo,
                         CentroCostos: orden.CentroCostos,
                         Notas: orden.Notas,
                         IdOrdenBase: orden.IdOrdenBase,
@@ -144,6 +144,7 @@ angular
                         orden.Proveedor = ordenWS.Proveedor;
                         orden.NombreProveedor = (ordenWS.Proveedor !== null ? ordenWS.Proveedor.Nombre : null);
                         orden.FechaOrden = moment(ordenWS.FechaCreacion).format(Constants.formatDate);
+                        orden.Plazo = ordenWS.Plazo;
                         orden.CentroCostos = ordenWS.CentroCostos;
                         orden.UserName = ordenWS.UserName;
 
