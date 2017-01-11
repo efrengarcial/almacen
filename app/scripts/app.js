@@ -23,10 +23,11 @@ angular
         'angularMoment',
         'angular-jwt',
         'angularSpinner',
-        'ui.checkbox'
+        'ui.checkbox',
+        '720kb.tooltips'
     ]).
 config(function($routeProvider, $logProvider, $locationProvider, $httpProvider,
-    RestangularProvider, usSpinnerConfigProvider) {
+    RestangularProvider, usSpinnerConfigProvider, tooltipsConfProvider) {
     $logProvider.debugEnabled(true);
     //$locationProvider.html5Mode(true);
     //$httpProvider.interceptors.push('authInterceptorFactory');
@@ -51,6 +52,14 @@ config(function($routeProvider, $logProvider, $locationProvider, $httpProvider,
         left: '50%' // Left position relative to parent
     });
 
+     tooltipsConfProvider.configure({
+        'smart': true,
+        'size': 'large',
+        'speed': 'slow',
+        'tooltipTemplateUrlCache': true,
+        'side': 'top'
+        //etc...
+      });    
 
     $routeProvider
         .when('/', {
@@ -188,6 +197,15 @@ config(function($routeProvider, $logProvider, $locationProvider, $httpProvider,
             resolve: {
                 permission: function(authorizationFactory, $route, Permissions) {
                     return authorizationFactory.permissionCheck([Permissions.SALIDAS]);
+                },
+            }
+        })
+        .when('/consultarSalida', {
+            templateUrl: 'views/consultarSalida.html',
+            controller: 'ConsultarSalidaCtrl',
+            resolve: {
+                permission: function(authorizationFactory, $route, Permissions) {
+                    return authorizationFactory.permissionCheck([Permissions.CONSULTAR_SALIDAS]);
                 },
             }
         })

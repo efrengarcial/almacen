@@ -25,9 +25,9 @@
                     <div class="col-md-12">
                         <ng-form name="productoForm">
                             <input class="form-control" name="producto" type="text" ng-model="salidaItem.Producto.Nombre" placeHolder="Producto" uib-typeahead="producto.Nombre for producto in getProductos($viewValue) | limitTo:10" typeahead-loading="Cargando" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label, salidaItem)" typeahead-editable="true" ng-blur="noRepeatProduct()" ng-required="true" />
-                            <div class="required-icon" ng-mouseover="showMessage();">
-                                <div class="text">*</div>
-                            </div>                           
+                            <div class="required-icon">
+                                <a href="#" tooltips tooltip-template="Campo Requerido" class="text">*</a>
+                            </div>
                             <div class="error-message" ng-messages="productoForm.producto.$error" ng-if="interacted(productoForm.producto) || salidaForm.$submitted">
                                 <div class="error-message" ng-message="required">Debe ingresar un producto o eligir uno diferente</div>
                             </div>
@@ -46,8 +46,8 @@
                     <div class="col-md-12">
                         <ng-form name="cantidadForm">
                             <input class="form-control" type="text" name="cantidad" ng-model="salidaItem.Cantidad" placeHolder="Cantidad" ng-maxlength="9" ng-required="true" numbers-only ng-min="1" ng-max="salidaItem.Producto.CantidadInventario" />
-                            <div class="required-icon" ng-mouseover="showMessage();">
-                                <div class="text">*</div>
+                            <div class="required-icon">
+                                <a href="#" tooltips tooltip-template="Campo Requerido" class="text">*</a>
                             </div>
                             <div class="error-message" ng-messages="cantidadForm.cantidad.$error" ng-if="interacted(cantidadForm.cantidad) || salidaForm.$submitted">
                                 <div class="error-message" ng-message="maxlength">El máximo es demasiado largo...</div>
@@ -66,8 +66,8 @@
                             <select ng-model="salidaItem.IdCentroCostos" name="centroCosto" placeHolder="Centro de Costo" class="form-control" ng-required="true" ng-options="centroCosto.Id as centroCosto.Nombre for centroCosto in centroCostos" ng-change="selectCentroCostos(salidaItem.IdCentroCostos)">
                                 <option style="display:none" value="">SELECCIONE</option>
                             </select>
-                            <div class="required-icon" ng-mouseover="showMessage();">
-                                <div class="text">*</div>
+                            <div class="required-icon">
+                                <a href="#" tooltips tooltip-template="Campo Requerido" class="text">*</a>
                             </div>
                             <div class="error-message" ng-messages="centroCostosForm.centroCosto.$error" ng-if="interacted(centroCostosForm.centroCosto) || salidaForm.$submitted">
                                 <div class="error-message" ng-message="required">Debe ingresar un Centro de Costo</div>
@@ -81,8 +81,8 @@
                     <div class="col-md-12">
                         <ng-form name="equipoObraForm">
                             <input type="text" ng-model="salidaItem.EquipoObra" name="equipoObra" placeholder="Equipo Obra" required class="form-control" />
-                            <div class="required-icon" ng-mouseover="showMessage();">
-                                <div class="text">*</div>
+                            <div class="required-icon">
+                                <a href="#" tooltips tooltip-template="Campo Requerido" class="text">*</a>
                             </div>
                             <div class="error-message" ng-messages="equipoObraForm.equipoObra.$error" ng-if="interacted(equipoObraForm.equipoObra) || salidaForm.$submitted">
                                 <div class="error-message" ng-message="required">Debe ingresar un Equipo Obra</div>

@@ -58,7 +58,7 @@
             <div class="col-md-4 form-group required-field-block">
                 <label class="col-md-4 control-label">Usuario</label>
                 <div class="col-md-8">
-                    <input type="text" ng-model="consultaOrden.UserName" name="UserName" placeholder="Usuario" typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" class="form-control" typeahead-on-select="saveUser($item, $model, $label)" typeahead-editable="false" ng-focus typeahead-loading="Cargando" ng-readonly="consultaOrden.NotSearchPermission||consultaOrden.ReadOnly" />
+                    <input type="text" ng-model="consultaOrden.UserName" name="UserName" placeholder="Usuario" uib-typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" class="form-control" typeahead-on-select="saveUser($item, $model, $label)" typeahead-editable="false" ng-focus typeahead-loading="Cargando" ng-readonly="consultaOrden.NotSearchPermission||consultaOrden.ReadOnly" />
                 </div>
             </div>
         </div>

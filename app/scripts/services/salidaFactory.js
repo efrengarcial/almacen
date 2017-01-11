@@ -74,6 +74,25 @@ angular
                     }
                     $log.debug(JSON.stringify(salidaWS));
                     return apiFactory.all(WS.URI_SAVE_SALIDA).post(salidaWS);
+                },
+
+                getConsultaSalidaObject: function() {
+                    var consultaSalida = {
+                        StartDate: new Date().getTime(),
+                        EndDate: new Date().getTime(),
+                        Solicitador: null,
+                        IdSolicitador: null,
+                        Recibidor: null,
+                        IdRecibidor: null,
+                        esSolicitador: false,
+                        UserName: '',
+                        UserId: null,
+                    };
+
+                    return consultaSalida;
+                },
+                query: function(params) {
+                    return apiFactory.all(WS.URI_QUERY_SALIDA).getList(params);
                 }
             }
         }

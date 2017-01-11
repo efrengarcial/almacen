@@ -40,7 +40,8 @@ angular
 		URI_TOKEN: 'token',
 		URI_SAVE_ENTRADA: 'orden/saveEntrada',
 		URI_REPORTES: 'SSRSReporting/saveReport',
-		URI_GET_FECHA_ENTREGA: 'orden/getFechaEntrega'	
+		URI_GET_FECHA_ENTREGA: 'orden/getFechaEntrega',
+		URI_QUERY_SALIDA: 'salida/query'
 	})
 	.constant('Roles', {		
 		Almacenista : 'Almacenista',
@@ -56,7 +57,9 @@ angular
 		REQUISICION : 'REQUISICION',
 		ORDEN_SERVICIO : 'ORDEN_SERVICIO',
 		REQUISICION_SERVICIO : 'REQUISICION_SERVICIO',
-		CONSULTAR_ORDENES : 'CONSULTAR_ORDENES'
+		CONSULTAR_ORDENES : 'CONSULTAR_ORDENES',
+		CONSULTAR_SALIDAS : 'CONSULTAR_SALIDAS',
+		CONSULTAR_TODAS_LAS_ORDENES : 'CONSULTAR_TODAS_LAS_ORDENES'
 	})
 	.constant('Constants', {
 		formatDate : 'DD/MM/YYYY',

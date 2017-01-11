@@ -68,6 +68,7 @@
                 <ul class="dropdown-menu">                
                     <li><a ng-if="authenticationData.permissions.indexOf('ENTRADAS') > -1" href="#/entradas">Entradas</a></li>
                     <li><a ng-if="authenticationData.permissions.indexOf('SALIDAS') > -1" href="#/salida">Salidas</a></li>
+                    <li><a ng-if="authenticationData.permissions.indexOf('CONSULTAR_SALIDAS') > -1" href="#/consultarSalida">Consultar Salida</a></li>
                 </ul>
             </li>
             <li><a ng-if="authenticationData.permissions.indexOf('REQUISICIONES_POR_PROCESAR') > -1" href="#/inboxOrden">Mis pendientes</a></li>
@@ -176,6 +177,7 @@
         <script src="scripts/services/authorizationFactory.js"></script>
         <script src="scripts/controllers/entrada.js"></script>
         <script src="scripts/controllers/salida.js"></script>
+        <script src="scripts/controllers/consultarSalida.js"></script>
         <script src="scripts/services/userFactory.js"></script> 
         <!-- endbuild -->
 </body>

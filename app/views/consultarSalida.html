@@ -1,0 +1,74 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <h1 class="header">Consultar Salida</h1>
+        </div>
+    </div>
+    <hr>
+    <form name="consultarSalidaForm" ng-submit="buscarSalida(consultarSalidaForm.$valid)" role="form" novalidate>
+        <div class="row">
+            <div class="col-md-4 form-group required-field-block">
+                <label class="col-md-4 control-label">Fecha inicial</label>
+                <div class="col-md-7 input-group">
+                    <input type="text" ng-model="consultaSalida.StartDate" name="startDate" class="form-control date-field" uib-datepicker-popup="{{format}}" is-open="openedStartDate" datepicker-options="dateOptions" date-lower-than="{{consultaSalida.EndDate | date:'DD/MM/YYYY'}}" close-text="Close" ng-readonly="consultaSalida.ReadOnly" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-disabled="consultaSalida.ReadOnly" ng-click="open($event, 'openedStartDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+                <div class="error-message" ng-messages="consultarSalidaForm.startDate.$error" gn-if="interacted(consultarSalidaForm.startDate || !consultarSalidaForm.startDate.$pristine)">
+                    <div class="error-message" ng-message="required">Campo inválido o vacío</div>
+                    <div class="error-message" ng-message="dateLowerThan">La fecha inicial debe ser menor que la final</div>
+                </div>
+            </div>
+            <div class="col-md-4 form-group required-field-block">
+                <label class="col-md-4 control-label">Fecha final</label>
+                <div class="col-md-7 input-group">
+                    <input type="text" ng-model="consultaSalida.EndDate" name="endDate" class="form-control date-field" uib-datepicker-popup="{{format}}" is-open="openedEndDate" min-date="minDate" max-date="'22/06/2016'" datepicker-options="dateOptions" date-greater-than="{{consultaSalida.StartDate | date:'yyyy-MM-dd'}}" close-text="Close" ng-readonly="consultaSalida.ReadOnly" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-disabled="consultaSalida.ReadOnly" ng-click="open($event,'openedEndDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+                <div class="error-message" ng-messages="consultarSalidaForm.endDate.$error" gn-if="interacted(consultarSalidaForm.endDate || !consultarSalidaForm.endDate.$pristine)">
+                    <div class="error-message" ng-message="required">Campo inválido o vacío</div>
+                    <div class="error-message" ng-message="dateGreaterThan">La fecha final debe ser mayor que la inicial</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 form-group required-field-block">
+                <label class="col-md-4 control-label">Solicitador</label>
+                <div class="col-md-8">
+                    <input type="text" ng-model="consultaSalida.Solicitador" ng-change="consultaSalida.esSolicitador=true" name="solicitador" placeholder="Solicitador" uib-typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" class="form-control" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" ng-focus typeahead-loading="Cargando" ng-readonly="consultaSalida.NotSearchPermission" />
+                    <div class="error-message" ng-messages="consultarSalidaForm.solicitador.$error" ng-if="interacted(consultarSalidaForm.solicitador) || consultarSalidaForm.$submitted"></div>
+                </div>
+            </div>
+            <div class="col-md-4 form-group required-field-block">
+                <label class="col-md-4 control-label">Recibidor</label>
+                <div class="col-md-8">
+                    <input type="text" ng-model="consultaSalida.Recibidor" ng-change="consultaSalida.esSolicitador=false" name="recibidor" placeholder="Recibidor" uib-typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" class="form-control" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" ng-focus typeahead-loading="Cargando" ng-readonly="consultaSalida.NotSearchPermission" />
+                    <div class="error-message" ng-messages="consultarSalidaForm.recibidor.$error" ng-if="interacted(consultarSalidaForm.recibidor) || consultarSalidaForm.$submitted"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <button type="button" class="btn btn-danger" ng-click="clearForm()">
+                    <i class="glyphicon glyphicon-remove"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-search" style="vertical-align:middle"></span> Buscar
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr>
+    <!-- Table to show data -->
+    <div class="grid">
+        <!-- Binds the grid component to be displayed. -->
+        <div class="gridStyle" ng-grid="gridOptions" ng-show="allData.length > 0"></div>
+        <!--  Bind the pagination component to be displayed. -->
+        <pagination direction-links="true" boundary-links="true" ng-show="allData.length > 0" total-items="pagingOptions.totalServerItems" items-per-page="pagingOptions.pageSize" ng-model="pagingOptions.currentPage" ng-change="refreshGrid()">
+        </pagination>
+    </div>
+    <!-- end table-->
+</div>

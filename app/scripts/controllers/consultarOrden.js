@@ -9,8 +9,8 @@
  */
 
 angular.module('almacenApp')
-    .controller('ConsultarOrdenCtrl', ['$scope', '$log', '$rootScope', 'userFactory', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter', 'modalWindowFactory', 'moment', 'Constants', 'accountFactory', '$location', '$routeParams',
-        function($scope, $log, $rootScope, userFactory, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants, accountFactory, $location, $routeParams) {
+    .controller('ConsultarOrdenCtrl', ['$scope', '$log', '$rootScope', 'userFactory', 'proveedorFactory', 'ordenFactory', 'toaster', '$filter', 'modalWindowFactory', 'moment', 'Constants', 'Permissions', 'accountFactory', '$location', '$routeParams',
+        function($scope, $log, $rootScope, userFactory, proveedorFactory, ordenFactory, toaster, $filter, modalWindowFactory, moment, Constants, Permissions, accountFactory, $location, $routeParams) {
             $log.debug('Iniciando consultar orden');
 
             var params = $routeParams;
@@ -126,7 +126,7 @@ angular.module('almacenApp')
 
             //Cheque si usurario tiene permiso para consultar orden
             function checkIfUserHasQueryPermission() {
-                var permission = 'CONSULTAR_TODAS_LAS_ORDENES';
+                var permission = Permissions.CONSULTAR_TODAS_LAS_ORDENES;
                 var index = $scope.permissions.indexOf(permission);
                 if (index > -1) {
                     return true;
@@ -246,7 +246,6 @@ angular.module('almacenApp')
             $scope.$on('ngGridEventSorted', function(event, sortInfo) {
                 $scope.sortInfo = sortInfo;
             });
-
 
             $scope.$on('ordenSelected', function(event, orden) {
                 $scope.orden = orden;
