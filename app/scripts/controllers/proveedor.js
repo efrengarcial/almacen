@@ -224,14 +224,6 @@ angular.module('almacenApp')
                 return $scope.submitted || field.$dirty;
             };
 
-            $scope.showMessage = function() {
-                $('.required-icon, .required-combo-icon').tooltip({
-                    placement: 'left',
-                    title: 'Campo requerido'
-                });
-            };
-
-
             // Picks the event broadcasted when the form is cleared to also clear the grid selection.
             $scope.$on('clear', function() {
                 $scope.gridOptions.selectAll(false);

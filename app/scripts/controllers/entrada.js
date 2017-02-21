@@ -31,13 +31,6 @@ angular.module('almacenApp')
                 return $scope.submitted || field.$dirty;
             };
 
-            $scope.showMessage = function() {
-                $('.required-icon, .required-combo-icon').tooltip({
-                    placement: 'left',
-                    title: 'Campo requerido'
-                });
-            };
-
             $scope.save = function(isValid) {
                 if (isValid) {
                     ordenFactory.saveEntrada($scope.orden).then(function() {

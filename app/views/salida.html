@@ -27,7 +27,7 @@
                     <div class="col-md-6">
                         <input type="text" ng-model="salida.Solicitador" ng-change="salida.esSolicitador=true" name="solicitador" placeholder="Solicita" uib-typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control" />
                         <div class="required-icon">
-                            <a href="#" tooltips tooltip-template="Campo Requerido" class="text">*</a>
+                            <a href="#" tooltips tooltip-template="Requerido" class="text">*</a>
                         </div>
                         <div class="error-message" ng-messages="salidaForm.solicitador.$error" ng-if="interacted(salidaForm.solicitador) || salidaForm.$submitted">
                             <div class="error-message" ng-message="required">Debe ingresar un Solicitador</div>
@@ -39,7 +39,7 @@
                     <div class="col-md-6">
                         <input type="text" ng-model="salida.Recibidor" ng-change="salida.esSolicitador=false" name="recibidor" placeholder="Recibe" uib-typeahead="user.FullName for user in users | filter:$viewValue | limitTo:10" typeahead-on-select="saveUsers($item, $model, $label)" typeahead-editable="false" required ng-focus typeahead-loading="Cargando" class="form-control" />
                         <div class="required-icon">
-                            <a href="#" tooltips tooltip-template="Campo Requerido" class="text">*</a>
+                            <a href="#" tooltips tooltip-template="Requerido" class="text">*</a>
                         </div>
                         <div class="error-message" ng-messages="salidaForm.recibidor.$error" ng-if="interacted(salidaForm.recibidor) || salidaForm.$submitted">
                             <div class="error-message" ng-message="required">Debe ingresar un Recibidor</div>

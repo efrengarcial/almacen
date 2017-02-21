@@ -25,7 +25,6 @@ angular.module('almacenApp')
             function getUsers() {
                 userFactory.getUsers().then(function(users) {
                     $scope.users = users;
-                    console.log('users', $scope.users);
                 });
             }
 

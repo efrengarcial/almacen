@@ -23,8 +23,8 @@
                 <div class="col-md-12 form-group required-field-block">
                     <ng-form name="productoForm">
                         <input class="form-control" name="producto" type="text" ng-model="ordenItem.Producto.Nombre" uib-typeahead="producto.Nombre for producto in getProductos($viewValue) |  limitTo:10" typeahead-loading="Cargando" typeahead-min-length="2" typeahead-wait-ms="300" typeahead-on-select="saveProducto($item, $model, $label,ordenItem)" typeahead-editable="false"  ng-required="true" ng-readonly="truefalse"/>
-                        <div class="required-icon" ng-mouseover="showMessage();">
-                            <div class="text">*</div>
+                        <div class="required-icon">
+                            <a href="#" tooltips tooltip-template="Requerido" class="text">*</a>
                         </div>
                         <div class="error-message" ng-messages="productoForm.producto.$error" ng-if="interacted(productoForm.producto) || ordenForm.$submitted">
                             <div class="error-message" ng-message="required">Debe ingresar un producto</div>     
@@ -43,8 +43,8 @@
                 <div class="col-md-8 form-group required-field-block">
                     <ng-form name="cantidadForm">
                         <input class="form-control" type="text" name="cantidad" ng-model="ordenItem.Cantidad"  ng-maxlength="9" ng-required="true" numbers-only ng-pattern="/^[0-9]{1,9}$/" ng-readonly="truefalse"/>
-                        <div class="required-icon" ng-mouseover="showMessage();">
-                            <div class="text">*</div>
+                        <div class="required-icon">
+                            <a href="#" tooltips tooltip-template="Requerido" class="text">*</a>
                         </div>
                        <div class="error-message" ng-messages="cantidadForm.cantidad.$error" ng-if="interacted(cantidadForm.cantidad) || ordenForm.$submitted">
                               <div class="error-message" ng-message="maxlength">La Cantidad es demasiado larga...</div>

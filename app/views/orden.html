@@ -60,8 +60,8 @@
                     <label class="col-md-5 control-label" for="proveedor">Proveedor</label>
                     <div class="col-md-7">
                         <input type="text" id="proveedor" name="proveedor" ng-model="orden.NombreProveedor" placeholder="Proveedor" uib-typeahead="obj.Nombre for obj in proveedores | filter:$viewValue | limitTo:10" class="form-control" typeahead-on-select="saveProveedor($item, $model, $label)" typeahead-editable="false" ng-required="!isRequisicion" ng-focus typeahead-loading="Cargando" />
-                        <div class="required-icon" ng-mouseover="showMessage();" ng-hide="isRequisicion">
-                            <div class="text">*</div>
+                        <div class="required-icon">
+                            <a href="#" tooltips tooltip-template="Requerido" class="text">*</a>
                         </div>
                         <div class="error-message" ng-messages="ordenForm.proveedor.$error" ng-if="interacted(ordenForm.proveedor) || ordenForm.$submitted">
                             <div class="error-message" ng-message="required">Debe ingresar Proveedor</div>
@@ -94,8 +94,8 @@
                     <label class="col-md-5 control-label" for="plazo">Plazo entrega</label>
                     <div class="col-md-7">
                         <input id="plazo" min="{{min}}" max="{{max}}" type="text" name="plazo" ng-model="orden.Plazo" ng-change="hasChangedPlazoField()" class="form-control" ng-maxlength="2" numbers-only ng-required="true" ng-pattern="/^([1-9]|[1-8][0-9]|90)$/">
-                        <div class="required-icon" ng-mouseover="showMessage();">
-                            <div class="text">*</div>
+                        <div class="required-icon">
+                            <a href="#" tooltips tooltip-template="Requerido" class="text">*</a>
                         </div>
                         <div class="error-message" ng-messages="ordenForm.plazo.$error" ng-if="interacted(ordenForm.plazo) || ordenForm.$submitted">
                             <div class="error-message" ng-message="required">Debe ingresar un valor</div>
@@ -110,8 +110,8 @@
                         <select ng-model="orden.CentroCostos" name="costos" placeHolder="Centro de Costo" class="form-control" ng-required="true" ng-options="centroCosto.Nombre as centroCosto.Nombre for centroCosto in centroCostos" ng-change="selectCentroCostos(orden.CentroCostos)">
                             <option style="display:none" value="">SELECCIONE</option>
                         </select>
-                        <div class="required-icon" ng-mouseover="showMessage();">
-                            <div class="text">*</div>
+                        <div class="required-icon">
+                            <a href="#" tooltips tooltip-template="Requerido" class="text">*</a>
                         </div>
                         <div class="error-message" ng-messages="ordenForm.costos.$error" ng-if="interacted(ordenForm.costos) || ordenForm.$submitted">
                             <div class="error-message" ng-message="required">Debe ingresar un Centro de Costos</div>

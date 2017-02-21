@@ -150,13 +150,6 @@ angular.module('almacenApp')
                 }
             };
 
-            $scope.showMessage = function() {
-                $('.required-icon, .required-combo-icon').tooltip({
-                    placement: 'left',
-                    title: 'Campo requerido'
-                });
-            };
-
             $scope.clearForm = function() {
                 $scope.consultaOrden = ordenFactory.getConsultaOrdenObject();
 
